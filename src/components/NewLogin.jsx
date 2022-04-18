@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import * as Page from '../utils/PageEnum'
+import {saveToken} from "../utils/AuthUtils";
 
 export default function NewLogin(props) {
     const [usernameField, setUsernameField] = useState('')
@@ -8,33 +9,61 @@ export default function NewLogin(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const data = new FormData();
-        data.append("username", usernameField);
-        data.append("password", passwordField);
+        // const data = new FormData();
+        // data.append("username", usernameField);
+        // data.append("password", passwordField);
+
         fetch('http://127.0.0.1:8000/api/auth/login', {
             method: 'POST',
-            body: data
+            headers: new Headers({
+                'Authorization': 'Basic ' + btoa(usernameField.toString() + ':' + passwordField.toString()),
+                'Content-Type': 'application/x-www-form-urlencoded',
+            })
         })
-            .then(response => response.json())
-            .then(data => handleFetch(data));
+            .then(response => handleFetch(response)).catch(e => {
+                console.error(e)
+                setError('Unexpected error')
+            });
+
+
     }
 
-    const handleFetch = (data) => {
-        if (data.result === 'inactive_user') {
-            props.setUser(usernameField);
-            props.setPage(Page.verify);
-            return;
+    const handleFetch = (response) => {
+        // if (data.result === 'inactive_user') {
+        //     props.setUser(usernameField);
+        //     props.setPage(Page.verify);
+        //     return;
+        // }
+        //
+        // if (data.result === 'invalid_user') return setError('wrong username or password')
+        //
+        // props.setUser(data.user);
+        // props.stayLoggedIn ? localStorage.setItem('user', JSON.stringify(data.user)) : sessionStorage.setItem('user', JSON.stringify(data.user));
+        // props.setPage(Page.main);
+
+        switch (response.status) {
+            case 200:
+                response.json().then(data => {
+                    saveToken(data['token']);
+                    props.setUser(data['user']);
+                    props.setPage(Page.main);
+                })
+                break;
+            case 401:
+                setError('Invalid username or password')
+                break;
+            case 406:
+                props.setUser({'username': usernameField})
+                props.setPage(Page.verify)
+                break;
+            default:
+                setError('Unexpected error')
         }
 
-        if (data.result === 'invalid_user') return setError('wrong username or password')
-
-        props.setUser(data.user);
-        props.stayLoggedIn ? localStorage.setItem('user', JSON.stringify(data.user)) : sessionStorage.setItem('user', JSON.stringify(data.user));
-        props.setPage(Page.main);
     }
 
-    const handleCheck = () => {
-        props.setStayLoggedIn(!props.stayLoggedIn);
+    const handleCheck = (e) => {
+        props.setStayLoggedIn(e.target.checked);
     }
 
     return (
@@ -68,7 +97,9 @@ export default function NewLogin(props) {
                 <span className='font-semibold text-sm text-red-700'>{error}</span>
                 <button className='text-xl mt-3 p-1 rounded-lg bg-orange-500 hover:bg-rose-500'>log in</button>
             </form>
-            <button className='mt-6 text-lg underline' onClick={() => props.setPage(Page.signup)}>Don't have an account yet? Sign up</button>
+            <button className='mt-6 text-lg underline' onClick={() => props.setPage(Page.signup)}>Don't have an account
+                yet? Sign up
+            </button>
         </>
     )
 }

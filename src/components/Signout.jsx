@@ -1,12 +1,14 @@
 import React from 'react';
 import * as Page from '../utils/PageEnum'
+import {clearToken} from "../utils/AuthUtils";
 
 function Signout(props) {
     function signOut(){
         props.setUser(null);
-        localStorage.removeItem('user');
-        props.stayLoggedIn ? localStorage.removeItem('user') : sessionStorage.removeItem('user');
+        (props.stayLoggedIn ? localStorage : sessionStorage).removeItem('user');
+        clearToken()
         props.setPage(Page.login);
+
     }
 
     return (

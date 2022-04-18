@@ -5,8 +5,8 @@ export default function Verify({username, setPage}) {
     const [codeField, setCodeField] = useState('')
     const [error, setError] = useState('')
 
-    const placeholder = (data) => {
-        setPage(Page.main)
+    const handleFetch = (response) => {
+        console.log(response)
     }
 
     const handleSubmit = (e) => {
@@ -28,8 +28,10 @@ export default function Verify({username, setPage}) {
             method: 'POST',
             body: formData
         })
-            .then(response => response.json())
-            .then(data => placeholder(data))
+            .then(response => handleFetch(response)).catch((e) => {
+            console.error(e);
+            setPage(Page.login);
+        })
     }
 
     // const handleFetch = (data) => {

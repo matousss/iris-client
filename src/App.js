@@ -7,6 +7,7 @@ import Verify from './components/Verify';
 import NewMain from "./components/NewMain";
 
 import React, {useEffect, useState} from 'react'
+import {getAuthHeader, loadToken} from "./utils/AuthUtils";
 
 function App() {
     const [user, setUser] = useState('');
@@ -27,6 +28,7 @@ function App() {
         localStorage.setItem('stayLogged', stayLoggedIn.toString());
         console.log(stayLoggedIn);
         console.log(localStorage);
+        console.log(sessionStorage);
     }, [stayLoggedIn])
 
     const selectComponent = (page) => {
@@ -42,9 +44,19 @@ function App() {
                                stayLoggedIn={stayLoggedIn}
                                setStayLoggedIn={setStayLoggedIn}/>
             case Page.verify:
-                return <Verify setUser={setUser}
+                return <Verify username={user['username']}
                                setPage={setPage}/>
         }
+    }
+    if (loadToken() != null) {
+        fetch('http://127.0.0.1:8000/api/auth/check', {
+            method: 'GET',
+            headers: getAuthHeader(),
+        }).then(response => {
+            if (response.ok) setPage(Page.main)
+        }).catch(e => {
+            console.error(e)
+        })
     }
 
     return (
