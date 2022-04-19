@@ -44,9 +44,10 @@ export default function NewLogin(props) {
         switch (response.status) {
             case 200:
                 response.json().then(data => {
-                    saveToken(data['token']);
+                    // saveToken(data['token']);
                     props.setUser(data['user']);
-                    props.setPage(Page.main);
+                    props.setToken(data['token'])
+                    // props.setPage(Page.main);
                 })
                 break;
             case 401:

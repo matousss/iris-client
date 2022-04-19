@@ -10,6 +10,7 @@ function getAuthHeader() {
 
 
 function saveToken(token) {
+    if (token === null) return clearToken();
     (stayLogged() ? localStorage : sessionStorage).setItem('token', token);
 }
 
