@@ -8,6 +8,7 @@ import NewMain from "./components/NewMain";
 
 import React, {useEffect, useState} from 'react'
 import {getAuthHeader, loadToken, saveToken} from "./utils/AuthUtils";
+import {getChannels, getFullProfile, logout} from './utils/RequestUtils'
 import {func} from "prop-types";
 
 const WS_PORT = 8000
@@ -18,8 +19,10 @@ function App() {
     const [user, setUser] = useState('');
     const [page, setPage] = useState(Page.login);
     const [stayLoggedIn, setStayLoggedIn] = useState(localStorage.getItem('stayLogged') === 'true');
-    const [token, setToken] = useState(null)
+    const [token, setToken] = useState('')
     const [ws, setWebsocket] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [channels, setChannels] = useState(null)
 
     const connect = () => {
         // set loading screen

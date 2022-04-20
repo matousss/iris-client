@@ -4,6 +4,7 @@ import SearchField from "./SearchField";
 import UserButton from "./UserButton";
 import Signout from "./Signout";
 import {isMobile} from "react-device-detect";
+import {getMiniProfile} from "../utils/RequestUtils";
 
 //temp import
 import avatar from '../assets/avatar.svg'
@@ -21,14 +22,19 @@ export default function Sidebar(props) {
                 <SearchField visible={visible}/>
 
                 <div className='w-full overflow-x-hidden overflow-y-scroll border-y-2 border-gray-700 buttons'>
-                    <UserButton avatar={avatar} username='Dane' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                    <UserButton avatar={avatar} username='Chci' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                    <UserButton avatar={avatar} username='Ti' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                    <UserButton avatar={avatar} username='Cucat' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                    <UserButton avatar={avatar} username='Ty Tvoje Plesnivý' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                    <UserButton avatar={avatar} username='Palce' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                    <UserButton avatar={avatar} username='U Nohou' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                    <UserButton avatar={avatar} username='Plsky' visible={visible} setActiveConversation={props.setActiveConversation}/>
+                    {/*<UserButton avatar={avatar} username='Dane' visible={visible} setActiveConversation={props.setActiveConversation}/>*/}
+                    {/*<UserButton avatar={avatar} username='Chci' visible={visible} setActiveConversation={props.setActiveConversation}/>*/}
+                    {/*<UserButton avatar={avatar} username='Ti' visible={visible} setActiveConversation={props.setActiveConversation}/>*/}
+                    {/*<UserButton avatar={avatar} username='Cucat' visible={visible} setActiveConversation={props.setActiveConversation}/>*/}
+                    {/*<UserButton avatar={avatar} username='Ty Tvoje Plesnivý' visible={visible} setActiveConversation={props.setActiveConversation}/>*/}
+                    {/*<UserButton avatar={avatar} username='Palce' visible={visible} setActiveConversation={props.setActiveConversation}/>*/}
+                    {/*<UserButton avatar={avatar} username='U Nohou' visible={visible} setActiveConversation={props.setActiveConversation}/>*/}
+                    {/*<UserButton avatar={avatar} username='Plsky' visible={visible} setActiveConversation={props.setActiveConversation}/>*/}
+                    {Object.values(props.channels).forEach(element => {
+                        const otherUser = element.users[0] === props.user.id ? element.users[1] : element.users[0];
+                        const miniProfile = getMiniProfile(otherUser);
+                        React.createElement(UserButton, {avatar : {avatar}, username: miniProfile.username, visible: {visible}, setActiveConversation: props.setActiveConversation});
+                    })}
                 </div>
 
                 <Signout visible={visible} setUser={props.setUser} clearDesk={props.clearDesk}/>
