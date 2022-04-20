@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import * as Page from '../utils/PageEnum'
+import {login} from '../utils/RequestUtils'
 import {saveToken} from "../utils/AuthUtils";
 
 export default function NewLogin(props) {
@@ -9,17 +10,7 @@ export default function NewLogin(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const data = new FormData();
-        // data.append("username", usernameField);
-        // data.append("password", passwordField);
-
-        fetch('http://127.0.0.1:8000/api/auth/login', {
-            method: 'POST',
-            headers: new Headers({
-                'Authorization': 'Basic ' + btoa(usernameField.toString() + ':' + passwordField.toString()),
-                'Content-Type': 'application/x-www-form-urlencoded',
-            })
-        })
+        login(btoa(usernameField.toString() + ':' + passwordField.toString()))
             .then(response => handleFetch(response)).catch(e => {
                 console.error(e)
                 setError('Unexpected error')
@@ -46,7 +37,9 @@ export default function NewLogin(props) {
                 response.json().then(data => {
                     // saveToken(data['token']);
                     props.setUser(data['user']);
-                    props.setToken(data['token'])
+                    // props.setToken(data['token'])
+                    props.initMain(data['token'])
+
                     // props.setPage(Page.main);
                 })
                 break;
