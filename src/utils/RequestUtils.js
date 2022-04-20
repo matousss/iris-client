@@ -7,30 +7,61 @@ const BASE_URL = `${PROTOCOL}//${HOST}/api/`
 
 console.log(BASE_URL)
 
-function getFetch(url, method, headers = getAuthHeader()) {
-    return fetch(url,
+function getFetch(url, method, headers = getAuthHeader(), body = '') {
+    return fetch(BASE_URL + url,
         {
             method: method,
             headers: headers,
+            body: body,
         }
     )
 }
 
+function dictToFormData(data) {
+    let formData = new FormData()
+    Object.keys(data).forEach(
+        key => {
+            formData.append(key, data[key])
+        }
+    )
+    return formData;
+}
+
+
+function getMiniProfile(id = 'current') {
+    return getFetch('profile/miniature/' + id, 'GET')
+}
+
 function getFullProfile(id = 'current') {
-    return getFetch(BASE_URL + 'profile/full/' + id, 'GET')
+    return getFetch('profile/full/' + id, 'GET')
 }
 
 function getChannels() {
-    return getFetch(BASE_URL + 'channel', 'GET')
+    return getFetch('channel', 'GET')
 }
 
 function login(auth) {
-    return getFetch('http://127.0.0.1:8000/api/auth/login', 'POST',
+    return getFetch('auth/login', 'POST',
         new Headers({
             'Authorization': 'Basic ' + auth,
             'Content-Type': 'application/x-www-form-urlencoded',
         }))
 }
 
+function logout() {
+    return getFetch('auth/logout', 'POST')
+}
 
-export {getFullProfile, getChannels, login}
+function signup(data = {}) {
+
+    return getFetch('auth/register', 'POST', ...dictToFormData(data))
+}
+
+function activateAccount(username, activationCode) {
+    return getFetch('auth/activate', 'POST', ...dictToFormData({
+        'username': username,
+        'activation_code': activationCode,
+    }))
+}
+
+export {getMiniProfile, getFullProfile, getChannels, login, logout, signup, activateAccount}
