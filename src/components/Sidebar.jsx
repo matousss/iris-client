@@ -31,7 +31,7 @@ export default function Sidebar(props) {
                     <UserButton avatar={avatar} username='Plsky' visible={visible} setActiveConversation={props.setActiveConversation}/>
                 </div>
 
-                <Signout visible={visible} setUser={props.setUser} setPage={props.setPage}/>
+                <Signout visible={visible} setUser={props.setUser} clearDesk={props.clearDesk}/>
             </div>
         </div>
     );
