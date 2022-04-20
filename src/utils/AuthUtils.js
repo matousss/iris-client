@@ -1,5 +1,5 @@
 function getAuthHeader() {
-    if (loadToken() != null) {
+    if (loadToken() !== null) {
         return new Headers({
         'Authorization': 'Token ' + loadToken(),
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -10,7 +10,7 @@ function getAuthHeader() {
 
 
 function saveToken(token) {
-    if (token === null) return clearToken();
+    if (token === null || token === '') return clearToken();
     (stayLogged() ? localStorage : sessionStorage).setItem('token', token);
 }
 
