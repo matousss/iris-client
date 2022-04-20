@@ -7,7 +7,7 @@ const BASE_URL = `${PROTOCOL}//${HOST}/api/`
 
 console.log(BASE_URL)
 
-function getFetch(url, method, headers = getAuthHeader(), body = '') {
+function getFetch(url, method, headers = getAuthHeader(), body = null) {
     return fetch(BASE_URL + url,
         {
             method: method,
