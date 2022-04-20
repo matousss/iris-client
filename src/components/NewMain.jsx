@@ -7,7 +7,7 @@ export default function NewMain(props) {
 
     return (
         <div className='h-screen'>
-            <Sidebar user={props.user} setUser={props.setUser} setActiveConversation={setActiveConversation} setPage={props.setPage}/>
+            <Sidebar user={props.user} setUser={props.setUser} clearDesk={props.clearDesk} setActiveConversation={setActiveConversation}/>
             <MessagePanel user={props.user} activeConversation={activeConversation} setActiveConversation={setActiveConversation}/>
         </div>
     );
