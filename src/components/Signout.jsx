@@ -4,11 +4,7 @@ import {clearToken} from "../utils/AuthUtils";
 
 function Signout(props) {
     function signOut(){
-        props.setUser(null);
-        (props.stayLoggedIn ? localStorage : sessionStorage).removeItem('user');
-        clearToken()
-        props.setPage(Page.login);
-
+        props.clearDesk();
     }
 
     return (
