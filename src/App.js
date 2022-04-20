@@ -10,6 +10,8 @@ import React, {useEffect, useState} from 'react'
 import {getAuthHeader, loadToken, saveToken} from "./utils/AuthUtils";
 import {getChannels, getFullProfile, logout} from './utils/RequestUtils'
 import {func} from "prop-types";
+import Loading from "./components/Loading";
+import {parseChannels} from './utils/StorageUtil';
 
 const WS_PORT = 8000
 const WS_URL = 'ws://' + window.location.hostname + ':' + WS_PORT + '/ws/messages'
@@ -37,13 +39,45 @@ function App() {
         setWebsocket(ws)
     }
 
+    const initMain = _token => {
+        if (_token !== null) {
+            console.log(_token)
+            saveToken(_token)
+            setToken(_token)
+            getFullProfile().then(response => {
+                if (response.status === 200) {
+                    response.json().then(data => {
+                        setUser(data);
+                        loadChannels();
+                        setLoading(false);
+                        setPage(Page.main)
+                    })
+
+
+                } else if (response.status === 401) {
+                    setToken(null)
+                }
+            }).catch(e => {
+                console.error(e)
+            })
+        }
+    }
+
 
     useEffect(() => {
-        const storedUser = stayLoggedIn ? localStorage.getItem('user') : sessionStorage.getItem('user');
+        console.log('loading from storage')
+        // const storedUser = stayLoggedIn ? localStorage.getItem('user') : sessionStorage.getItem('user');
+        //
+        // if (storedUser !== null) {
+        //     setUser(JSON.parse(storedUser));
+        //     //setPage(Page.main);
+        // }
 
-        if (storedUser !== null) {
-            setUser(JSON.parse(storedUser));
-            setPage(Page.main);
+        const storedToken = loadToken();
+        if (storedToken !== null) {
+            initMain(storedToken);
+        } else {
+            setLoading(false);
         }
 
     }, [])
@@ -57,30 +91,9 @@ function App() {
     }, [stayLoggedIn])
 
     useEffect(() => {
-        let token = loadToken();
-        if (token !== null) setToken(token);
-    }, [])
-
-    useEffect(() => {
         saveToken(token)
-        if (token !== null) {
-            fetch('http://127.0.0.1:8000/api/profile/full/current', {
-                method: 'GET',
-                headers: getAuthHeader(),
-            }).then(response => {
-
-                if (response.ok) {
-                    response.json().then(data => {
-                        setUser(data)
-                        setPage(Page.main)
-                    })
-
-                }
-            }).catch(e => {
-                console.error(e)
-            })
-        }
     }, [token])
+
 
     const selectComponent = (page) => {
         switch (page) {
@@ -89,25 +102,60 @@ function App() {
                                  setPage={setPage}
                                  stayLoggedIn={stayLoggedIn}
                                  setStayLoggedIn={setStayLoggedIn}
-                                 setToken={setToken}/>
+                                 initMain={initMain}/>
             case Page.signup:
                 return <Signup setUser={setUser}
                                setPage={setPage}
                                stayLoggedIn={stayLoggedIn}
-                               setStayLoggedIn={setStayLoggedIn}/>
+                               setStayLoggedIn={setStayLoggedIn}
+                               />
             case Page.verify:
                 return <Verify username={user['username']}
-                               setPage={setPage}/>
+                               setPage={setPage}
+                               initMain={initMain}/>
             default:
                 return (<div>Error</div>)
         }
     }
 
+    const clearDesk = () => {
+        logout().then(response => {
+        })
+        setPage(Page.login)
+        setUser(null);
+        (stayLoggedIn ? localStorage : sessionStorage).removeItem('user');
+        setToken(null)
+
+    }
+
+    const loadChannels = () => {
+        if (sessionStorage.getItem('channels') !== null) {
+            setChannels(parseChannels())
+        }
+        console.log('ahojda')
+        //fetch
+        getChannels().then(response => {
+            console.log(response);
+            response.json().then(data => {
+                sessionStorage.setItem('channels', JSON.stringify(data));
+                setChannels(data);
+            });
+        })
+    }
+
     return (
-        page !== Page.main ? <MenuContainer component={selectComponent(page)}/> : <NewMain user={user}
-                                                                                           setUser={setUser}
-                                                                                           setPage={setPage}
-                                                                                           stayLoggedIn={stayLoggedIn}/>
+        <>
+            {loading ? <Loading opacity={.6}/> :
+                (page !== Page.main ? <MenuContainer component={selectComponent(page)}/> : <NewMain user={user}
+                                                                                                    setUser={setUser}
+                                                                                                    clearDesk={clearDesk}
+                                                                                                    setPage={setPage}
+                                                                                                    stayLoggedIn={stayLoggedIn}
+                                                                                                    channels={channels}/>
+                )
+            }
+
+        </>
     );
 }
 
