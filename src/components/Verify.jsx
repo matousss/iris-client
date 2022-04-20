@@ -1,12 +1,19 @@
 import React, {useState} from 'react'
 import * as Page from '../utils/PageEnum'
+import {activateAccount} from "../utils/RequestUtils";
 
-export default function Verify({username, setPage}) {
+export default function Verify({username, setPage, initMain}) {
     const [codeField, setCodeField] = useState('')
     const [error, setError] = useState('')
 
     const handleFetch = (response) => {
-        console.log(response)
+        switch (response.status) {
+            case 200:
+                response.json().then(data => initMain(data['token']))
+                break;
+            default:
+                console.log(response)
+        }
     }
 
     const handleSubmit = (e) => {
@@ -21,14 +28,7 @@ export default function Verify({username, setPage}) {
         //     .then(response => response.json())
         //     .then(data => console.log(data))
         e.preventDefault()
-        const formData = new FormData()
-        formData.append("activation_code", codeField)
-        formData.append("username", username);
-        fetch('http://127.0.0.1:8000/api/auth/activate', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => handleFetch(response)).catch((e) => {
+        activateAccount(username, codeField).then(response => handleFetch(response)).catch((e) => {
             console.error(e);
             setPage(Page.login);
         })

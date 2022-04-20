@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import * as Page from '../utils/PageEnum'
+import {signup} from '../utils/RequestUtils'
 
 export default function Signup({setUser, setPage}) {
     const [emailField, setEmailField] = useState('')
@@ -12,34 +13,46 @@ export default function Signup({setUser, setPage}) {
     const handleSubmit = (e) => {
         e.preventDefault()
         if (passwordField !== passwordAgainField) {
-            setErrorMessage("passwords don't match")
+            return setErrorMessage("passwords don't match");
         }
-        const formData = new FormData()
-        formData.append("email", emailField)
-        formData.append("username", usernameField)
-        formData.append("password", passwordField)
-        fetch('http://127.0.0.1:8000/api/auth/register', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => handleFetch(data))
+        signup({
+            'email': emailField,
+            'username': usernameField,
+            'password': passwordField,
+        }).then(response => handleFetch(response))
     }
 
-    const handleFetch = (data) => {
-        if (data.result === 'success') {
-            setUser(data.user)
-            setPage(Page.verify)
-            console.log(data.token)
-        } else {
-            const error = data.details
-            if (error.hasOwnProperty('email')) {
-                setErrorMessage('account with email ' + emailField + ' already exists')
+    const handleFetch = (response) => {
+        // if (data.result === 'success') {
+        //     setUser(data.user)
+        //     setPage(Page.verify)
+        //     console.log(data.token)
+        // } else {
+        //     const error = data.details
+        //     if (error.hasOwnProperty('email')) {
+        //         setErrorMessage('account with email ' + emailField + ' already exists')
+        //     }
+        //     if (error.hasOwnProperty('username')) {
+        //         setErrorMessage('username ' + usernameField + ' is already taken')
+        //     }
+        // }
+
+        response.json().then(
+            data => {
+                switch (response.status) {
+                    case 200:
+                        setPage(Page.verify);
+                        setUser(data['user'])
+                        break;
+                    case 400:
+                        let errMsg = 'Check fields listed below'
+                        Object.keys(data).forEach(key => errMsg += `${key}: ${data[key]}`)
+                        break;
+                    default:
+                        setErrorMessage(`Unknown error (code: ${response.status})`)
+                }
             }
-            if (error.hasOwnProperty('username')) {
-                setErrorMessage('username ' + usernameField + ' is already taken')
-            }
-        }
+        )
     }
 
     return (
