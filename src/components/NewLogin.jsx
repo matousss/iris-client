@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import * as Page from '../utils/PageEnum'
 import {login} from '../utils/RequestUtils'
-import {saveToken} from "../utils/AuthUtils";
 
 export default function NewLogin(props) {
     const [usernameField, setUsernameField] = useState('')
