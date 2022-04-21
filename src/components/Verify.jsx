@@ -11,8 +11,16 @@ export default function Verify({username, setPage, initMain}) {
             case 200:
                 response.json().then(data => initMain(data['token']))
                 break;
+            case 400:
+                response.json().then(data => {
+                    let err = ''
+                    Object.keys(data).forEach(
+                        key => (err+=(data[key] + '\n'))
+                    )
+                });
             default:
-                console.log(response)
+                console.log(response);
+
         }
     }
 

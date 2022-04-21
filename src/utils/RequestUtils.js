@@ -5,9 +5,8 @@ const PROTOCOL = window.location.protocol
 const HOST = 'localhost:8000'
 const BASE_URL = `${PROTOCOL}//${HOST}/api/`
 
-console.log(BASE_URL)
 
-function getFetch(url, method, headers = getAuthHeader(), body = null) {
+function getFetch(url, method, body = null, headers = getAuthHeader()) {
     return fetch(BASE_URL + url,
         {
             method: method,
@@ -41,7 +40,7 @@ function getChannels() {
 }
 
 function login(auth) {
-    return getFetch('auth/login', 'POST',
+    return getFetch('auth/login', 'POST', null,
         new Headers({
             'Authorization': 'Basic ' + auth,
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -49,19 +48,18 @@ function login(auth) {
 }
 
 function logout() {
-    return getFetch('auth/logout', 'POST')
+    return getFetch('auth/logout/', 'POST')
 }
 
 function signup(data = {}) {
-
-    return getFetch('auth/register', 'POST', ...dictToFormData(data))
+    return getFetch('auth/register', 'POST', dictToFormData(data), new Headers())
 }
 
 function activateAccount(username, activationCode) {
-    return getFetch('auth/activate', 'POST', ...dictToFormData({
+    return getFetch('auth/activate', 'POST', dictToFormData({
         'username': username,
         'activation_code': activationCode,
-    }))
+    }), new Headers())
 }
 
 export {getMiniProfile, getFullProfile, getChannels, login, logout, signup, activateAccount}
