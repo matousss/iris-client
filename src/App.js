@@ -65,7 +65,6 @@ function App() {
 
 
     useEffect(() => {
-        console.log('loading from storage')
         // const storedUser = stayLoggedIn ? localStorage.getItem('user') : sessionStorage.getItem('user');
         //
         // if (storedUser !== null) {
@@ -132,10 +131,8 @@ function App() {
         if (sessionStorage.getItem('channels') !== null) {
             setChannels(parseChannels())
         }
-        console.log('ahojda')
         //fetch
         getChannels().then(response => {
-            console.log(response);
             response.json().then(data => {
                 sessionStorage.setItem('channels', JSON.stringify(data));
                 setChannels(data);
