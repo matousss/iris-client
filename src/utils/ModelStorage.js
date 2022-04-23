@@ -65,9 +65,14 @@ class Channel extends Model {
 }
 
 
-class ModelStorage extends Map {
+class ModelStorage extends Map<String, Model> {
     set(value: Model): this {
         return super.set(value.id, value);
+    }
+
+
+    get(key: String): Model | undefined {
+        return super.get(key);
     }
 }
 

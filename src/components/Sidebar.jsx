@@ -73,9 +73,10 @@ export default function Sidebar(props) {
                 })*/}
                 {
                     Array.from(props.storage.channels.values(),
-                        (val, i) =>
-                            <UserButton key={val.id} avatar={val.avatar} username={val.title}
+                        (channel) => {
+                            return <UserButton key={channel.id} avatar={channel.avatar} username={channel.title}
                                         setActiveConversation={props.setActiveConversation} visible={visible}/>
+                        }
                     )
 
                 }
