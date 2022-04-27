@@ -38,16 +38,12 @@ export default function Sidebar(props) {
     //     return elements
     // }
 
-    const getChannelComponent = () => {
-        return <UserButton avatar={this.avatar} username={this.title}
-                           setActiveConversation={props.setActiveConversation}/>
-    }
 
     return (<div className='h-screen w-16 fixed bg-orange-400 shadow-2xl hover:w-96 sidebar'
                  onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
         <div className='list-none flex flex-col items-center h-full w-full sidebar-container'>
             <div className='w-full mb-2'>
-                <UserCard avatar={/*placeholder*/ avatar} username={props.user.username} visible={visible}/>
+                <UserCard avatar={/*placeholder*/ props.user.avatar} username={props.user.username} visible={visible}/>
             </div>
 
             <SearchField visible={visible}/>
@@ -73,10 +69,23 @@ export default function Sidebar(props) {
                 })*/}
                 {
 
-                    Array.from(props.storage.channels.values(),
+                    Array.from(Array.from(props.storage.channels.values()).sort((a, b) => {
+                            if (a.messages === null || b.messages === null || a.messages.length() === 0 || b.messages.length() === 0) return 1;
+                            let aMessage = a.messages[a.messages.length() - 1]
+                            let bMessage = b.messages[b.messages.length() - 1]
+
+                            console.log(a)
+                            if (aMessage.creation < bMessage.creation) {
+                                return -1;
+                            }
+                            if (aMessage.creation > bMessage.creation) {
+                                return 1;
+                            }
+                            return 0;
+                        }),
                         (channel) => {
-                            return <UserButton key={channel.id} avatar={channel.avatar} username={channel.title}
-                                        setActiveConversation={props.setActiveConversation} visible={visible}/>
+                            return <UserButton key={channel.id} avatar={channel.icon} username={channel.title}
+                                               setActiveConversation={props.setActiveConversation} visible={visible}/>
                         }
                     )
 

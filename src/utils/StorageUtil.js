@@ -41,17 +41,21 @@ async function getData(localUserId) {
 
     function processRawChannel(raw) {
         let title;
+        let icon;
         switch (raw.type) {
             case 'directchannel':
-                title = users.get(otherThanMe(...raw.users)).username;
+                let user = users.get(otherThanMe(...raw.users));
+                title = user.username
+                icon = user.avatar
                 break;
             case 'groupchannel':
                 title = raw.name === null ? "NaN" : raw.name;
+                icon = raw.icon
                 break;
             default:
                 title = undefined;
         }
-        return new Channel(raw.id, raw.users, raw.last_message, title);
+        return new Channel(raw.id, raw.users, raw.last_message, title, icon);
     }
 
     await channelsRaw.forEach(channel => channels.set(processRawChannel(channel)));
