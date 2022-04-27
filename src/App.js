@@ -11,13 +11,11 @@ import {loadToken, saveToken} from "./utils/AuthUtils";
 import {getChannels, getFullProfile, getMiniProfile, logout} from './utils/RequestUtils'
 import {func} from "prop-types";
 import Loading from "./components/Loading";
-import {parseChannels} from './utils/StorageUtil';
+import {getData, parseChannels} from './utils/StorageUtil';
 import {Channel, ModelStorage, User} from "./utils/ModelStorage";
 
 const WS_PORT = 8000
 const WS_URL = 'ws://' + window.location.hostname + ':' + WS_PORT + '/ws/messages'
-
-const storage = {users: new ModelStorage(), channels: new ModelStorage(), messages: new ModelStorage()};
 
 
 function App() {
@@ -27,8 +25,11 @@ function App() {
     const [token, setToken] = useState('')
     const [ws, setWebsocket] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [userStorage, setUserStorage] = useState(null)
+    const [channelStorage, setChannelStorage] = useState(null)
+    const [messageStorage, setMessageStorage] = useState(null)
 
-    console.log(storage)
+
     const connect = () => {
         // set loading screen
         let ws = new WebSocket(WS_URL + '?token=' + token)
@@ -43,71 +44,22 @@ function App() {
     }
 
 
-    const otherThanMe = (id1, id2) => id1 === user.id ? id2 : id1;
-
-    async function getUsers(ids: String[]) {
-        let ms = new ModelStorage();
-
-        async function processResponse(response) {
-            if (response.ok) {
-                let raw = await response.json()
-                ms.set(new User(raw.user, raw.username, raw.avatar));
-            }
-        }
-
-        let responses = await Promise.all(ids.map((id) => getMiniProfile(id)));
-        responses.map(reponse => processResponse(reponse))
-        console.log(ms)
-        storage.users = ms;
-    }
-
-    async function getData() {
-        let response = await getChannels();
-        let userSet = new Set();
-        let channels = await response.json();
-
-        for (let i in channels) {
-            let channel = channels[i];
-            for (let j in channel.users) {
-                userSet.add(channel.users[j]);
-            }
-        }
-
-        await getUsers(Array.from(userSet.values()));
-        // storage.users["060dbde0-c444-45a1-ab9d-faf8246395a3"] = "ahoj";
-
-        console.log(storage.users);
-        console.log(storage.users.get("060dbde0-c444-45a1-ab9d-faf8246395a3"));
 
 
-        function processRawChannel(raw) {
-            switch (raw.type) {
-                case 'directchannel':
-                    return new Channel(raw.id, null, raw.last_message, storage.users.get(otherThanMe(raw.users[0], user.id)))
-
-                case 'groupchannel':
-                    return new Channel(raw.id, null, raw.last_message, raw.title === null ? "NaN" : raw.title)
-                default:
-            }
-        }
-
-        await channels.forEach(channel => storage.channels.set(processRawChannel(channel)));
-
-    }
 
     const initMain = _token => {
         if (_token !== null) {
-            console.log(_token)
+            console.log("fokin main")
             saveToken(_token)
             setToken(_token)
             getFullProfile().then(response => {
                 if (response.status === 200) {
                     response.json().then(data => {
                         setUser(data);
-                        getData().then(() => {
+                        getData(data.user).then(data => {
+                            setUserStorage(data.users)
+                            setChannelStorage(data.channels)
                             setLoading(false);
-                            console.log(storage.users);
-                            console.log(storage.users[1])
                             setPage(Page.main)
 
                         });
@@ -185,6 +137,8 @@ function App() {
         setUser(null);
         (stayLoggedIn ? localStorage : sessionStorage).removeItem('user');
         setToken(null)
+        setUserStorage(null)
+        setChannelStorage(null)
 
     }
     //
@@ -210,7 +164,12 @@ function App() {
                                                                                                     clearDesk={clearDesk}
                                                                                                     setPage={setPage}
                                                                                                     stayLoggedIn={stayLoggedIn}
-                                                                                                    storage={storage}/>
+                                                                                                    storage={
+                                                                                                        {
+                                                                                                            users: userStorage,
+                                                                                                            channels: channelStorage
+                                                                                                        }
+                                                                                                    }/>
                 )
             }
 

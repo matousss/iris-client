@@ -72,6 +72,7 @@ export default function Sidebar(props) {
                     });
                 })*/}
                 {
+
                     Array.from(props.storage.channels.values(),
                         (channel) => {
                             return <UserButton key={channel.id} avatar={channel.avatar} username={channel.title}
