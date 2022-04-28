@@ -7,7 +7,7 @@ function SearchField(props) {
                 <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
             </svg>
             <input type='text' placeholder='Search for user or group'
-                   className={(props.visible ? 'block' : 'hidden') + ' text-xl mx-auto h-10 w-64 p-3 rounded-2xl placeholder:italic'}/>
+                   className={(props.visible ? 'block w-10' : 'hidden w-0') + ' text-xl mx-auto h-10 w-64 p-3 rounded-2xl placeholder:italic'}/>
         </div>
     );
 }

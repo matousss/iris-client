@@ -1,18 +1,46 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import UserCard from "./UserCard";
 import SearchField from "./SearchField";
 import UserButton from "./UserButton";
-import Signout from "./Signout";
-import {isMobile} from "react-device-detect";
-import {getMiniProfile} from "../utils/RequestUtils";
-
+import SignOutButton from "./SignOutButton";
 //temp import
 import avatar from '../assets/avatar.svg'
+import ExpandButton from "./ExpandButton";
 
 
 export default function Sidebar(props) {
-    const [visible, setVisible] = useState(false)
+    const [expanded, setExpanded] = useState(false)
 
+
+    const generateButtons = () =>
+        Array.from(Array.from(props.storage.channels.values()).sort((a, b) => {
+                if (a.messages === null || b.messages === null || a.messages.length() === 0 || b.messages.length() === 0) return 1;
+                let aMessage = a.messages[a.messages.length() - 1]
+                let bMessage = b.messages[b.messages.length() - 1]
+
+                console.log(a)
+                if (aMessage.creation < bMessage.creation) {
+                    return -1;
+                }
+                if (aMessage.creation > bMessage.creation) {
+                    return 1;
+                }
+                return 0;
+            }),
+            (channel) => {
+                return (<UserButton key={channel.id} avatar={channel.icon} username={channel.title}
+                                    setActiveConversation={props.setActiveConversation}
+                                    visible={expanded}/>)
+            }
+        )
+
+
+    useEffect(() => {
+        let sbContainer = document.getElementById('sidebar-container');
+        if (expanded) sbContainer.classList.add('sidebar-expanded')
+        else sbContainer.classList.remove('sidebar-expanded');
+
+    }, [expanded])
 
     // const showChannels = () => {
     //     let elements = []
@@ -38,69 +66,32 @@ export default function Sidebar(props) {
     //     return elements
     // }
 
+    const handleDrag = e => {
+        let x = e.touches[0].clientX
+        let startX = e.target.dragStart;
+        let n = x - startX;
+        if (n > 100) setExpanded(true)
+        if (n < -100) setExpanded(false)
+    }
 
-    return (<div className={'h-screen fixed bg-orange-400 shadow-2xl sidebar w-' + (visible ? '96': '16') }
-        // onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}
-    >
-        <div className='list-none flex flex-col items-center h-full w-full sidebar-container'>
-            <button onClick={() => setVisible(!visible)} className={'w-full ' + (visible ? 'text-right pr-10' : '')}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 10 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                          clip-rule="evenodd"/>
-                </svg>
-            </button>
-            <div className='w-full mb-2'>
-                <UserCard avatar={/*placeholder*/ props.user.avatar} username={props.user.username} visible={visible}/>
+    const toggleExpansion = () => {
+        setExpanded(!expanded)
+    };
+
+    return (
+        <div id='sidebar-container'
+             className='sidebar backdrop-blur-sm'
+             onTouchStart={e => e.target.dragStart = e.touches[0].clientX}
+             onTouchMove={e => handleDrag(e)}>
+            <div className={'min-h-[64px] content-center block'}>
+                <ExpandButton onClick={toggleExpansion}/>
             </div>
-
-            <SearchField visible={visible}/>
-
-            <div className='w-full overflow-x-hidden overflow-y-scroll border-y-2 border-gray-700 buttons'>
-                {/*<UserButton avatar={avatar} username='Dane' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                <UserButton avatar={avatar} username='Chci' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                <UserButton avatar={avatar} username='Ti' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                <UserButton avatar={avatar} username='Cucat' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                <UserButton avatar={avatar} username='Ty Tvoje Plesnivý' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                <UserButton avatar={avatar} username='Palce' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                <UserButton avatar={avatar} username='U Nohou' visible={visible} setActiveConversation={props.setActiveConversation}/>
-                <UserButton avatar={avatar} username='Plsky' visible={visible} setActiveConversation={props.setActiveConversation}/>*/}
-                {/*Object.values(props.channels).forEach(element => {
-                    const otherUser = element.users[0] === props.user.id ? element.users[1] : element.users[0];
-                    const miniProfile = getMiniProfile(otherUser);
-                    React.createElement(UserButton, {
-                        avatar: {avatar},
-                        username: miniProfile.username,
-                        visible: {visible},
-                        setActiveConversation: props.setActiveConversation
-                    });
-                })*/}
-                {
-
-                    Array.from(Array.from(props.storage.channels.values()).sort((a, b) => {
-                            if (a.messages === null || b.messages === null || a.messages.length() === 0 || b.messages.length() === 0) return 1;
-                            let aMessage = a.messages[a.messages.length() - 1]
-                            let bMessage = b.messages[b.messages.length() - 1]
-
-                            console.log(a)
-                            if (aMessage.creation < bMessage.creation) {
-                                return -1;
-                            }
-                            if (aMessage.creation > bMessage.creation) {
-                                return 1;
-                            }
-                            return 0;
-                        }),
-                        (channel) => {
-                            return <UserButton key={channel.id} avatar={channel.icon} username={channel.title}
-                                               setActiveConversation={props.setActiveConversation} visible={visible}/>
-                        }
-                    )
-
-                }
+            <div id='sidebar-channels' className={'h-full'}>
+                {generateButtons()}
             </div>
-
-            <Signout visible={visible} setUser={props.setUser} clearDesk={props.clearDesk}/>
+            <div className={''}>
+                <SignOutButton clearDesk={/*props.clearDesk*/ ()=>{}} expanded={expanded}/>
+            </div>
         </div>
-    </div>);
+    );
 }

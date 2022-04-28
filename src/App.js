@@ -44,8 +44,9 @@ function App() {
     }
 
 
-
-
+    const showError = message => {
+        console.error(message)
+    }
 
     const initMain = _token => {
         if (_token !== null) {
@@ -68,10 +69,12 @@ function App() {
 
 
                 } else if (response.status === 401) {
-                    setToken(null)
+                    setToken(null);
+                    setLoading(false);
                 }
             }).catch(e => {
                 console.error(e)
+                showError("Server unreachable")
             })
         }
     }
@@ -159,17 +162,18 @@ function App() {
     return (
         <>
             {loading ? <Loading opacity={.6}/> :
-                (page !== Page.main ? <MenuContainer component={selectComponent(page)}/> : <NewMain user={user}
-                                                                                                    setUser={setUser}
-                                                                                                    clearDesk={clearDesk}
-                                                                                                    setPage={setPage}
-                                                                                                    stayLoggedIn={stayLoggedIn}
-                                                                                                    storage={
-                                                                                                        {
-                                                                                                            users: userStorage,
-                                                                                                            channels: channelStorage
-                                                                                                        }
-                                                                                                    }/>
+                (page !== Page.main ? <MenuContainer component={selectComponent(page)}/> :
+                        <NewMain user={user}
+                                 setUser={setUser}
+                                 clearDesk={clearDesk}
+                                 setPage={setPage}
+                                 stayLoggedIn={stayLoggedIn}
+                                 storage={
+                                     {
+                                         users: userStorage,
+                                         channels: channelStorage
+                                     }
+                                 }/>
                 )
             }
 

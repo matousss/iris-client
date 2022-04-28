@@ -1,20 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    --transition-duration: 300ms;
+    --sidebar-size: 18;
+}
 
 :root {
-  font-size: 16px;
-  font-family: 'Raleway', sans-serif;
-  --transition-duration: 300ms;
+    --sidebar-width: calc(var(--sidebar-size) * 0.25rem);
 }
 
 .body {
-  margin: 0;
+    margin: 0;
 }
 
 .app {
-  height: 100vh;
-  width: 100vw;
+    height: 100vh;
+    width: 100vw;
 }
 
 /*login page
@@ -32,50 +33,86 @@
   background-color: #1520A6;
 } */
 
-.menu-container{
-  background-image: url(./assets/layered-waves-haikei.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
+.menu-container {
+    background-image: url(./assets/layered-waves-haikei.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* sidebar */
-.sidebar{
-  transition: var(--transition-duration);
+
+.w-sidebar {
+    width: var(--sidebar-width);
 }
 
-.buttons{
-  max-height: 70vh;
-  scrollbar-width: none;
+.sidebar {
+    @apply h-screen;
+    @apply fixed;
+    @apply bg-primary;
+    @apply shadow-2xl;
+    @apply divide-y;
+    @apply divide-dotted;
+    @apply divide-secondary;
+    @apply duration-[250ms];
+    @apply w-sidebar;
+    @apply flex;
+    @apply flex-col;
+    @apply items-stretch;
+}
+
+.sidebar-expanded {
+    @apply w-64;
+}
+
+.sidebar-expanded .rotate{
+    transform: rotateZ(-180deg);
+
+}
+.on-expand {
+    @apply hidden;
+    @apply duration-[500ms];
+}
+
+.sidebar-expanded .on-expand {
+    @apply block;
+}
+
+
+
+
+.buttons {
+    max-height: 70vh;
+    scrollbar-width: none;
 }
 
 .buttons::-webkit-scrollbar {
-  width: 0;
+    width: 0;
 }
 
 .buttons:hover::-webkit-scrollbar {
-  width: 7px;
+    width: 7px;
 }
 
 .buttons:hover::-webkit-scrollbar-thumb {
-  background: #4b5563;
-  border-radius: 4px;
+    background: #4b5563;
+    border-radius: 4px;
 }
 
-.signout{
-  transition: none !important;
+.signout {
+    transition: none !important;
 }
 
 /*main page*/
-.messages{
-  scrollbar-width: thin;
+.messages {
+    scrollbar-width: thin;
 }
 
-.message-input{
-  scrollbar-width: none;
+.message-input {
+    scrollbar-width: none;
 }
 
 .message-input::-webkit-scrollbar {
-  width: 0;
+    width: 0;
 }
 
 /*!*main page*!*/
