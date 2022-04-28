@@ -2,7 +2,7 @@
     font-size: 16px;
     font-family: 'Raleway', sans-serif;
     --transition-duration: 300ms;
-    --sidebar-size: 18;
+    --sidebar-size: 19;
 }
 
 :root {
@@ -58,6 +58,7 @@
     @apply flex;
     @apply flex-col;
     @apply items-stretch;
+    scrollbar-width: none;
 }
 
 .sidebar-expanded {
@@ -81,22 +82,22 @@
 
 
 .buttons {
-    max-height: 70vh;
     scrollbar-width: none;
+    overflow-x: hidden;
 }
 
 .buttons::-webkit-scrollbar {
     width: 0;
 }
-
 .buttons:hover::-webkit-scrollbar {
     width: 7px;
 }
 
 .buttons:hover::-webkit-scrollbar-thumb {
     background: #4b5563;
-    border-radius: 4px;
+    border-radius: 10px;
 }
+
 
 .signout {
     transition: none !important;

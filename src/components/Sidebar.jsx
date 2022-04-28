@@ -82,15 +82,25 @@ export default function Sidebar(props) {
         <div id='sidebar-container'
              className='sidebar backdrop-blur-sm'
              onTouchStart={e => e.target.dragStart = e.touches[0].clientX}
-             onTouchMove={e => handleDrag(e)}>
+             onTouchMove={e => handleDrag(e)}
+             onMouseEnter={e => {
+                if (e.ctrlKey) setExpanded(true)
+             }
+             }
+             onMouseLeave={() => setExpanded(false)}
+
+        >
             <div className={'min-h-[64px] content-center block'}>
                 <ExpandButton onClick={toggleExpansion}/>
             </div>
-            <div id='sidebar-channels' className={'h-full'}>
+            <div id='sidebar-channels' className={'max-h-full overflow-y-auto buttons'}>
+                {generateButtons()}
+                {generateButtons()}
                 {generateButtons()}
             </div>
             <div className={''}>
-                <SignOutButton clearDesk={/*props.clearDesk*/ ()=>{}} expanded={expanded}/>
+                <SignOutButton clearDesk={/*props.clearDesk*/ () => {
+                }} expanded={expanded}/>
             </div>
         </div>
     );
