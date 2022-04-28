@@ -39,9 +39,17 @@ export default function Sidebar(props) {
     // }
 
 
-    return (<div className='h-screen w-16 fixed bg-orange-400 shadow-2xl hover:w-96 sidebar'
-                 onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
+    return (<div className={'h-screen fixed bg-orange-400 shadow-2xl sidebar w-' + (visible ? '96': '16') }
+        // onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}
+    >
         <div className='list-none flex flex-col items-center h-full w-full sidebar-container'>
+            <button onClick={() => setVisible(!visible)} className={'w-full ' + (visible ? 'text-right pr-10' : '')}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 10 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                          clip-rule="evenodd"/>
+                </svg>
+            </button>
             <div className='w-full mb-2'>
                 <UserCard avatar={/*placeholder*/ props.user.avatar} username={props.user.username} visible={visible}/>
             </div>
