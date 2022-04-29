@@ -12,11 +12,11 @@ function SignOutButton(props) {
 
     return (
         <SidebarButton onClick={() => signOut()}
-                       className={'max-h-[16rem] leading-[3rem]'}>
+                       className={'max-h-[16rem] justify-self-end'}>
 
             <div className={"h-full w-sidebar float-left"}>
                 <svg xmlns="http://www.w3.org/2000/svg"
-                     className={"h-10 w-full mt-[1rem] y-fixed"}
+                     className={"h-10 w-full mt-[1rem] ml-[.2rem]"}
                      fill="none"
                      viewBox="0 0 24 24"
                      stroke="currentColor" strokeWidth={2}>
@@ -27,7 +27,7 @@ function SignOutButton(props) {
 
             </div>
 
-            <div className={"text-xl p-[1.4rem] text-left h-[64px] fixed left-10 on-expand"}>
+            <div className={"fixed text-xl p-[1.4rem] text-left h-[64px] fixed left-10 on-expand"}>
                 <nobr>
                     Sign Out
                 </nobr>

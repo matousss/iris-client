@@ -58,6 +58,7 @@
     @apply flex;
     @apply flex-col;
     @apply items-stretch;
+    @apply backdrop-blur-sm;
     scrollbar-width: none;
 }
 
@@ -70,12 +71,14 @@
 
 }
 .on-expand {
-    @apply hidden;
-    @apply duration-[500ms];
+    @apply opacity-0;
+    @apply duration-[200ms];
+
 }
 
 .sidebar-expanded .on-expand {
-    @apply block;
+    @apply opacity-100;
+    transform: translateX(1rem);
 }
 
 

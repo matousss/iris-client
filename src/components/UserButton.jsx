@@ -4,7 +4,7 @@ import Avatar from "react-avatar";
 function UserButton(props) {
     let autoAvatar = <Avatar name={props.username} size={'56'} round={true}/>
     return (
-        <button className={'flex items-left row align-left px-2 py-3 hover:bg-rose-500' + (props.visible ? ' w-full' : '')}
+        <button className={'flex items-left row align-left px-2 py-3 hover:bg-rose-500 w-full h-22'}
                 onClick={() => {
                     props.setActiveConversation(props.username)
                 }}>
@@ -15,11 +15,11 @@ function UserButton(props) {
                 autoAvatar :
                 <img src={props.avatar} className={'max-h-14 rounded-[100%] bg-white'} alt={autoAvatar}/>}
 
-            <span
+            <div
                 className={
-                    (props.visible ? 'block' : 'hidden')
-                    + ' text-xl ml-5 overflow-hidden text-ellipsis max-w-[50%]'}>{props.username}
-            </span>
+                    'on-expand text-xl ml-1 m-auto overflow-hidden text-ellipsis align-middle'}>
+                {props.username}
+            </div>
         </button>
     );
 }
