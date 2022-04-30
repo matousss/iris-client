@@ -1,3 +1,11 @@
+function withOpacity(variable) {
+    return ({ opacityValue }) => {
+        console.log({opacityValue})
+        return opacityValue===undefined ? `rgb(var(${variable}))` : `rgba(var(${variable}), ${opacityValue})`;
+    }
+}
+
+
 module.exports = {
     content: [
         "./src/**/*.{js,jsx,ts,tsx}",
@@ -10,10 +18,13 @@ module.exports = {
                 '3/5': '60%',
             },
             colors: {
-                primary: 'rgba(255,114,0,0.81)',
-                secondary: '#7f3300',
+                primary: withOpacity('--color-primary'),
+                secondary: withOpacity('--color-secondary'),
+                'text-1': withOpacity('--color-text-1'),
+
             },
         },
+
     },
     plugins: [],
 }

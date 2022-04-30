@@ -17,7 +17,7 @@ function UserButton(props) {
 
             <div
                 className={
-                    'on-expand text-xl ml-1 m-auto overflow-hidden text-ellipsis align-middle'}>
+                    'on-expand text-xl ml-3 m-auto overflow-hidden text-ellipsis align-middle'}>
                 {props.username}
             </div>
         </button>

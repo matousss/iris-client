@@ -27,7 +27,7 @@ function SignOutButton(props) {
 
             </div>
 
-            <div className={"fixed text-xl p-[1.4rem] text-left h-[64px] fixed left-10 on-expand"}>
+            <div className={"fixed text-xl p-[1.4rem] text-left h-[64px] left-10 on-expand"}>
                 <nobr>
                     Sign Out
                 </nobr>

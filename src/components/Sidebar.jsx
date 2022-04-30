@@ -6,7 +6,7 @@ import SignOutButton from "./SignOutButton";
 //temp import
 import avatar from '../assets/avatar.svg'
 import ExpandButton from "./ExpandButton";
-
+import {isMobile} from "react-device-detect";
 
 export default function Sidebar(props) {
     const [expanded, setExpanded] = useState(false)
@@ -79,30 +79,34 @@ export default function Sidebar(props) {
     };
 
     return (
-        <div id='sidebar-container'
-             className='sidebar'
-             onTouchStart={e => e.target.dragStart = e.touches[0].clientX}
-             onTouchMove={e => handleDrag(e)}
-             onMouseEnter={e => {
-                if (e.ctrlKey) setExpanded(true);
-             }
-             }
-             onMouseLeave={e => {
-                 if (e.ctrlKey) setExpanded(false);
-             }}
+        <ul id='sidebar-container'
+            className={'sidebar'}
+            onTouchStart={e => e.target.dragStart = e.touches[0].clientX}
+            onTouchMove={e => handleDrag(e)}
+            onMouseEnter={e => {
+                if (!isMobile) setExpanded(true)
+            }}
+            onMouseLeave={() => {
+                if (!isMobile) setExpanded(false)
+            }}
 
         >
-            <div className={'min-h-[64px] content-center block'}>
-                <ExpandButton onClick={toggleExpansion}/>
-            </div>
-            <div id='sidebar-channels' className={'h-full overflow-y-auto buttons'}>
+
+            <li className={''}>
+                avatar
+            </li>
+            {isMobile ?
+                <li className={'duration-[250ms]'}>
+                    <ExpandButton onClick={toggleExpansion}/>
+                </li> : ''}
+            <li id='sidebar-channels' className={'h-full overflow-y-auto buttons'}>
                 {generateButtons()}
 
-            </div>
-            <div className={''}>
+            </li>
+            <li>
                 <SignOutButton clearDesk={/*props.clearDesk*/ () => {
                 }} expanded={expanded}/>
-            </div>
-        </div>
+            </li>
+        </ul>
     );
 }

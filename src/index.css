@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        --color-primary: 255, 144, 0;
+        --color-secondary: 255, 255, 255;
+        --color-text-1: 0, 0, 0;
+    }
+
+    [data-theme="dark"] {
+        --color-primary: 28, 28, 38;
+        --color-secondary: 36, 42, 74;
+        --color-text-1: 255, 255, 255;
+
+    }
+    [data-theme="red"] {
+        --color-primary: 20, 61, 42;
+        --color-secondary: 45, 51, 59;
+        --color-text-1: 255, 255, 255;
+    }
+}
