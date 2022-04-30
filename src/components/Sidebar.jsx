@@ -92,8 +92,8 @@ export default function Sidebar(props) {
 
         >
 
-            <li className={''}>
-                avatar
+            <li className={'h-[6rem]'}>
+                <UserCard username={props.user.username} avatar={props.user.avatar}/>
             </li>
             {isMobile ?
                 <li className={'duration-[250ms]'}>

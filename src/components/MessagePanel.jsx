@@ -9,101 +9,16 @@ function MessagePanel(props) {
                 <span className='m-auto py-5 text-4xl'>{props.activeConversation}</span>
             </div>
             <div className='grow flex flex-col-reverse overflow-y-scroll overflow-x-hidden messages'>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={true}/>
-
-                <Message message='OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌 🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌 🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯' from={false}/>
-                <Message message='18 naked cowboys in the showers at Ram Ranch!
-Big, hard, throbbing cocks wanting to be sucked!
-18 naked cowboys wanting to be fucked!
-Cowboys in the showers at Ram Ranch!
-On their knees wanting to suck cowboy cocks!
-Ram Ranch really rocks!
-Hot, hard, buff cowboys, their cocks throbbing hard!
-18 more wild cowboys out in the yard!
-Big, bulging cocks ever so hard!
-Orgy in the showers at Ram Ranch!
-Big, hard, throbbing cocks ramming cowboy butt!
-Like a breed of ram wanting to rut!
-Big, hard, throbbing cocks getting sucked real deep!
-Cowboys even getting fucked in their sleep!
-Ram Ranch ... it ROCKS!
-Cowboys love big hard throbbing cocks!
-18 naked cowboys in the showers at Ram Ranch!
-Big hard throbbing cocks wanting to be sucked!
-18 naked cowboys wanting to be fucked!
-Cowboys in the showers at Ram Ranch!
-On their knees wanting to suck cowboy cocks!
-Ram Ranch really rocks!
-Hot, hard, buff cowboys their cocks throbbing hard!
-18 more wild cowboys out in the yard!
-Big, bulging cocks ever so hard!
-Orgy in the showers at Ram Ranch!
-Big, hard throbbing cocks ramming cowboy butt!
-Like a breed of ram wanting to rut!
-18 naked cowboys in the showers at Ram Ranch!
-Big, hard, throbbing cocks wanting to be sucked!
-18 naked cowboys wanting to be fucked!
-Cowboys in the showers at Ram Ranch!
-On their knees wanting to suck cowboy cocks!
-Ram Ranch really rocks!
-Big, hard, throbbing cocks getting sucked real deep!
-Cowboys even getting fucked in their sleep!
-Ram Ranch ... it ROCKS!
-Cowboys love big hard throbbing cocks!
-18 naked cowboys in the showers at Ram Ranch!
-Big, hard, throbbing cocks wanting to be sucked!
-18 naked cowboys wanting to be fucked!
-Cowboys in the showers at Ram Ranch!
-On their knees wanting to suck cowboy cocks!
-Ram Ranch really rocks!
-Hot, hard, buff cowboys, their cocks throbbing hard!
-18 more wild cowboys out in the yard!
-Big, bulging cocks ever so hard!
-Orgy in the showers at Ram Ranch!
-Big, hard, throbbing cocks ramming cowboy butt!
-Like a breed of ram wanting to rut!
-Big, hard, throbbing cocks getting sucked real deep!
-Cowboys even getting fucked in their sleep!
-Ram Ranch ... it ROCKS!
-Cowboys love big hard throbbing cocks!
-18 naked cowboys in the showers at Ram Ranch!
-Big, hard, throbbing cocks wanting to be sucked!
-18 naked cowboys wanting to be fucked!
-Cowboys in the showers at Ram Ranch!
-On their knees wanting to suck cowboy cocks!
-Ram Ranch really rocks!
-Hot, hard, buff cowboys, their cocks throbbing hard!
-18 more wild cowboys out in the yard!
-Big, bulging cocks ever so hard!
-Orgy in the showers at Ram Ranch!
-Big, hard, throbbing cocks ramming cowboy butt!
-Like a breed of ram wanting to rut!
-18 naked cowboys in the showers at Ram Ranch!
-Big, hard, throbbing cocks wanting to be sucked!
-18 naked cowboys wanting to be fucked!
-Cowboys in the showers at Ram Ranch!
-On their knees wanting to suck cowboy cocks!
-Ram Ranch really rocks!
-Big, hard, throbbing cocks getting sucked real deep!
-Cowboys even getting fucked in their sleep!
-Ram Ranch ... it ROCKS!
-Cowboys love big hard throbbing cocks!' from={true}/>
-                <Message message='dane' from={false}/>
-                <Message message='ahoj' from={false}/>
-                <Message message='ahoj' from={true}/>
+                <Message from={true}>[Company Name] is having a [offer] sale until the end of [month]. Visit [location]
+                    today on [address] for more info and special prices.</Message>
+                <Message from={false}>Receive discounts on [offer]. Text “KEYWORD” to [business number] and get 10%
+                    discount on your next order! [Company Name] Reply UNSUB to unsubscribe.</Message>
+                <Message from={true}>
+                    Receive discounts on [offer]. Text “KEYWORD” to [business number] and get 10% discount on your next order! [Company Name] Reply UNSUB to unsubscribe.
+                </Message>
+                <Message from={false}>
+                    <img src={"https://cdn.pixabay.com/photo/2020/03/23/08/45/cat-4959941_960_720.jpg"} className={"duration-100 h-full rounded-3xl"}/>
+                </Message>
             </div>
             <InputField/>
         </div>
