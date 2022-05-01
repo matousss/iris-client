@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 67.733331 67.733335"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="výkres02.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="0.32026164"
+     inkscape:cx="-298.19369"
+     inkscape:cy="696.30567"
+     inkscape:window-width="1680"
+     inkscape:window-height="987"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <style
+       type="text/css"
+       id="style911">
+   <![CDATA[
+    .fil0 {fill:black}
+   ]]>
+  </style>
+  </defs>
+  <g
+     inkscape:label="Vrstva 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       class="fil0"
+       d="M 32.747337,0 C 24.292233,0.27759563 16.632687,3.6457559 10.841774,8.9940983 L 42.257015,21.967067 Z M 9.361668,10.474608 C 3.8667759,16.230091 0.3700264,23.928743 0.01850132,32.423169 L 31.285732,19.524226 Z M 0,34.51439 c 0.14801056,8.438907 3.4042429,16.119052 8.6401165,21.967067 L 21.646545,25.594317 Z m 10.101721,23.48459 c 5.88342,5.811001 13.894491,9.475264 22.738122,9.734353 L 19.222872,36.309508 Z m 24.847273,9.734353 c 8.4181,-0.259089 16.077647,-3.608743 21.850059,-8.938579 L 25.476318,45.877304 Z M 58.29766,57.33275 c 5.550396,-5.773989 9.065647,-13.509654 9.417172,-22.041093 L 36.281089,48.24612 Z M 67.733333,33.181931 C 67.566821,24.724517 64.292087,17.007359 59.00071,11.159344 L 45.957279,42.176029 Z M 57.557607,9.6418214 C 51.655686,3.8863388 43.681617,0.24058288 34.837986,0 l 13.579969,31.331293 z"
+       id="path938"
+       style="clip-rule:evenodd;fill:#000000;fill-rule:evenodd;stroke-width:0.0185039;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision" />
+  </g>
+</svg>
