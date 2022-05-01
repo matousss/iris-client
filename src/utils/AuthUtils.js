@@ -1,9 +1,9 @@
 function getAuthHeader() {
     if (loadToken() !== null) {
         return new Headers({
-        'Authorization': 'Token ' + loadToken(),
-        'Content-Type': 'application/x-www-form-urlencoded'
-    })
+            'Authorization': 'Token ' + loadToken(),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        })
 
     } else return null;
 }

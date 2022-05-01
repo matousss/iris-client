@@ -1,4 +1,4 @@
-import {getAuthHeader} from "./AuthUtils";
+import {getAuthHeader, loadToken} from "./AuthUtils";
 import {func} from "prop-types";
 
 const PROTOCOL = window.location.protocol
@@ -9,8 +9,8 @@ function getFetch(url, method, body = null, headers = getAuthHeader()) {
     return fetch(BASE_URL + url,
         {
             method: method,
-            headers: headers,
             body: body,
+            headers: headers,
         }
     )
 }
@@ -65,4 +65,17 @@ function activateAccount(username, activationCode) {
     }), new Headers())
 }
 
-export {getMiniProfile, getFullProfile, getChannels, login, logout, signup, activateAccount}
+
+function sendMessageOG(channel, text) {
+    let headers = new Headers()
+    headers.append('Authorization', 'Token ' + loadToken())
+    console.log({channel, text})
+    return getFetch('message/', 'POST', dictToFormData({
+        'channel': channel,
+        'text': text,
+    }), headers)
+
+
+}
+
+export {getMiniProfile, getFullProfile, getChannels, getMessages, login, logout, signup, activateAccount, sendMessageOG}

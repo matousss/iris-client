@@ -19,7 +19,7 @@ function MessagePanel(props) {
                     activeChannel ? generateMessages() : 'todo intro screen'
                 }
             </div>
-            <InputField/>
+            <InputField channel={props.activeConversation}/>
         </div>
     );
 }
