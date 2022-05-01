@@ -4,7 +4,7 @@ import InputField from "./InputField";
 
 function MessagePanel(props) {
     return (
-        <div className='h-screen ml-16 flex flex-col'>
+        <div className='h-screen ml-16 flex flex-col pl-3'>
             <div className='flex w-full mx-auto shadow-lg h-[80px]'>
                 <span className='m-auto py-5 text-4xl'>{props.activeConversation}</span>
             </div>

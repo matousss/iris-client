@@ -7,17 +7,20 @@
         --color-primary: 255, 144, 0;
         --color-secondary: 255, 255, 255;
         --color-text-1: 0, 0, 0;
+        --color-shadow: 0, 0, 0;
     }
 
     [data-theme="dark"] {
         --color-primary: 28, 28, 38;
-        --color-secondary: 36, 42, 74;
+        --color-secondary: 26, 32, 64;
         --color-text-1: 255, 255, 255;
+        --color-shadow: 0, 0, 0;
 
     }
     [data-theme="red"] {
         --color-primary: 68, 0, 1;
         --color-secondary: 16, 12, 18;
         --color-text-1: 255, 255, 255;
+        --color-shadow: 0, 0, 0;
     }
 }

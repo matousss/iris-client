@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Message(props) {
-    const messageFrom = 'mr-auto border border-primary/30 bg-primary/10';
+    const messageFrom = 'mr-auto border border-primary/30  bg-white/10';
     const messageTo = 'ml-auto bg-primary/40';
 
     return (
