@@ -6,7 +6,7 @@ export default function UserCard(props) {
 
     return (
         <div className={'flex items-left row align-left px-2 w-full h-full py-3'}>
-            {props.avatar === null || true ?
+            {props.avatar === null ?
                 autoAvatar :
                 <img src={props.avatar} className={'max-h-14 rounded-[100%] bg-white'} alt={autoAvatar}/>}
 
