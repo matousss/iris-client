@@ -1,18 +1,16 @@
-import {isMobile} from "react-device-detect";
-import ExpandButton from "./ExpandButton";
-import SettingsButton from "./Buttons/SettingsButton";
-import ThemeButton from "./Buttons/ThemeButton";
 import React from "react";
-import DummyButton from "./Buttons/DummyButton";
+import {BrowserView, MobileView} from "react-device-detect";
+import {DummyButton, SettingsButton, ThemeButton, ExpandButton} from "./Buttons";
 
 export default function (props) {
     return (
         <li className={'duration-[250ms] flex overflow-hidden'}>
-            {isMobile ?
 
-                <div><ExpandButton onClick={props.toggleExpansion}/></div>
+            <div>
+                <BrowserView><DummyButton/></BrowserView>
 
-                : <div><DummyButton/></div>}
+                <MobileView><ExpandButton onClick={props.toggleExpansion}/></MobileView>
+            </div>
 
 
             <div className={"w-full top-btn"}>

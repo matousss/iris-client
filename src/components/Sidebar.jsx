@@ -1,16 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import UserCard from "./UserCard";
-import SearchField from "./SearchField";
-import UserButton from "./Buttons/UserButton";
-import SignOutButton from "./Buttons/SignOutButton";
+import UserButton from "./UserButton";
 //temp import
 import avatar from '../assets/avatar.svg'
-import ExpandButton from "./ExpandButton";
 import {isMobile} from "react-device-detect";
-import SidebarButton from "./Buttons/SidebarButton";
-import SettingsButton from "./Buttons/SettingsButton";
-import ThemeButton from "./Buttons/ThemeButton";
 import SidebarTop from "./SidebarTop";
+import {SignOutButton} from "./Buttons";
 
 export default function Sidebar(props) {
     const [expanded, setExpanded] = useState(false)
