@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import * as Page from '../utils/PageEnum'
+import {login} from "../utils/PageEnum";
 
 export default function NewLogin(props) {
     const [usernameField, setUsernameField] = useState('')
