@@ -75,7 +75,8 @@ body * {
 }
 
 .sidebar-expanded {
-    @apply w-64;
+    /*@apply w-64;*/
+    @apply w-[222px]
 }
 
 .sidebar-expanded .rotate {

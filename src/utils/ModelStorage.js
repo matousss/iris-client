@@ -1,4 +1,4 @@
-import UserButton from "../components/UserButton";
+import UserButton from "../components/Buttons/UserButton";
 
 function modelFromJSON(json, model: Class) {
     let obj = JSON.parse(json);

@@ -1,7 +1,7 @@
 function withOpacity(variable) {
-    return ({ opacityValue }) => {
+    return ({opacityValue}) => {
         console.log({opacityValue})
-        return opacityValue===undefined ? `rgb(var(${variable}))` : `rgba(var(${variable}), ${opacityValue})`;
+        return opacityValue === undefined ? `rgb(var(${variable}))` : `rgba(var(${variable}), ${opacityValue})`;
     }
 }
 
@@ -23,6 +23,28 @@ module.exports = {
                 'text-1': withOpacity('--color-text-1'),
 
             },
+            animation: {
+                'spin-slow': 'spin 4s linear infinite',
+                'pulse-fast': 'pulse 1500ms linear infinite',
+                'flip': 'flip 300ms linear 1',
+                'shake': 'shake 300ms linear 1',
+            },
+            keyframes: {
+                flip: {
+                    '0%': {transform: 'rotateY(180deg)'},
+                    '100%': {transform: 'rotateY(360deg)'},
+                },
+                shake: {
+                    '0%': {
+                        transform: 'translateX(-5%)',
+
+                    },
+
+                    '50%': {
+                        transform: 'translateX(5%)',
+                    }
+                }
+            }
         },
 
     },

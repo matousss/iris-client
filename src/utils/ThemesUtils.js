@@ -11,14 +11,14 @@ const cycleTheme = direction => {
 
     const b = document.getElementsByTagName("body")[0];
 
-    let newIndex = (b.dataset.theme === undefined) ?
-        1: (themes.indexOf(b.dataset.theme) + (direction ? 1 : -1))
+    let newIndex = ((b.dataset.theme === undefined) ?
+        0: (themes.indexOf(b.dataset.theme)) + (direction ? 1 : -1))
 
 
     if (newIndex === themes.length) newIndex = 0;
+    if (newIndex === -1) newIndex = themes.length - 1;
 
     b.dataset.theme = themes[newIndex]
-    console.log(themes.indexOf(b.dataset.theme))
 }
 
 export {cycleTheme, changeTheme}

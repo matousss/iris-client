@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import UserCard from "./UserCard";
 import SearchField from "./SearchField";
-import UserButton from "./UserButton";
-import SignOutButton from "./SignOutButton";
+import UserButton from "./Buttons/UserButton";
+import SignOutButton from "./Buttons/SignOutButton";
 //temp import
 import avatar from '../assets/avatar.svg'
 import ExpandButton from "./ExpandButton";
 import {isMobile} from "react-device-detect";
-import SidebarButton from "./SidebarButton";
-import SettingsButton from "./SettingsButton";
-import ThemeButton from "./ThemeButton";
+import SidebarButton from "./Buttons/SidebarButton";
+import SettingsButton from "./Buttons/SettingsButton";
+import ThemeButton from "./Buttons/ThemeButton";
 import SidebarTop from "./SidebarTop";
 
 export default function Sidebar(props) {
@@ -105,8 +105,7 @@ export default function Sidebar(props) {
 
             </li>
             <li>
-                <SignOutButton clearDesk={/*props.clearDesk*/ () => {
-                }} expanded={expanded}/>
+                <SignOutButton clearDesk={props.clearDesk} expanded={expanded}/>
             </li>
         </ul>
     );

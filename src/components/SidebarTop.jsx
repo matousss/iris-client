@@ -1,9 +1,9 @@
 import {isMobile} from "react-device-detect";
 import ExpandButton from "./ExpandButton";
-import SettingsButton from "./SettingsButton";
-import ThemeButton from "./ThemeButton";
+import SettingsButton from "./Buttons/SettingsButton";
+import ThemeButton from "./Buttons/ThemeButton";
 import React from "react";
-import DummyButton from "./DummyButton";
+import DummyButton from "./Buttons/DummyButton";
 
 export default function (props) {
     return (
@@ -15,7 +15,7 @@ export default function (props) {
                 : <div><DummyButton/></div>}
 
 
-            <div className={"mx-auto top-btn"}>
+            <div className={"w-full top-btn"}>
                 <SettingsButton/>
             </div>
             <div className={"top-btn"}>

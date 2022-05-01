@@ -1,6 +1,6 @@
 import React from 'react';
 import Avatar from "react-avatar";
-import UserCard from "./UserCard";
+import UserCard from "../UserCard";
 
 function UserButton(props) {
     let autoAvatar = <Avatar name={props.username} size={'56'} round={true}/>

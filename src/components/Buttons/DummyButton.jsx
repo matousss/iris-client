@@ -4,9 +4,9 @@ import SidebarButton from "./SidebarButton";
 export default function () {
 
     return (
-        <SidebarButton
-                       className={'w-sidebar inline hover:bg-white/0 cursor-not-allowed group'}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-sidebar" fill="none" viewBox="0 0 24 24"
+        <SidebarButton onClick={() => {}}
+                       className={'w-sidebar inline hover:bg-white/0 cursor-not-allowed'}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-sidebar group-hover:animate-flip" fill="none" viewBox="0 0 24 24"
                  stroke="currentColor" strokeWidth={2}>
                 <path className={"opacity-100 group-hover:opacity-0 duration-[250ms]"}
                       strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/>

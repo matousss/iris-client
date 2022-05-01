@@ -14,9 +14,9 @@ function SignOutButton(props) {
     return (
         <SidebarButton onClick={() => signOut()}
              className={'justify-self-end flex items-left row align-left w-full'}>
-            <div className={"w-sidebar my-auto"}>
+            <div className={"w-sidebar my-auto group-hover:animate-shake"}>
                 <svg xmlns="http://www.w3.org/2000/svg"
-                     className={"h-10 mx-auto ml-[1.1rem]"}
+                     className={"h-10 mx-auto ml-[1.1rem] "}
                      fill="none"
                      viewBox="0 0 24 24"
                      stroke="currentColor" strokeWidth={2}>

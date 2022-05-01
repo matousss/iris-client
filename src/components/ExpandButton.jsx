@@ -1,5 +1,5 @@
 import React from "react";
-import SidebarButton from "./SidebarButton";
+import SidebarButton from "./Buttons/SidebarButton";
 
 export default function ({onClick}) {
 
