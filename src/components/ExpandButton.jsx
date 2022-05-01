@@ -5,7 +5,7 @@ export default function ({onClick}) {
 
     return (
         <SidebarButton onClick={() => onClick()}
-                className={'w-sidebar'}>
+                className={'w-sidebar inline'}>
             <svg xmlns="http://www.w3.org/2000/svg"
                  className={"h-8 w-full rotate duration-[250ms]"}
                  fill="none"

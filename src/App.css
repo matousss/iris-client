@@ -5,6 +5,9 @@
 
 }
 
+body * {
+    @apply duration-75;
+}
 
 
 .body {
@@ -59,10 +62,9 @@
 
     @apply divide-y;
     @apply divide-dotted;
-    @apply divide-secondary;
+    @apply divide-white;
 
     @apply duration-[250ms];
-
 
 
     scrollbar-width: none;
@@ -76,10 +78,11 @@
     @apply w-64;
 }
 
-.sidebar-expanded .rotate{
+.sidebar-expanded .rotate {
     transform: rotateZ(-180deg);
 
 }
+
 .on-expand {
     @apply invisible;
     @apply opacity-0;
@@ -92,11 +95,20 @@
     @apply opacity-100;
     transform: translateX(1rem);
 }
+.top-btn {
+    @apply invisible;
+    @apply opacity-0;
+    @apply duration-[350ms];
+}
 
-
-
+.sidebar-expanded .top-btn {
+    @apply visible;
+    @apply opacity-100;
+}
 
 .buttons {
+    @apply h-full;
+    @apply overflow-y-auto;
     scrollbar-width: none;
     overflow-x: hidden;
 }
@@ -104,6 +116,7 @@
 .buttons::-webkit-scrollbar {
     width: 0;
 }
+
 .buttons:hover::-webkit-scrollbar {
     width: 7px;
 }

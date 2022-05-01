@@ -7,6 +7,10 @@ import SignOutButton from "./SignOutButton";
 import avatar from '../assets/avatar.svg'
 import ExpandButton from "./ExpandButton";
 import {isMobile} from "react-device-detect";
+import SidebarButton from "./SidebarButton";
+import SettingsButton from "./SettingsButton";
+import ThemeButton from "./ThemeButton";
+import SidebarTop from "./SidebarTop";
 
 export default function Sidebar(props) {
     const [expanded, setExpanded] = useState(false)
@@ -91,15 +95,12 @@ export default function Sidebar(props) {
             }}
 
         >
-
-            <li className={'h-[6rem]'}>
-                <UserCard username={props.user.username} avatar={props.user.avatar}/>
-            </li>
-            {isMobile ?
-                <li className={'duration-[250ms]'}>
-                    <ExpandButton onClick={toggleExpansion}/>
-                </li> : ''}
-            <li id='sidebar-channels' className={'h-full overflow-y-auto buttons'}>
+            {/*idk why, but only way to fix height*/}
+            {/*<li className={"pb-[80px]"} style={{height: "80px"}}>
+                <UserCard/>
+            </li>*/}
+            <SidebarTop toggleExpansion={toggleExpansion}/>
+            <li id='sidebar-channels' className={'buttons'}>
                 {generateButtons()}
 
             </li>

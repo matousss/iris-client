@@ -27,7 +27,9 @@ function SignOutButton(props) {
             <div
                 className={
                     'on-expand text-xl my-auto 0 inline'}>
-                Sign Out
+                <nobr>
+                    Sign Out
+                </nobr>
             </div>
 
         </SidebarButton>

@@ -16,8 +16,8 @@
 
     }
     [data-theme="red"] {
-        --color-primary: 20, 61, 42;
-        --color-secondary: 45, 51, 59;
+        --color-primary: 68, 0, 1;
+        --color-secondary: 16, 12, 18;
         --color-text-1: 255, 255, 255;
     }
 }
