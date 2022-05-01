@@ -6,16 +6,15 @@ import {Channel, User} from "../utils/ModelStorage";
 
 
 export default function NewMain(props) {
-    const [activeConversation, setActiveConversation] = useState('');
-
+    const [activeConversation, setActiveConversation] = useState(null);
     return (
 
 
         <div className='h-screen bg-secondary/90 text-text-1'>
             <Sidebar user={props.user} setUser={props.setUser} clearDesk={props.clearDesk}
-                     setActiveConversation={setActiveConversation} channels={props.channels} storage={props.storage}/>
+                     setActiveConversation={setActiveConversation} storage={props.storage}/>
             <MessagePanel user={props.user} activeConversation={activeConversation}
-                          setActiveConversation={setActiveConversation}/>
+                          setActiveConversation={setActiveConversation} channels={props.storage.channels}/>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import UserButton from "../components/UserButton";
+import ChannelButton from "../components/ChannelButton";
 
 function modelFromJSON(json, model: Class) {
     let obj = JSON.parse(json);
@@ -52,7 +52,7 @@ class Channel extends Model {
     title: String;
     icon;
 
-    constructor(id, users: Array<User>, messages = {String: Message}, title = 'Unknown channel', icon = null) {
+    constructor(id, users: Array<User>, messages: Array<Message> = [], title = 'Unknown channel', icon = null) {
         super();
         this.id = id;
         this.users = users;

@@ -11,7 +11,7 @@ import {loadToken, saveToken} from "./utils/AuthUtils";
 import {getChannels, getFullProfile, getMiniProfile, logout} from './utils/RequestUtils'
 import {func} from "prop-types";
 import Loading from "./components/Loading";
-import {getData, parseChannels} from './utils/StorageUtil';
+import {getData} from './utils/StorageUtil';
 import {Channel, ModelStorage, User} from "./utils/ModelStorage";
 
 const WS_PORT = 8000
@@ -27,8 +27,6 @@ function App() {
     const [loading, setLoading] = useState(true)
     const [userStorage, setUserStorage] = useState(null)
     const [channelStorage, setChannelStorage] = useState(null)
-    const [messageStorage, setMessageStorage] = useState(null)
-
 
     const connect = () => {
         // set loading screen
@@ -58,10 +56,10 @@ function App() {
                     response.json().then(data => {
                         setUser(data);
                         getData(data.user).then(data => {
-                            setUserStorage(data.users)
-                            setChannelStorage(data.channels)
+                            setUserStorage(data.users);
+                            setChannelStorage(data.channels);
                             setLoading(false);
-                            setPage(Page.main)
+                            setPage(Page.main);
 
                         });
 
@@ -171,7 +169,7 @@ function App() {
                                  storage={
                                      {
                                          users: userStorage,
-                                         channels: channelStorage
+                                         channels: channelStorage,
                                      }
                                  }/>
                 )

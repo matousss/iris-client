@@ -1,5 +1,5 @@
-import {Channel, ModelStorage, User} from "./ModelStorage";
-import {getChannels, getMiniProfile} from "./RequestUtils";
+import {Channel, Message, ModelStorage, User} from "./ModelStorage";
+import {getChannels, getMessages as fetchMessages, getMiniProfile} from "./RequestUtils";
 
 async function getUsers(ids: String[]) {
     let ms = new ModelStorage();
@@ -20,6 +20,22 @@ async function getUsers(ids: String[]) {
     return ms;
 }
 
+async function getMessages(users) {
+    const response = await fetchMessages();
+    let rawMessages = await response.json();
+    let map = new Map();
+
+
+    const processRaw = raw => {
+        if (map.get(raw.channel) === undefined) map.set(raw.channel, [])
+        map.get(raw.channel).push(new Message(raw.id, raw.text, users.get(raw.author), raw.media))
+    }
+
+    await rawMessages.forEach(val => processRaw(val))
+
+    return map;
+}
+
 
 async function getData(localUserId) {
     let response = await getChannels();
@@ -34,12 +50,14 @@ async function getData(localUserId) {
     }
 
     let users = await getUsers(Array.from(userSet.values()));
+    let messages = await getMessages(users);
     let channels = new ModelStorage();
+
 
     const otherThanMe = (id1, id2) => id1 === localUserId ? id2 : id1;
 
 
-    function processRawChannel(raw) {
+    async function processRawChannel(raw) {
         let title;
         let icon;
         switch (raw.type) {
@@ -55,10 +73,16 @@ async function getData(localUserId) {
             default:
                 title = undefined;
         }
-        return new Channel(raw.id, raw.users, raw.last_message, title, icon);
+
+
+        return new Channel(raw.id, raw.users, messages.get(raw.id), title, icon);
     }
 
-    await channelsRaw.forEach(channel => channels.set(processRawChannel(channel)));
+    for(let i in channelsRaw) {
+        let c = await processRawChannel(channelsRaw[i]);
+        await channels.set(c);
+    }
+
     return {users, channels}
 }
 

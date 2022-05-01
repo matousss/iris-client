@@ -38,6 +38,10 @@ function getChannels() {
     return getFetch('channel', 'GET')
 }
 
+function getMessages() {
+    return getFetch('message', 'GET')
+}
+
 function login(auth) {
     return getFetch('auth/login', 'POST', null,
         new Headers({
