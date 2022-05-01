@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import * as Page from '../utils/PageEnum'
-import {login} from '../utils/RequestUtils'
 
 export default function NewLogin(props) {
     const [usernameField, setUsernameField] = useState('')
@@ -9,10 +8,10 @@ export default function NewLogin(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        login(btoa(usernameField.toString() + ':' + passwordField.toString()))
+        login(window.btoa(usernameField.toString() + ':' + passwordField.toString()))
             .then(response => handleFetch(response)).catch(e => {
-                console.error(e)
-                setError('Unexpected error')
+                console.error(e);
+                setError('Unexpected error');
             });
 
 
@@ -50,7 +49,7 @@ export default function NewLogin(props) {
                 props.setPage(Page.verify)
                 break;
             default:
-                setError('Unexpected error')
+                setError('Unexpected error ' + response.status)
         }
 
     }

@@ -50,7 +50,7 @@ function App() {
 
     const initMain = _token => {
         if (_token !== null) {
-            console.log("fokin main")
+            setLoading(true)
             saveToken(_token)
             setToken(_token)
             getFullProfile().then(response => {

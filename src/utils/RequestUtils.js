@@ -2,9 +2,8 @@ import {getAuthHeader} from "./AuthUtils";
 import {func} from "prop-types";
 
 const PROTOCOL = window.location.protocol
-const HOST = 'localhost:8000'
+const HOST = window.location.hostname + ':8000'
 const BASE_URL = `${PROTOCOL}//${HOST}/api/`
-
 
 function getFetch(url, method, body = null, headers = getAuthHeader()) {
     return fetch(BASE_URL + url,
