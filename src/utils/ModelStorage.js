@@ -32,14 +32,16 @@ class Message extends Model {
     text: ?String;
     author: User;
     media: boolean;
+    creation: Date;
 
-    constructor(id, text = null, author: User, media = false) {
+    constructor(id, text = null, author: User, media = false, creation) {
         super();
         this.id = id;
         if (text === null && !media) throw new Error('Invalid state');
         this.text = text;
         this.author = author;
         this.media = media;
+        this.creation = creation;
     }
 
 

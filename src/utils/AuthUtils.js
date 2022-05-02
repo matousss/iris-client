@@ -1,10 +1,13 @@
 function getAuthHeader() {
+    return {'Authorization': 'Token ' + loadToken(),}
+}
+
+function getHeadersWithAuth(additional = {}) {
     if (loadToken() !== null) {
         return new Headers({
-            'Authorization': 'Token ' + loadToken(),
-            'Content-Type': 'application/x-www-form-urlencoded'
+            ...getAuthHeader(),
+            ...additional,
         })
-
     } else return null;
 }
 
@@ -27,4 +30,4 @@ function stayLogged() {
     return localStorage.getItem('stayLogged') === 'true'
 }
 
-export {getAuthHeader, saveToken, loadToken, clearToken}
+export {getHeadersWithAuth, saveToken, loadToken, clearToken}

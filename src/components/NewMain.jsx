@@ -4,9 +4,15 @@ import MessagePanel from "./MessagePanel";
 import {Channel, User} from "../utils/ModelStorage";
 
 
-
 export default function NewMain(props) {
-    const [activeConversation, setActiveConversation] = useState(null);
+    const [activeConversation, setActiveConversation] = useState(() => {
+        let lastActive= localStorage.getItem('lastActiveChannel');
+        return props.storage.channels.get(lastActive) === undefined ? null : lastActive;
+    });
+    useEffect(() => {
+        localStorage.setItem('lastActiveChannel', activeConversation)
+    }, [activeConversation])
+
     return (
 
 

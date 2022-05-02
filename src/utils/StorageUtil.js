@@ -28,7 +28,7 @@ async function getMessages(users) {
 
     const processRaw = raw => {
         if (map.get(raw.channel) === undefined) map.set(raw.channel, [])
-        map.get(raw.channel).push(new Message(raw.id, raw.text, users.get(raw.author), raw.media))
+        map.get(raw.channel).push(new Message(raw.id, raw.text, users.get(raw.author), raw.media, new Date(raw.creation)))
     }
 
     await rawMessages.forEach(val => processRaw(val))

@@ -10,18 +10,12 @@ export default function Sidebar(props) {
     const [expanded, setExpanded] = useState(false)
 
     const sort = (a, b) => {
-        if (a.messages === null || b.messages === null || a.messages.length === 0 || b.messages.length === 0) return 1;
-        let aMessage = a.messages[a.messages.length - 1]
-        let bMessage = b.messages[b.messages.length - 1]
+        if (a.messages === null || b.messages === null || a.messages.length === 0 || b.messages.length === 0) return -1;
+        let aMessage = a.messages[0]
+        let bMessage = b.messages[0]
 
+        return (bMessage.creation.getTime() - aMessage.creation.getTime())
 
-        if (aMessage.creation < bMessage.creation) {
-            return -1;
-        }
-        if (aMessage.creation > bMessage.creation) {
-            return 1;
-        }
-        return 0;
     }
 
     const sortedChannels = Array.from(props.storage.channels.values()).sort((a, b) => sort(a, b))
