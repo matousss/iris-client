@@ -1,12 +1,21 @@
 const themes = ['default', 'dark']
 
+const STORAGE_KEY = 'theme';
 
-const changeTheme = theme => {
+
+export const changeTheme = theme => {
     const b = document.getElementsByTagName("body")[0];
     b.dataset.theme = theme;
+    localStorage.setItem(STORAGE_KEY, theme)
 }
 
-const cycleTheme = direction => {
+export const loadTheme = () => {
+    let loaded = localStorage.getItem(STORAGE_KEY);
+    if (loaded) changeTheme(loaded);
+}
+
+
+export const cycleTheme = direction => {
     if (direction === undefined) direction = true;
 
     const b = document.getElementsByTagName("body")[0];
@@ -25,5 +34,3 @@ const cycleTheme = direction => {
 
     changeTheme(themes[newIndex]);
 }
-
-export {cycleTheme, changeTheme}

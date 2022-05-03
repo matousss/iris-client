@@ -11,6 +11,8 @@ import {loadToken, saveToken} from "./utils/AuthUtils";
 import {getFullProfile, logout} from './utils/RequestUtils'
 import Loading from "./components/Loading";
 import {getData} from './utils/StorageUtil';
+import {Channel, ModelStorage, User} from "./utils/ModelStorage";
+import {loadTheme} from "./utils/ThemesUtils";
 
 
 
@@ -69,6 +71,7 @@ function App() {
         //     setUser(JSON.parse(storedUser));
         //     //setPage(Page.main);
         // }
+        loadTheme()
 
         const storedToken = loadToken();
         if (storedToken !== null) {
