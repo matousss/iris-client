@@ -13,6 +13,7 @@ import {func} from "prop-types";
 import Loading from "./components/Loading";
 import {getData} from './utils/StorageUtil';
 import {Channel, ModelStorage, User} from "./utils/ModelStorage";
+import {loadTheme} from "./utils/ThemesUtils";
 
 const WS_PORT = 8000
 const WS_URL = 'ws://' + window.location.hostname + ':' + WS_PORT + '/ws/messages'
@@ -85,6 +86,7 @@ function App() {
         //     setUser(JSON.parse(storedUser));
         //     //setPage(Page.main);
         // }
+        loadTheme()
 
         const storedToken = loadToken();
         if (storedToken !== null) {
