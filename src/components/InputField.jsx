@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import {sendMessageOG} from "../utils/RequestUtils";
+import {Message} from "../utils/ModelStorage";
+// import EmojiPicker from "emoji-picker-react";
 
 function InputField(props) {
     const [input, setInput] = useState('');
@@ -16,9 +18,23 @@ function InputField(props) {
     return (
         <div className='w-full h-auto p-5 mx-auto bg-text-1/5 shadow-[0_-5px_52px_-30px]'>
             <form className='flex justify-center item w-full' onSubmit={handleSubmit}>
-                <TextareaAutosize maxRows={4} onChange={e => setInput(e.target.value)}
+                <TextareaAutosize id={'input'} maxRows={4} onChange={e => setInput(e.target.value)}
                                   className='w-2/3 resize-none p-2 border-2 border-text-1/40 rounded-3xl message-input bg-text-1/10'/>
-                {/*<Picker onEmojiClick={(e, emoji) => setInput(input + emoji)} />*/}
+                {/*<BrowserView>
+                    <button onClick={() => {
+                        let picker = document.getElementById('picker');
+                        picker.classList.remove('hidden')
+                        picker.classList.remove('opacity-0')
+
+                    }}>a
+                    </button>
+                    <div id={'picker'} className={'opacity-0 duration-[250ms] fixed bottom-[5rem] right-[6rem]'}>
+                        <EmojiPicker onEmojiClick={(e, emoji) => {
+                            let inputField = document.getElementById('input');
+                            inputField.value = inputField.value + emoji.emoji
+                        }}/>
+                    </div>
+                </BrowserView>*/}
                 <button onClick={() => handleSend()}>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          className="h-8 w-8 justify-self-end ml-5 hover:text-orange-500" viewBox="0 0 20 20"
