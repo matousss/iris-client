@@ -8,12 +8,9 @@ import NewMain from "./components/NewMain";
 
 import React, {useEffect, useState} from 'react'
 import {loadToken, saveToken} from "./utils/AuthUtils";
-import {getChannels, getFullProfile, getMiniProfile, logout} from './utils/RequestUtils'
-import {func} from "prop-types";
+import {getFullProfile, logout} from './utils/RequestUtils'
 import Loading from "./components/Loading";
 import {getData} from './utils/StorageUtil';
-import {Channel, ModelStorage, User} from "./utils/ModelStorage";
-import WebsocketHandler from "./utils/WebsocketHandler";
 
 
 
@@ -64,18 +61,6 @@ function App() {
             })
         }
     }
-
-    useEffect(() => {
-        if (userStorage === null || channelStorage === null) return;
-        let wsh = new WebsocketHandler(userStorage, channelStorage);
-        setWebsocket(wsh)
-        wsh.connect();
-
-    }, [userStorage, channelStorage])
-
-    useEffect(() => console.log("diasnj"),
-        [channelStorage])
-
 
     useEffect(() => {
         // const storedUser = stayLoggedIn ? localStorage.getItem('user') : sessionStorage.getItem('user');
