@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import ChannelButton from "./ChannelButton";
-//temp import
-import avatar from '../assets/avatar.svg'
 import {isMobile} from "react-device-detect";
 import SidebarTop from "./SidebarTop";
 import {SignOutButton} from "./Buttons";
@@ -20,8 +18,8 @@ export default function Sidebar(props) {
 
     const sortedChannels = Array.from(props.storage.channels.values()).sort((a, b) => sort(a, b))
 
-    const generateButtons = () => Array.from(sortedChannels, (channel, i) => {
-            return (<ChannelButton key={i} channel={channel.id} avatar={channel.icon} username={channel.title}
+    const generateButtons = () => Array.from(sortedChannels, (channel) => {
+            return (<ChannelButton key={channel.id} channel={channel.id} avatar={channel.icon} username={channel.title}
                                    setActiveConversation={props.setActiveConversation}
                                    visible={expanded}/>)
         }
@@ -76,7 +74,7 @@ export default function Sidebar(props) {
             className={'sidebar'}
             onTouchStart={e => e.target.dragStart = e.touches[0].clientX}
             onTouchMove={e => handleDrag(e)}
-            onMouseEnter={e => {
+            onMouseEnter={() => {
                 if (!isMobile) setExpanded(true)
             }}
             onMouseLeave={() => {

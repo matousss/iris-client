@@ -13,9 +13,11 @@ import {func} from "prop-types";
 import Loading from "./components/Loading";
 import {getData} from './utils/StorageUtil';
 import {Channel, ModelStorage, User} from "./utils/ModelStorage";
+import WebsocketHandler from "./utils/WebsocketHandler";
 
-const WS_PORT = 8000
-const WS_URL = 'ws://' + window.location.hostname + ':' + WS_PORT + '/ws/messages'
+
+
+
 
 
 function App() {
@@ -27,19 +29,6 @@ function App() {
     const [loading, setLoading] = useState(true)
     const [userStorage, setUserStorage] = useState(null)
     const [channelStorage, setChannelStorage] = useState(null)
-
-    const connect = () => {
-        // set loading screen
-        let ws = new WebSocket(WS_URL + '?token=' + token)
-        ws.onopen = (event) => {
-            console.log(event);
-            // remove loading screen?
-        };
-        ws.onclose = () => {
-            connect();
-        };
-        setWebsocket(ws)
-    }
 
 
     const showError = message => {
@@ -60,7 +49,6 @@ function App() {
                             setChannelStorage(data.channels);
                             setLoading(false);
                             setPage(Page.main);
-
                         });
 
                     })
@@ -76,6 +64,17 @@ function App() {
             })
         }
     }
+
+    useEffect(() => {
+        if (userStorage === null || channelStorage === null) return;
+        let wsh = new WebsocketHandler(userStorage, channelStorage);
+        setWebsocket(wsh)
+        wsh.connect();
+
+    }, [userStorage, channelStorage])
+
+    useEffect(() => console.log("diasnj"),
+        [channelStorage])
 
 
     useEffect(() => {

@@ -26,6 +26,9 @@ class User extends Model {
 
 
 }
+function rawToMessage(raw, author) {
+    return new Message(raw.id, raw.text, author, raw.media, new Date(raw.creation));
+}
 
 class Message extends Model {
     id: String;
@@ -78,4 +81,4 @@ class ModelStorage extends Map<String, Model> {
     }
 }
 
-export {User, Message, Channel, ModelStorage}
+export {User, Message, Channel, ModelStorage, rawToMessage}

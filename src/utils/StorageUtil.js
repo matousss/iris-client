@@ -1,4 +1,4 @@
-import {Channel, Message, ModelStorage, User} from "./ModelStorage";
+import {Channel, Message, ModelStorage, rawToMessage, User} from "./ModelStorage";
 import {getChannels, getMessages as fetchMessages, getMiniProfile} from "./RequestUtils";
 
 async function getUsers(ids: String[]) {
@@ -28,7 +28,7 @@ async function getMessages(users) {
 
     const processRaw = raw => {
         if (map.get(raw.channel) === undefined) map.set(raw.channel, [])
-        map.get(raw.channel).push(new Message(raw.id, raw.text, users.get(raw.author), raw.media, new Date(raw.creation)))
+        map.get(raw.channel).push(rawToMessage(raw, users.get(raw.author)))
     }
 
     await rawMessages.forEach(val => processRaw(val))
