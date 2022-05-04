@@ -19,8 +19,6 @@ export default function NewMain(props) {
     const [messageCount, setMessageCount] = useState(0);
 
 
-
-
     const [sortedChannels, setSortedChannels] = useState(getSortedChannels(props.channels));
 
     const generateMessages = () => {
@@ -67,13 +65,22 @@ export default function NewMain(props) {
                 setMessageCount(channel.messages.length)
 
                 break;
+            case 'error':
+                console.error('Received WebSocket error: ' + raw)
             default:
                 console.error("Received unexpected object type: " + type);
         }
     }
 
     const sendMessage = (message) => {
-        wsh.send()
+        wsh.ws.send(JSON.stringify({
+            type: "message",
+            data: {
+                "text": message,
+                "media": false,
+                "channel": activeConversation
+            }
+        }))
     }
 
     return (
@@ -85,7 +92,7 @@ export default function NewMain(props) {
                      sortedChannels={sortedChannels}
             />
             <MessagePanel user={props.user} activeChannel={channel}
-                          messages={messageArray}/>
+                          messages={messageArray} sendMessage={sendMessage}/>
         </div>
     );
 }

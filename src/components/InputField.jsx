@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import {sendMessageOG} from "../utils/RequestUtils";
 import {Message} from "../utils/ModelStorage";
+
 // import EmojiPicker from "emoji-picker-react";
 
 function InputField(props) {
@@ -12,14 +13,23 @@ function InputField(props) {
     }
 
     const handleSend = () => {
-        if (input.trim().length > 0) sendMessageOG(props.channel, input);
+        if (input.trim().length > 0) props.sendMessage(input) //sendMessageOG(props.channel, input);
+        document.getElementById('input').value = '';
     }
 
     return (
         <div className='w-full h-auto p-5 mx-auto bg-text-1/5 shadow-[0_-5px_52px_-30px]'>
             <form className='flex justify-center item w-full' onSubmit={handleSubmit}>
                 <TextareaAutosize id={'input'} maxRows={4} onChange={e => setInput(e.target.value)}
-                                  className='w-2/3 resize-none p-2 border-2 border-text-1/40 rounded-3xl message-input bg-text-1/10'/>
+                                  className='w-2/3 resize-none p-2 border-2 border-text-1/40 rounded-3xl message-input bg-text-1/10'
+                                  onKeyDown={
+                                      e => {
+                                          if (e.key === "Enter" && !e.shiftKey) {
+                                              handleSend()
+                                          }
+                                      }
+                                  }
+                />
                 {/*<BrowserView>
                     <button onClick={() => {
                         let picker = document.getElementById('picker');

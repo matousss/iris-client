@@ -24,6 +24,9 @@ export default class {
 
     onclose = this.connect
     onopen = () => console.log('connected websocket');
+    send(data, callback) {
+        this.ws.send(data, callback)
+    }
 
     connect() {
         this.ws = new WebSocket(WS_URL + '?token=' + loadToken());
