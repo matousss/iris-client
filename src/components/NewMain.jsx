@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Sidebar from "./Sidebar";
 import MessagePanel from "./MessagePanel";
-import {Channel, Message, rawToMessage, User} from "../utils/ModelStorage";
+import {rawToMessage} from "../utils/ModelStorage";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import MessageComponent from "./MessageComponent";
+import {getSortedChannels} from "../utils/Sorting";
 
 
 export default function NewMain(props) {
@@ -17,17 +18,10 @@ export default function NewMain(props) {
     const [messageArray, setMessageArray] = useState([]);
     const [messageCount, setMessageCount] = useState(0);
 
-    const getComparsionValue = (channel: Channel) =>
-        (channel.messages === null || channel.messages.length === 0) ? 0 : channel.messages[0].creation.getTime()
-
-    const getSortedChannels = () => Array.from(props.channels.values()).sort((a, b) => {
-        let aTime = getComparsionValue(a);
-        let bTime = getComparsionValue(b);
-        return (bTime - aTime)
-    })
 
 
-    const [sortedChannels, setSortedChannels] = useState(getSortedChannels());
+
+    const [sortedChannels, setSortedChannels] = useState(getSortedChannels(props.channels));
 
     const generateMessages = () => {
         return Array.from(channel.messages, (message, i) => {
@@ -69,7 +63,7 @@ export default function NewMain(props) {
                 let channel = props.channels.get(raw.channel);
                 if (channel === undefined) return console.error("Channel not found");
                 channel.messages.splice(0, 0, message);
-                if (sortedChannels[0].id !== raw.channel) setSortedChannels(getSortedChannels());
+                if (sortedChannels[0].id !== raw.channel) setSortedChannels(getSortedChannels(props.channels));
                 setMessageCount(channel.messages.length)
 
                 break;
