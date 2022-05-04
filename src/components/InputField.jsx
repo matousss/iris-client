@@ -25,10 +25,14 @@ function InputField(props) {
                                   onKeyDown={
                                       e => {
                                           if (e.key === "Enter" && !e.shiftKey) {
-                                              handleSend()
+                                              e.canceled = true;
+                                              handleSend();
                                           }
                                       }
                                   }
+                                  onInput={e => {
+                                      if (e.target.value.trim().length === 0) e.target.value = '';
+                                  }}
                 />
                 {/*<BrowserView>
                     <button onClick={() => {
