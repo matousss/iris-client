@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import Sidebar from "./Sidebar";
 import MessagePanel from "./MessagePanel";
-import {Channel, rawToMessage, User} from "../utils/ModelStorage";
+import {Channel, Message, rawToMessage, User} from "../utils/ModelStorage";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
-import Message from "./Message";
+import MessageComponent from "./MessageComponent";
 
 
 export default function NewMain(props) {
@@ -17,13 +17,24 @@ export default function NewMain(props) {
     const [messageArray, setMessageArray] = useState([]);
     const [messageCount, setMessageCount] = useState(0);
 
+    const getSortedChannels = () => Array.from(props.channels.values()).sort((a, b) => {
+        if (a.messages === null || b.messages === null || a.messages.length === 0 || b.messages.length === 0) return -1;
+        let aMessage = a.messages[0]
+        let bMessage = b.messages[0]
+
+        return (bMessage.creation.getTime() - aMessage.creation.getTime())
+    })
+
+
+    const [sortedChannels, setSortedChannels] = useState(getSortedChannels());
+
     const generateMessages = () => {
         return Array.from(channel.messages, (message, i) => {
             return (
-                <Message key={i}
-                         from={message.author.id !== props.user.user}>
+                <MessageComponent key={i}
+                                  from={message.author.id !== props.user.user}>
                     {message.text ? message.text : `Media: $${message.media}`}
-                </Message>
+                </MessageComponent>
             )
         })
     }
@@ -56,8 +67,8 @@ export default function NewMain(props) {
                 let message = rawToMessage(raw, props.users.get(raw.author));
                 let channel = props.channels.get(raw.channel);
                 if (channel === undefined) return console.error("Channel not found");
-
-                channel.messages.splice(0,0, message);
+                channel.messages.splice(0, 0, message);
+                if (sortedChannels[0].id !== raw.channel) setSortedChannels(getSortedChannels());
                 setMessageCount(channel.messages.length)
 
                 break;
@@ -66,12 +77,18 @@ export default function NewMain(props) {
         }
     }
 
+    const sendMessage = (message) => {
+        wsh.send()
+    }
+
     return (
 
 
         <div className='h-screen bg-secondary/90 text-text-1'>
             <Sidebar user={props.user} setUser={props.setUser} clearDesk={props.clearDesk}
-                     setActiveConversation={setActiveConversation} channels={props.channels}/>
+                     setActiveConversation={setActiveConversation} channels={props.channels}
+                     sortedChannels={sortedChannels}
+            />
             <MessagePanel user={props.user} activeChannel={channel}
                           messages={messageArray}/>
         </div>

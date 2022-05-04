@@ -22,13 +22,16 @@ export default class {
         if (this.ws === undefined) await this.connect();
     }
 
+    onclose = this.connect
+    onopen = () => console.log('connected websocket');
 
     connect() {
         this.ws = new WebSocket(WS_URL + '?token=' + loadToken());
-        this.ws.onclose = this.connect;
-        this.ws.onmessage = (e) => this.handleReceive(e,  this.users, this.channels);
+        this.ws.onclose = this.onclose;
+        this.ws.onopen = this.onopen;
+        this.ws.onmessage = (e) => this.handleReceive(e, this.users, this.channels);
         this.send = this.ws.send;
-        console.log('connected websocket')
+
     }
 
     disconnect() {
@@ -40,7 +43,6 @@ export default class {
     handleReceive(event) {
         console.log(event)
     }
-
 
 
 }

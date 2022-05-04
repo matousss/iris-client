@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
-import Message from "./Message";
 import InputField from "./InputField";
-import {Channel} from "../utils/ModelStorage";
 
 function MessagePanel({activeChannel, messages}) {
     useEffect(()=> console.log('messages updated'),[messages])
