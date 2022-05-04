@@ -1,13 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Message from "./Message";
 import InputField from "./InputField";
 import {Channel} from "../utils/ModelStorage";
 
-function MessagePanel(props) {
-    const activeChannel: Channel = props.channels.get(props.activeConversation);
-    const generateMessages = () => Array.from(activeChannel.messages, (message, i) => {
-        return <Message key={i} from={message.author.id !== props.user.user}>{message.text ? message.text : `Media: $${message.media}`}</Message>
-    })
+function MessagePanel({activeChannel, messages}) {
+    useEffect(()=> console.log('messages updated'),[messages])
 
     return (
         <div className='h-screen ml-16 flex flex-col pl-3'>
@@ -16,10 +13,10 @@ function MessagePanel(props) {
             </div>
             <div className='grow flex flex-col-reverse overflow-y-scroll overflow-x-hidden messages'>
                 {
-                    activeChannel ? generateMessages() : 'todo intro screen'
+                    activeChannel ? messages : 'todo intro screen'
                 }
             </div>
-            <InputField channel={props.activeConversation}/>
+            <InputField channel={activeChannel ? activeChannel.id : ''}/>
         </div>
     );
 }

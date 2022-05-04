@@ -8,7 +8,7 @@ export default function Sidebar(props) {
     const [expanded, setExpanded] = useState(false)
 
     const sort = (a, b) => {
-        if (a.messages === null || b.messages === null || a.messages.length === 0 || b.messages.length === 0) return 1;
+        if (a.messages === null || b.messages === null || a.messages.length === 0 || b.messages.length === 0) return -1;
         let aMessage = a.messages[0]
         let bMessage = b.messages[0]
 
@@ -16,7 +16,7 @@ export default function Sidebar(props) {
 
     }
 
-    const sortedChannels = Array.from(props.storage.channels.values()).sort((a, b) => sort(a, b))
+    const sortedChannels = Array.from(props.channels.values()).sort((a, b) => sort(a, b))
 
     const generateButtons = () => Array.from(sortedChannels, (channel) => {
             return (<ChannelButton key={channel.id} channel={channel.id} avatar={channel.icon} username={channel.title}

@@ -15,16 +15,11 @@ import {Channel, ModelStorage, User} from "./utils/ModelStorage";
 import {loadTheme} from "./utils/ThemesUtils";
 
 
-
-
-
-
 function App() {
     const [user, setUser] = useState('');
     const [page, setPage] = useState(Page.login);
     const [stayLoggedIn, setStayLoggedIn] = useState(localStorage.getItem('stayLogged') === 'true');
     const [token, setToken] = useState('')
-    const [ws, setWebsocket] = useState(null)
     const [loading, setLoading] = useState(true)
     const [userStorage, setUserStorage] = useState(null)
     const [channelStorage, setChannelStorage] = useState(null)
@@ -148,17 +143,13 @@ function App() {
         <>
             {loading ? <Loading opacity={.6}/> :
                 (page !== Page.main ? <MenuContainer component={selectComponent(page)}/> :
-                        <NewMain user={user}
-                                 setUser={setUser}
-                                 clearDesk={clearDesk}
-                                 setPage={setPage}
-                                 stayLoggedIn={stayLoggedIn}
-                                 storage={
-                                     {
-                                         users: userStorage,
-                                         channels: channelStorage,
-                                     }
-                                 }/>
+                    <NewMain user={user}
+                             setUser={setUser}
+                             clearDesk={clearDesk}
+                             setPage={setPage}
+                             stayLoggedIn={stayLoggedIn}
+                             users={userStorage}
+                             channels={channelStorage}/>
                 )
             }
 
