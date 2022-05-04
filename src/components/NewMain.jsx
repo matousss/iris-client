@@ -17,12 +17,13 @@ export default function NewMain(props) {
     const [messageArray, setMessageArray] = useState([]);
     const [messageCount, setMessageCount] = useState(0);
 
-    const getSortedChannels = () => Array.from(props.channels.values()).sort((a, b) => {
-        if (a.messages === null || b.messages === null || a.messages.length === 0 || b.messages.length === 0) return -1;
-        let aMessage = a.messages[0]
-        let bMessage = b.messages[0]
+    const getComparsionValue = (channel: Channel) =>
+        (channel.messages === null || channel.messages.length === 0) ? 0 : channel.messages[0].creation.getTime()
 
-        return (bMessage.creation.getTime() - aMessage.creation.getTime())
+    const getSortedChannels = () => Array.from(props.channels.values()).sort((a, b) => {
+        let aTime = getComparsionValue(a);
+        let bTime = getComparsionValue(b);
+        return (bTime - aTime)
     })
 
 
