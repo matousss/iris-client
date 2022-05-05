@@ -2,24 +2,24 @@ import React, {useEffect} from "react";
 import {cycleTheme} from "../utils/ThemesUtils";
 import {getAvatar} from "./UserCard";
 
+const SIDEBAR_TOP_HEIGHT = 5;
+
 export function SidebarButton(props) {
     return (
         <button onClick={e => props.onClick(e)}
-                className={'h-16 w-full hover:bg-white/20 group ' + props.className}>
+                className={'w-full hover:bg-white/20 group ' + (props.height ? 'h-[' + props.height + ']' : 'h-full ') + props.className}>
             {props.children}
         </button>
     )
 }
 
 
-
 export function DummyButton({avatar, username}) {
     return (
         <SidebarButton onClick={() => {
-        }} className={'w-sidebar inline hover:bg-white/0 cursor-not-allowed'}>
+        }} className={'inline hover:bg-white/0 cursor-not-allowed'}>
             {/*{avatar ? <img src={avatar}/> : 'ne'}*/}
-            {console.log(avatar)}
-            <div className={'mx-auto w-max border-text-1/50 border-[3px] border-dashed rounded-full'}>
+            <div className={'m-auto w-max border-text-1/50 border-[3px] border-dashed rounded-full'}>
                 {getAvatar(username, avatar)}
             </div>
         </SidebarButton>
@@ -30,8 +30,8 @@ export function SettingsButton() {
 
     return (
         <SidebarButton onClick={() => console.log("open settings")}
-                       className={'w-full inline'}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-sidebar mx-auto group-hover:animate-spin-slow"
+                       className={'inline'}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-sidebar m-auto group-hover:animate-spin-slow"
                  viewBox="0 0 20 20"
                  fill="currentColor">
                 <path fillRule="evenodd"
