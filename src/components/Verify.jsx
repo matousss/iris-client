@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import * as Page from '../utils/PageEnum'
 import {activateAccount} from "../utils/RequestUtils";
 
-export default function Verify({username, setPage, initMain}) {
+export default function Verify({username, setPage, initMain, setLoading}) {
     const [codeField, setCodeField] = useState('')
     const [error, setError] = useState('')
 
@@ -18,10 +18,12 @@ export default function Verify({username, setPage, initMain}) {
                         key => (err+=(data[key] + '\n'))
                     )
                 });
+                break;
             default:
                 console.log(response);
 
         }
+        setLoading(false);
     }
 
     const handleSubmit = (e) => {
@@ -36,6 +38,7 @@ export default function Verify({username, setPage, initMain}) {
         //     .then(response => response.json())
         //     .then(data => console.log(data))
         e.preventDefault()
+        setLoading(true)
         activateAccount(username, codeField).then(response => handleFetch(response)).catch((e) => {
             console.error(e);
             setPage(Page.login);

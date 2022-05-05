@@ -88,7 +88,7 @@ function App() {
     useEffect(() => {
         saveToken(token)
     }, [token])
-
+    console.log({user})
 
     const selectComponent = (page) => {
         switch (page) {
@@ -107,7 +107,9 @@ function App() {
             case Page.verify:
                 return <Verify username={user['username']}
                                setPage={setPage}
-                               initMain={initMain}/>
+                               initMain={initMain}
+                               setLoading={setLoading}
+                />
             default:
                 return (<div>Error</div>)
         }
@@ -143,13 +145,13 @@ function App() {
         <>
             {loading ? <Loading opacity={.6}/> :
                 (page !== Page.main ? <MenuContainer component={selectComponent(page)}/> :
-                    <NewMain user={user}
-                             setUser={setUser}
-                             clearDesk={clearDesk}
-                             setPage={setPage}
-                             stayLoggedIn={stayLoggedIn}
-                             users={userStorage}
-                             channels={channelStorage}/>
+                        <NewMain user={user}
+                                 setUser={setUser}
+                                 clearDesk={clearDesk}
+                                 setPage={setPage}
+                                 stayLoggedIn={stayLoggedIn}
+                                 users={userStorage}
+                                 channels={channelStorage}/>
                 )
             }
 

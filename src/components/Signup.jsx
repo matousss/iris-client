@@ -42,11 +42,13 @@ export default function Signup({setUser, setPage}) {
                 switch (response.status) {
                     case 200:
                         setPage(Page.verify);
+                        console.log(data['user'])
                         setUser(data['user'])
                         break;
                     case 400:
                         let errMsg = 'Check fields listed below'
                         Object.keys(data).forEach(key => errMsg += `${key}: ${data[key]}\n`)
+                        setErrorMessage(errMsg);
                         break;
                     default:
                         setErrorMessage(`Unknown error (code: ${response.status})`)

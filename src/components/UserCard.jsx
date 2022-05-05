@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from "react-avatar";
 
 export default function UserCard(props) {
-     let autoAvatar = <Avatar className={"my-auto"} name={props.username} size={'56'} round={true}/>
+    let autoAvatar = <Avatar className={"my-auto"} name={props.username} size={'56'} round={true}/>
 
     return (
         <div className={'flex items-left row align-left px-2 w-full h-full py-3'}>
@@ -12,8 +12,9 @@ export default function UserCard(props) {
 
             <div
                 className={
-                    'on-expand overflow-hidden text-ellipsis Ih-full text-xl my-auto ml-3'}>
-                {props.username}
+                    'on-expand text-xl my-auto ml-3 h-fixed text-left'}>
+                <span className={"overflow-hidden text-ellipsis line-clamp-1 duration-75"}>{props.username}</span>
+
             </div>
         </div>
     );
