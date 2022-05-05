@@ -7,7 +7,7 @@ export default function (props) {
         <li className={'duration-[250ms] flex overflow-hidden'}>
 
             <div>
-                <BrowserView><DummyButton/></BrowserView>
+                <BrowserView><DummyButton avatar={props.user.avatar} username={props.user.username}/></BrowserView>
 
                 <MobileView><ExpandButton onClick={props.toggleExpansion}/></MobileView>
             </div>

@@ -79,7 +79,7 @@ export default function Sidebar(props) {
             {/*<li className={"pb-[80px]"} style={{height: "80px"}}>
                 <UserCard/>
             </li>*/}
-            <SidebarTop toggleExpansion={toggleExpansion}/>
+            <SidebarTop toggleExpansion={toggleExpansion} user={props.user}/>
             <li id='sidebar-channels' className={'buttons'}>
                 {generateButtons()}
 

@@ -5,7 +5,7 @@ function MessageComponent(props) {
     const messageTo = 'ml-auto bg-primary/40';
 
     return (
-        <div className={'max-w-3/5 lg:max-w-1/2 max-h-[30rem] mx-5 my-2 p-3 rounded-3xl whitespace-pre-line ' + (props.from ? messageFrom : messageTo)}>
+        <div className={'max-w-3/5 lg:max-w-1/2 max-h-[30rem] mx-5 my-2 p-3 rounded-3xl whitespace-pre-line break-words ' + (props.from ? messageFrom : messageTo)}>
             {props.children}
         </div>
     );
