@@ -27,6 +27,7 @@ module.exports = {
                 'pulse-fast': 'pulse 1500ms linear infinite',
                 'flip': 'flip 300ms linear 1',
                 'shake': 'shake 300ms linear 1',
+                'rotate-logo': 'rotate-center 1200ms ease-in-out infinite both',
             },
             keyframes: {
                 flip: {

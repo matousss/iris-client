@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import * as Page from '../utils/PageEnum'
-import {signup} from '../utils/RequestUtils'
+import * as Page from '../../utils/PageEnum'
+import {signup} from '../../utils/RequestUtils'
 
-export default function Signup({setUser, setPage}) {
+export function Signup({setUser, setPage}) {
     const [emailField, setEmailField] = useState('')
     const [usernameField, setUsernameField] = useState('')
     const [passwordField, setPasswordField] = useState('')

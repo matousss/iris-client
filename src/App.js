@@ -1,18 +1,14 @@
 import './App.css';
 import * as Page from './utils/PageEnum';
-import MenuContainer from "./components/MenuContainer";
-import NewLogin from './components/NewLogin';
-import Signup from "./components/Signup";
-import Verify from './components/Verify';
-import NewMain from "./components/NewMain";
+import {Login, Signup, Verify, HomeContainer} from "./components/home";
 
 import React, {useEffect, useState} from 'react'
 import {loadToken, saveToken} from "./utils/AuthUtils";
 import {getFullProfile, logout} from './utils/RequestUtils'
 import Loading from "./components/Loading";
 import {getData} from './utils/StorageUtil';
-import {Channel, ModelStorage, User} from "./utils/ModelStorage";
 import {loadTheme} from "./utils/ThemesUtils";
+import Main from "./components/Main";
 
 
 function App() {
@@ -88,16 +84,15 @@ function App() {
     useEffect(() => {
         saveToken(token)
     }, [token])
-    console.log({user})
 
     const selectComponent = (page) => {
         switch (page) {
             case Page.login:
-                return <NewLogin setUser={setUser}
-                                 setPage={setPage}
-                                 stayLoggedIn={stayLoggedIn}
-                                 setStayLoggedIn={setStayLoggedIn}
-                                 initMain={initMain}/>
+                return <Login setUser={setUser}
+                              setPage={setPage}
+                              stayLoggedIn={stayLoggedIn}
+                              setStayLoggedIn={setStayLoggedIn}
+                              initMain={initMain}/>
             case Page.signup:
                 return <Signup setUser={setUser}
                                setPage={setPage}
@@ -144,14 +139,14 @@ function App() {
     return (
         <>
             {loading ? <Loading opacity={.6}/> :
-                (page !== Page.main ? <MenuContainer component={selectComponent(page)}/> :
-                        <NewMain user={user}
-                                 setUser={setUser}
-                                 clearDesk={clearDesk}
-                                 setPage={setPage}
-                                 stayLoggedIn={stayLoggedIn}
-                                 users={userStorage}
-                                 channels={channelStorage}/>
+                (page !== Page.main ? <HomeContainer>{selectComponent(page)}</HomeContainer> :
+                        <Main user={user}
+                              setUser={setUser}
+                              clearDesk={clearDesk}
+                              setPage={setPage}
+                              stayLoggedIn={stayLoggedIn}
+                              users={userStorage}
+                              channels={channelStorage}/>
                 )
             }
 

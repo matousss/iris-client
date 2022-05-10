@@ -1,5 +1,5 @@
 import React from 'react';
-import UserCard from "./UserCard";
+import ChannelCard from "./ChannelCard";
 
 export default function ChannelButton(props) {
     return (
@@ -7,7 +7,7 @@ export default function ChannelButton(props) {
                 onClick={() => {
                     props.setActiveConversation(props.channel)
                 }}>
-            <UserCard username={props.username} avatar={props.avatar}/>
+            <ChannelCard username={props.username} avatar={props.avatar}/>
         </button>
     );
 }

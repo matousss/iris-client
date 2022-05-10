@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import {sendMessageOG} from "../utils/RequestUtils";
-import {Message} from "../utils/ModelStorage";
 
 // import EmojiPicker from "emoji-picker-react";
 

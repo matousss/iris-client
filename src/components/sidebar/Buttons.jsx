@@ -1,10 +1,9 @@
 import React, {useEffect} from "react";
-import {cycleTheme} from "../utils/ThemesUtils";
-import {getAvatar} from "./UserCard";
+import {cycleTheme} from "../../utils/ThemesUtils";
+import {getAvatar} from "./ChannelCard";
 
-const SIDEBAR_TOP_HEIGHT = 5;
 
-export function SidebarButton(props) {
+function SidebarButton(props) {
     return (
         <button onClick={e => props.onClick(e)}
                 className={'w-full hover:bg-white/20 group ' + (props.height ? 'h-[' + props.height + ']' : 'h-full ') + props.className}>
@@ -14,7 +13,7 @@ export function SidebarButton(props) {
 }
 
 
-export function DummyButton({avatar, username}) {
+function DummyButton({avatar, username}) {
     return (
         <SidebarButton onClick={() => {
         }} className={'inline hover:bg-white/0 cursor-not-allowed'}>
@@ -26,7 +25,7 @@ export function DummyButton({avatar, username}) {
     )
 }
 
-export function SettingsButton() {
+function SettingsButton() {
 
     return (
         <SidebarButton onClick={() => console.log("open settings")}
@@ -42,7 +41,7 @@ export function SettingsButton() {
     )
 }
 
-export function ThemeButton() {
+function ThemeButton() {
 
     return (
         <SidebarButton onClick={e => cycleTheme(!e.shiftKey)}
@@ -58,7 +57,7 @@ export function ThemeButton() {
     )
 }
 
-export function SignOutButton(props) {
+function SignOutButton(props) {
     function signOut() {
         props.clearDesk();
     }
@@ -91,7 +90,7 @@ export function SignOutButton(props) {
     );
 }
 
-export function ExpandButton({onClick}) {
+function ExpandButton({onClick}) {
 
     return (
         <SidebarButton onClick={() => onClick()}
@@ -106,3 +105,5 @@ export function ExpandButton({onClick}) {
         </SidebarButton>
     )
 }
+
+export {SidebarButton, DummyButton, SettingsButton, ThemeButton, SignOutButton, ExpandButton}

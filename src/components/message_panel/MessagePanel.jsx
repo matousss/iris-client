@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import InputField from "./InputField";
 
-function MessagePanel({activeChannel, messages, sendMessage}) {
+export function MessagePanel({activeChannel, messages, sendMessage}) {
     useEffect(()=> console.log('messages updated'),[messages])
 
     return (
@@ -19,4 +19,4 @@ function MessagePanel({activeChannel, messages, sendMessage}) {
     );
 }
 
-export default MessagePanel;
+

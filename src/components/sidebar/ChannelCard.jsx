@@ -7,7 +7,7 @@ export function getAvatar (username, avatar) {
         <img src={avatar} className={'max-h-14 rounded-[100%] bg-white'} alt={autoAvatar}/>
 }
 
-export default function UserCard(props) {
+export default function ChannelCard(props) {
     let autoAvatar = <Avatar className={"my-auto"} name={props.username} size={'56'} round={true}/>
 
     return (

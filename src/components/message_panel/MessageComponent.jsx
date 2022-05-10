@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MessageComponent(props) {
+export function MessageComponent(props) {
     const messageFrom = 'mr-auto border border-primary/30  bg-white/10';
     const messageTo = 'ml-auto bg-primary/40';
 
@@ -10,5 +10,3 @@ function MessageComponent(props) {
         </div>
     );
 }
-
-export default MessageComponent;

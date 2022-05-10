@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ChannelButton from "./ChannelButton";
 import {isMobile} from "react-device-detect";
-import SidebarTop from "./SidebarTop";
+import SidebarTop from "./TopButtons";
 import {SignOutButton} from "./Buttons";
 
 export default function Sidebar(props) {

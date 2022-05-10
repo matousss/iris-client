@@ -1,5 +1,3 @@
-import ChannelButton from "../components/ChannelButton";
-
 function modelFromJSON(json, model: Class) {
     let obj = JSON.parse(json);
     return model(Object.keys(obj).map(e => obj[e]));

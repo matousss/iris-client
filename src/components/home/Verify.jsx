@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import * as Page from '../utils/PageEnum'
-import {activateAccount} from "../utils/RequestUtils";
+import * as Page from '../../utils/PageEnum'
+import {activateAccount} from "../../utils/RequestUtils";
 
-export default function Verify({username, setPage, initMain, setLoading}) {
+export function Verify({username, setPage, initMain, setLoading}) {
     const [codeField, setCodeField] = useState('')
     const [error, setError] = useState('')
 

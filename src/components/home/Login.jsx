@@ -1,9 +1,8 @@
-import React, {useState} from 'react'
-import * as Page from '../utils/PageEnum'
-import {login} from "../utils/RequestUtils";
+import React, {useState} from 'react';
+import * as Page from '../../utils/PageEnum'
+import {login} from "../../utils/RequestUtils";
 
-
-export default function NewLogin(props) {
+export function Login(props) {
     const [usernameField, setUsernameField] = useState('')
     const [passwordField, setPasswordField] = useState('')
     const [error, setError] = useState('')

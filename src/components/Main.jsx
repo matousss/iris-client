@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import Sidebar from "./Sidebar";
-import MessagePanel from "./MessagePanel";
+import Sidebar from "./sidebar";
 import {rawToMessage} from "../utils/ModelStorage";
-import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
-import MessageComponent from "./MessageComponent";
+import {MessagePanel, MessageComponent} from "./message_panel";
 import {getSortedChannels} from "../utils/Sorting";
+import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 
-
-export default function NewMain(props) {
+export default function Main(props) {
     const [activeConversation, setActiveConversation] = useState(() => {
         let lastActive = localStorage.getItem('lastActiveChannel');
         return props.channels.get(lastActive) === undefined ? null : lastActive;
@@ -67,6 +65,7 @@ export default function NewMain(props) {
                 break;
             case 'error':
                 console.error('Received WebSocket error: ' + raw)
+                break;
             default:
                 console.error("Received unexpected object type: " + type);
         }
