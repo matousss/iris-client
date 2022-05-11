@@ -1,4 +1,4 @@
-import {Channel, Message, ModelStorage, rawToMessage, User} from "./ModelStorage";
+import {Channel, ModelStorage, rawToMessage, User} from "./ModelStorage";
 import {getChannels, getMessages as fetchMessages, getMiniProfile} from "./RequestUtils";
 
 async function getUsers(ids: String[]) {
@@ -68,7 +68,7 @@ async function getData(localUserId) {
         let icon;
         switch (raw.type) {
             case 'directchannel':
-                let user = users.get(otherThanMe(...raw.users));
+                let user: User = users.get(otherThanMe(...raw.users));
                 title = user.username
                 icon = user.avatar
                 break;
