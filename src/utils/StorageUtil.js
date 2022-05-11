@@ -7,6 +7,12 @@ async function getUsers(ids: String[]) {
     async function processResponse(response) {
         if (response.ok) {
             let raw = await response.json()
+
+            // precaches image
+            if (raw.avatar !== null) {
+                let temp = new Image();
+                temp.src = raw.avatar;
+            }
             return new User(raw.user, raw.username, raw.avatar);
         }
         return null;
