@@ -1,8 +1,3 @@
-function modelFromJSON(json, model: Class) {
-    let obj = JSON.parse(json);
-    return model(Object.keys(obj).map(e => obj[e]));
-}
-
 class Model {
     id: String;
 
@@ -20,6 +15,13 @@ class User extends Model {
         this.id = id;
         this.username = username;
         this.avatar = avatar;
+    }
+
+    precacheAvatar() {
+        if (this.avatar) {
+            let temp = new Image();
+            temp.src = this.avatar;
+        }
     }
 
 

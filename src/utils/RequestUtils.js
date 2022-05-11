@@ -1,5 +1,4 @@
-import {getHeadersWithAuth, loadToken} from "./AuthUtils";
-import {func} from "prop-types";
+import {getHeadersWithAuth} from "./AuthUtils";
 
 const PROTOCOL = window.location.protocol
 const HOST = window.location.hostname + ':8000'
@@ -65,13 +64,16 @@ function activateAccount(username, activationCode) {
     }), new Headers())
 }
 
-
+// just for debugging
 function sendMessageOG(channel, text) {
-    let headers = new Headers();
     return getFetch('message/', 'POST', dictToFormData({
         'channel': channel,
         'text': text,
     }))
 }
 
-export {getMiniProfile, getFullProfile, getChannels, getMessages, login, logout, signup, activateAccount, sendMessageOG}
+function searchUser(keyword = '') {
+    return getFetch('profile/miniature?search='+keyword)
+}
+
+export {getMiniProfile, getFullProfile, getChannels, getMessages, login, logout, signup, activateAccount, searchUser}
