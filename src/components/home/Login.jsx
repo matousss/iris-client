@@ -1,21 +1,29 @@
 import React, {useState} from 'react';
 import * as Page from '../../utils/PageEnum'
 import {login} from "../../utils/RequestUtils";
+import HomeForm from "./form/HomeForm";
+import FormField from "./form/FormField";
 
 export function Login(props) {
     const [usernameField, setUsernameField] = useState('')
     const [passwordField, setPasswordField] = useState('')
     const [error, setError] = useState('')
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        e.target.firstChild.disabled = true;
         e.preventDefault();
-        login(window.btoa(usernameField.toString() + ':' + passwordField.toString()))
-            .then(response => handleFetch(response)).catch(e => {
-                console.error(e);
-                setError('Unexpected error');
-            });
+
+        try {
+            let response = await login(window.btoa(usernameField.toString() + ':' + passwordField.toString()))
 
 
+            await handleFetch(response);
+        } catch (e) {
+            console.error(e);
+            setError('Unexpected error');
+        } finally {
+            e.target.firstChild.disabled = false;
+        }
     }
 
     const handleFetch = (response) => {
@@ -62,20 +70,13 @@ export function Login(props) {
     return (
         <>
             <h1 className='text-black text-6xl mb-6 text-center'>Welcome to Iris</h1>
-            <form className='flex flex-col w-4/5 md:w-2/5' onSubmit={handleSubmit}>
-                <label className='text-xl my-1'>Username</label>
-                <input
-                    className='bg-white outline-1 outline-gray-300 text-gray-700 text-lg p-1 mb-1 border-2 rounded-lg'
-                    type="text"
-                    required
-                    value={usernameField}
-                    onChange={(e) => setUsernameField(e.target.value)}
-                />
-                <label className='text-xl mb-1'>Password</label>
-                <input
-                    className='bg-white outline-1 outline-gray-300 text-gray-700 text-lg p-1 mb-1 border-2 rounded-lg'
-                    type="password"
-                    required
+            <HomeForm onSubmit={handleSubmit} error={error} submitText={'log in'}>
+
+                <FormField label={'Username'}
+                           value={usernameField} onChange={(e) => setUsernameField(e.target.value)}/>
+                <FormField
+                    label={'Password'}
+                    type={"password"}
                     value={passwordField}
                     onChange={(e) => setPasswordField(e.target.value)}
                 />
@@ -87,9 +88,7 @@ export function Login(props) {
                     />
                     <span className='ml-2 text-sm'>stay logged in</span>
                 </div>
-                <span className='font-semibold text-sm text-red-700'>{error}</span>
-                <button className='text-xl mt-3 p-1 rounded-lg bg-orange-500 hover:bg-rose-500'>log in</button>
-            </form>
+            </HomeForm>
             <button className='mt-6 text-lg underline' onClick={() => props.setPage(Page.signup)}>Don't have an account
                 yet? Sign up
             </button>
