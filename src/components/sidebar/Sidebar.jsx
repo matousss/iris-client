@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ChannelButton from "./ChannelButton";
 import {isMobile} from "react-device-detect";
-import SidebarTop from "./TopButtons";
+import TopButtons from "./TopButtons";
 import {SignOutButton} from "./Buttons";
 
 export default function Sidebar(props) {
@@ -79,7 +79,7 @@ export default function Sidebar(props) {
             {/*<li className={"pb-[80px]"} style={{height: "80px"}}>
                 <UserCard/>
             </li>*/}
-            <SidebarTop toggleExpansion={toggleExpansion} user={props.user}/>
+            <TopButtons toggleExpansion={toggleExpansion} user={props.user} setSettingsVisible={props.setSettingsVisible}/>
             <li id='sidebar-channels' className={'buttons'}>
                 {generateButtons()}
 

@@ -4,6 +4,7 @@ import {rawToMessage} from "../utils/ModelStorage";
 import {MessagePanel, MessageComponent} from "./message_panel";
 import {getSortedChannels} from "../utils/Sorting";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
+import SettingsModal from "./SettingsModal";
 
 export default function Main(props) {
     const [activeConversation, setActiveConversation] = useState(() => {

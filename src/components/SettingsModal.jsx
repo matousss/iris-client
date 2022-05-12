@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal'
-import {SidebarButton} from "./SidebarButtons";
 import SettingsButton from "./SettingsButton";
 import * as SettingsEnum from '../utils/SettingsEnum';
 import EmailSetting from "./EmailSetting";

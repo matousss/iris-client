@@ -14,7 +14,7 @@ export default function (props) {
 
 
             <div className={"w-full top-btn h-full"}>
-                <SettingsButton/>
+                <SettingsButton onClick={() => props.setSettingsVisible(true)}/>
             </div>
             <div className={"top-btn"}>
                 <ThemeButton/>

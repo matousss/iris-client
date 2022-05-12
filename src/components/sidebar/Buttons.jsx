@@ -25,10 +25,10 @@ function DummyButton({avatar, username}) {
     )
 }
 
-function SettingsButton() {
+function SettingsButton({onClick}) {
 
     return (
-        <SidebarButton onClick={() => console.log("open settings")}
+        <SidebarButton onClick={onClick}
                        className={'inline'}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-sidebar m-auto group-hover:animate-spin-slow"
                  viewBox="0 0 20 20"
