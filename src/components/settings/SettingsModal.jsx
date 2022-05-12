@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal'
 import SettingsButton from "./SettingsButton";
-import * as SettingsEnum from '../utils/SettingsEnum';
+import * as SettingsEnum from '../../utils/SettingsEnum';
 import EmailSetting from "./EmailSetting";
 import PasswordSetting from "./PasswordSetting";
 import AvatarSetting from "./AvatarSetting";
 
-function SettingsModal(props) {
+export default function SettingsModal(props) {
     const[setting, setSetting] = useState(SettingsEnum.password);
 
     const selectComponent = () => {
@@ -58,5 +58,3 @@ function SettingsModal(props) {
         </Modal>
     );
 }
-
-export default SettingsModal;
