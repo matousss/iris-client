@@ -5,6 +5,7 @@ import {rawToMessage} from "../utils/ModelStorage";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import MessageComponent from "./MessageComponent";
 import {getSortedChannels} from "../utils/Sorting";
+import SettingsModal from "./SettingsModal";
 
 
 export default function NewMain(props) {
@@ -20,6 +21,8 @@ export default function NewMain(props) {
 
 
     const [sortedChannels, setSortedChannels] = useState(getSortedChannels(props.channels));
+
+    const [settingsVisible, setSettingsVisible] = useState(false);
 
     const generateMessages = () => {
         return Array.from(channel.messages, (message, i) => {
@@ -86,13 +89,14 @@ export default function NewMain(props) {
     return (
 
 
-        <div className='h-screen bg-secondary/90 text-text-1'>
+        <div className='h-screen bg-secondary/90 text-text-1 relative'>
             <Sidebar user={props.user} setUser={props.setUser} clearDesk={props.clearDesk}
                      setActiveConversation={setActiveConversation} channels={props.channels}
-                     sortedChannels={sortedChannels}
+                     sortedChannels={sortedChannels} setSettingsVisible={setSettingsVisible}
             />
             <MessagePanel user={props.user} activeChannel={channel}
                           messages={messageArray} sendMessage={sendMessage}/>
+            <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible}/>
         </div>
     );
 }

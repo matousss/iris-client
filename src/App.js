@@ -74,7 +74,6 @@ function App() {
         } else {
             setLoading(false);
         }
-
     }, [])
 
     useEffect(() => {

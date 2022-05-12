@@ -127,6 +127,24 @@ body * {
     border-radius: 10px;
 }
 
+.settingsButton{
+    @apply p-1 rounded-3xl text-sm w-20 border-2;
+}
+
+.settingsButton:hover{
+    @apply bg-white;
+}
+
+.shrink{
+    -webkit-transform:scale(0.5);
+    -moz-transform:scale(0.5);
+    -ms-transform:scale(0.5);
+    transform:scale(0.5);
+}
+
+.translate{
+    transform: translate(-50%, -50%);
+}
 
 .signout {
     transition: none !important;

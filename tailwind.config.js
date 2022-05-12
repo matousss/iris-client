@@ -13,8 +13,22 @@ module.exports = {
     theme: {
         extend: {
             maxWidth: {
+                '1/5': '20%',
                 '1/2': '50%',
                 '3/5': '60%',
+            },
+            maxHeight: {
+                '4/5': '80%',
+            },
+            width: {
+                '70-screen': '70vw',
+                '80-screen': '80vw',
+                '90-screen': '90vw',
+            },
+            height: {
+                '70-screen': '70vh',
+                '80-screen': '80vh',
+                '90-screen': '90vh',
             },
             colors: {
                 primary: withOpacity('--color-primary'),
