@@ -19,6 +19,8 @@ export default function Main(props) {
 
     const [sortedChannels, setSortedChannels] = useState(getSortedChannels(props.channels));
 
+    const [settingsVisible, setSettingsVisible] = useState(false);
+
     const generateMessages = () => {
         return Array.from(channel.messages, (message, i) => {
             return (
@@ -85,13 +87,14 @@ export default function Main(props) {
     return (
 
 
-        <div className='h-screen bg-secondary/90 text-text-1'>
+        <div className='h-screen bg-secondary/90 text-text-1 relative'>
             <Sidebar user={props.user} setUser={props.setUser} clearDesk={props.clearDesk}
                      setActiveConversation={setActiveConversation} channels={props.channels}
-                     sortedChannels={sortedChannels}
+                     sortedChannels={sortedChannels} setSettingsVisible={setSettingsVisible}
             />
             <MessagePanel user={props.user} activeChannel={channel}
                           messages={messageArray} sendMessage={sendMessage}/>
+            <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible}/>
         </div>
     );
 }
