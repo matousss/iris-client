@@ -10,6 +10,8 @@ import {getData} from './utils/StorageUtil';
 import {loadTheme} from "./utils/ThemesUtils";
 import Main from "./components/Main";
 
+const SetLoadingContext = React.createContext(() => {})
+
 
 function App() {
     const [user, setUser] = useState('');
@@ -92,12 +94,14 @@ function App() {
                               setPage={setPage}
                               stayLoggedIn={stayLoggedIn}
                               setStayLoggedIn={setStayLoggedIn}
+                              setLoading={setLoading}
                               initMain={initMain}/>
             case Page.signup:
                 return <Signup setUser={setUser}
                                setPage={setPage}
                                stayLoggedIn={stayLoggedIn}
                                setStayLoggedIn={setStayLoggedIn}
+                               setLoading={setLoading}
                 />
             case Page.verify:
                 return <Verify username={user['username']}
@@ -138,8 +142,8 @@ function App() {
 
     return (
         <>
-            {loading ? <Loading opacity={.6}/> :
-                (page !== Page.main ? <HomeContainer>{selectComponent(page)}</HomeContainer> :
+            {loading ? <Loading opacity={.6}/> : ''}
+            {   (page !== Page.main ? <HomeContainer>{selectComponent(page)}</HomeContainer> :
 
                         <Main user={user}
                               clearDesk={clearDesk}

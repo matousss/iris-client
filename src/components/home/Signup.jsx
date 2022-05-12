@@ -4,7 +4,7 @@ import {signup} from '../../utils/RequestUtils'
 import HomeForm from "./form/HomeForm";
 import FormField from "./form/FormField";
 
-export function Signup({setUser, setPage}) {
+export function Signup({setUser, setPage, setLoading}) {
     const [emailField, setEmailField] = useState('')
     const [usernameField, setUsernameField] = useState('')
     const [passwordField, setPasswordField] = useState('')
@@ -15,6 +15,7 @@ export function Signup({setUser, setPage}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         e.target.firstChild.disabled = true;
+        setLoading(true)
         try {
             if (passwordField !== passwordAgainField) {
                 return setErrorMessage("passwords don't match");
@@ -28,6 +29,7 @@ export function Signup({setUser, setPage}) {
         }
         finally {
             e.target.firstChild.disabled = false;
+            setLoading(false);
         }
 
     }
