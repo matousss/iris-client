@@ -1,36 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import ReactCrop, {centerCrop, makeAspectCrop, Crop, PixelCrop} from 'react-image-crop';
+import ReactCrop, {centerCrop, makeAspectCrop} from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css'
 import Modal from "react-modal";
 
-function AvatarSetting(props) {
+function AvatarSetting() {
     const [srcImage, setSrcImage] = useState('');
-    const [crop, setCrop] = useState();
-    const [className, setClassName] = useState('');
+    const [crop, setCrop] = useState(null);
+    const [editorOpen, setEditorOpen] = useState(false);
 
     useEffect(() => {
-        setSize();
-        window.addEventListener('resize', () => setSize());
-    }, [])
-
-    useEffect(() => {
-        console.log(crop);}, [crop])
-
-    const setSize = () => {
-        if (window.screen.width > window.screen.height){
-            setClassName('h-70-screen md:h-80-screen');
-        } else {
-            setClassName('w-70-screen md:w-80-screen')
-        }
-    }
+        console.log(crop);
+    }, [crop])
 
     const onSelectFile = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             setCrop(undefined) // Makes crop preview update between images.
             const reader = new FileReader()
-            reader.addEventListener('load', () =>{
-                setSrcImage(reader.result.toString() || '');
-                console.log(srcImage);
+            reader.addEventListener('load', () => {
+                    setSrcImage(reader.result.toString() || '');
+                    setEditorOpen(true);
                 }
             )
             reader.readAsDataURL(e.target.files[0])
@@ -55,27 +43,37 @@ function AvatarSetting(props) {
 
     const onImageLoad = (e) => {
         const {width, height} = e.currentTarget;
-        console.log(height);
         setCrop(centerAspectCrop(width, height, 1));
     }
 
     const handleResult = () => {
-        setSrcImage('');
+        setEditorOpen(false);
     }
 
     return (
         <div className='flex flex-col w-4/5 mx-auto justify-center relative'>
             <h1 className='text-2xl mb-5'>Change avatar</h1>
             <input type='file' onChange={onSelectFile}/>
-            <Modal className='w-[80%] sm:w-[50%] h-fit border-2 border-gray-300 rounded-3xl p-5 absolute top-1/2 left-1/2 translate'  isOpen={Boolean(srcImage)}>
-                <ReactCrop crop={crop} onChange={(absoluteCrop, percentCrop) => setCrop(absoluteCrop)} aspect={1} className={'w-full'}>
-                        <img src={srcImage} onLoad={onImageLoad} id='image' className={'object-cover w-full'}/>
+            {// todo cropped preview
+                (crop && editorOpen === false) ?
+                    <div style={{width: crop.width.toString() + crop.unit, height: crop.height}}>
+                        <img src={srcImage}/>
+                    </div> : ''
+            }
+            <Modal
+                className='w-[80%] sm:w-[50%] h-fit border-2 border-gray-300 rounded-3xl p-5 absolute top-1/2 left-1/2 translate'
+                isOpen={Boolean(editorOpen)}>
+                <ReactCrop crop={crop} onChange={(crop) => setCrop(crop)} aspect={1} className={'w-full'}>
+                    <img src={srcImage} onLoad={onImageLoad} id='image' className={'object-cover w-full'}
+                         alt={'Error'}/>
                 </ReactCrop>
                 <div className='flex justify-end'>
                     <button className='bg-gray-300 mr-4 border-2 border-gray-300 settingsButton'
-                            onClick={() => setSrcImage('')}>Cancel</button>
+                            onClick={() => setSrcImage('')}>Cancel
+                    </button>
                     <button className='bg-orange-500 border-orange-500 settingsButton'
-                            onClick={() => handleResult()}>Ok</button>
+                            onClick={() => handleResult()}>Ok
+                    </button>
                 </div>
             </Modal>
         </div>
