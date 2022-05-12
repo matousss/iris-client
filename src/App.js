@@ -50,6 +50,7 @@ function App() {
                 }
             }).catch(e => {
                 console.error(e)
+                // todo show some error window
                 showError("Server unreachable")
             })
         }
