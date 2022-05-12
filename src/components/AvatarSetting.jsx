@@ -67,9 +67,9 @@ function AvatarSetting(props) {
         <div className='flex flex-col w-4/5 mx-auto justify-center relative'>
             <h1 className='text-2xl mb-5'>Change avatar</h1>
             <input type='file' onChange={onSelectFile}/>
-            <Modal className='w-fit h-fit border-2 border-gray-300 rounded-3xl p-5 absolute top-1/2 left-1/2 translate'  isOpen={Boolean(srcImage)}>
-                <ReactCrop crop={crop} onChange={(absoluteCrop, percentCrop) => setCrop(absoluteCrop)} aspect={1} className={className}>
-                    <img src={srcImage} onLoad={onImageLoad} id='image' className={className}/>
+            <Modal className='w-[80%] sm:w-[50%] h-fit border-2 border-gray-300 rounded-3xl p-5 absolute top-1/2 left-1/2 translate'  isOpen={Boolean(srcImage)}>
+                <ReactCrop crop={crop} onChange={(absoluteCrop, percentCrop) => setCrop(absoluteCrop)} aspect={1} className={'w-full'}>
+                        <img src={srcImage} onLoad={onImageLoad} id='image' className={'object-cover w-full'}/>
                 </ReactCrop>
                 <div className='flex justify-end'>
                     <button className='bg-gray-300 mr-4 border-2 border-gray-300 settingsButton'
