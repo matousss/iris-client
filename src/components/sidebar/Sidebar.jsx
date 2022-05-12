@@ -26,29 +26,6 @@ export default function Sidebar(props) {
 
     }, [expanded])
 
-    // const showChannels = () => {
-    //     let elements = []
-    //     props.channels.forEach(val => {
-    //         console.log(val)
-    //         switch (val['type']) {
-    //             case 'directchannel':
-    //                 initDirectChannel(val).then(e => elements.push(e))
-    //                 break;
-    //             case 'groupchannel':
-    //                 initGroupChannel(val).then(e => elements.push(e))
-    //                 break;
-    //             default:
-    //
-    //
-    //         }
-    //
-    //         elements.push(<ChannelButton
-    //             avatar={val['avatar']}
-    //             username={val['username']}
-    //             setActiveConversation={props.setActiveConversation}/>)
-    //     })
-    //     return elements
-    // }
 
     const handleDrag = e => {
         let x = e.touches[0].clientX
@@ -79,7 +56,7 @@ export default function Sidebar(props) {
             {/*<li className={"pb-[80px]"} style={{height: "80px"}}>
                 <UserCard/>
             </li>*/}
-            <TopButtons toggleExpansion={toggleExpansion} user={props.user} setSettingsVisible={props.setSettingsVisible}/>
+            <TopButtons toggleExpansion={toggleExpansion} setSettingsVisible={props.setSettingsVisible}/>
             <li id='sidebar-channels' className={'buttons'}>
                 {generateButtons()}
 

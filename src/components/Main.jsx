@@ -6,11 +6,15 @@ import {getSortedChannels} from "../utils/Sorting";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import SettingsModal from "./settings/SettingsModal";
 
+export const UserContext = React.createContext(null);
+
+
 export default function Main(props) {
     const [activeConversation, setActiveConversation] = useState(() => {
         let lastActive = localStorage.getItem('lastActiveChannel');
         return props.channels.get(lastActive) === undefined ? null : lastActive;
     });
+
 
     const [wsh, setWSH] = useState(null)
     const [channel, setChannel] = useState(null);
@@ -87,16 +91,17 @@ export default function Main(props) {
 
     return (
 
-
-        <div className='h-screen bg-secondary/90 text-text-1 relative'>
-            <Sidebar user={props.user} setUser={props.setUser} clearDesk={props.clearDesk}
-                     setActiveConversation={setActiveConversation} channels={props.channels}
-                     sortedChannels={sortedChannels} setSettingsVisible={setSettingsVisible}
-            />
-            <MessagePanel user={props.user} activeChannel={channel}
-                          messages={messageArray} sendMessage={sendMessage}/>
-            <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible}/>
-        </div>
+        <UserContext.Provider value={props.user}>
+            <div className='h-screen bg-secondary/90 text-text-1 relative'>
+                <Sidebar clearDesk={props.clearDesk}
+                         setActiveConversation={setActiveConversation} channels={props.channels}
+                         sortedChannels={sortedChannels} setSettingsVisible={setSettingsVisible}
+                />
+                <MessagePanel activeChannel={channel}
+                              messages={messageArray} sendMessage={sendMessage}/>
+                <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible}/>
+            </div>
+        </UserContext.Provider>
     );
 }
 

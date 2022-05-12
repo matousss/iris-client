@@ -140,13 +140,14 @@ function App() {
         <>
             {loading ? <Loading opacity={.6}/> :
                 (page !== Page.main ? <HomeContainer>{selectComponent(page)}</HomeContainer> :
+
                         <Main user={user}
-                              setUser={setUser}
                               clearDesk={clearDesk}
                               setPage={setPage}
                               stayLoggedIn={stayLoggedIn}
                               users={userStorage}
                               channels={channelStorage}/>
+
                 )
             }
 
