@@ -6,21 +6,24 @@
     :root {
         --color-primary: 255, 144, 0;
         --color-secondary: 255, 255, 255;
-        --color-text-1: 0, 0, 0;
-        --color-shadow: 0, 0, 0;
+        --color-ptext: 0, 0, 0;
+        --color-warning: 219, 0, 0;
+        --color-middle: 242, 242, 242;
     }
 
     [data-theme="dark"] {
         --color-primary: 28, 28, 38;
         --color-secondary: 6, 8, 14;
-        --color-text-1: 255, 255, 255;
-        --color-shadow: 0, 0, 0;
+        --color-ptext: 255, 255, 255;
+        --color-warning: 219, 0, 219;
+        --color-middle: 44, 46, 52;
 
     }
     [data-theme="red"] {
         --color-primary: 68, 0, 1;
         --color-secondary: 16, 12, 18;
-        --color-text-1: 255, 255, 255;
-        --color-shadow: 0, 0, 0;
+        --color-ptext: 255, 255, 255;
+        --color-warning: 219, 0, 219;
+        --color-middle: 44, 46, 52;
     }
 }

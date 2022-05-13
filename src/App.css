@@ -55,7 +55,7 @@ body * {
     @apply items-stretch;
 
     @apply bg-primary/75;
-    @apply text-text-1;
+    @apply text-ptext;
 
     @apply backdrop-blur-[1.5px];
     @apply shadow-[-4px_0_20px_-5px];
@@ -127,13 +127,6 @@ body * {
     border-radius: 10px;
 }
 
-.settingsButton{
-    @apply p-1 rounded-3xl text-sm w-20 border-2;
-}
-
-.settingsButton:hover{
-    @apply bg-white;
-}
 
 .shrink{
     -webkit-transform:scale(0.5);

@@ -18,7 +18,7 @@ function DummyButton({avatar, username}) {
         <SidebarButton onClick={() => {
         }} className={'inline hover:bg-white/0 cursor-not-allowed'}>
             {/*{avatar ? <img src={avatar}/> : 'ne'}*/}
-            <div className={'m-auto w-max border-text-1/50 border-[3px] border-dashed rounded-full'}>
+            <div className={'m-auto w-max border-ptext/50 border-[3px] border-dashed rounded-full'}>
                 {getAvatar(username, avatar)}
             </div>
         </SidebarButton>

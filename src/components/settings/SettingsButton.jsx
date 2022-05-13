@@ -2,7 +2,7 @@ import React from 'react';
 
 function SettingsButton(props) {
     return (
-        <button onClick={() => props.click()} className='rounded-3xl p-2 hover:bg-gray-300'>{props.title}</button>
+        <button onClick={() => props.click()} className='w-full border-y-[1px] border-white/0 hover:border-ptext/10 p-2'>{props.title}</button>
     );
 }
 

@@ -33,7 +33,9 @@ module.exports = {
             colors: {
                 primary: withOpacity('--color-primary'),
                 secondary: withOpacity('--color-secondary'),
-                'text-1': withOpacity('--color-text-1'),
+                'ptext': withOpacity('--color-ptext'),
+                warning: withOpacity('--color-warning'),
+                middle: withOpacity('--color-middle'),
 
             },
             animation: {
@@ -42,6 +44,7 @@ module.exports = {
                 'flip': 'flip 300ms linear 1',
                 'shake': 'shake 300ms linear 1',
                 'rotate-logo': 'rotate-center 1200ms ease-in-out infinite both',
+                'appear': 'appear 500ms linear 1'
             },
             keyframes: {
                 flip: {
@@ -57,6 +60,14 @@ module.exports = {
                     '50%': {
                         transform: 'translateX(5%)',
                     }
+                },
+                appear: {
+                    '0%': {
+                        opacity: '0%',
+                    },
+                    '100%': {
+                      opacity: '100%',
+                    },
                 }
             }
         },

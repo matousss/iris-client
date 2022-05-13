@@ -10,7 +10,7 @@ export function SearchField({onSearch, enabled, reset}) {
                 <input
                     id={'userSearchField'}
                     onChange={reset}
-                    className={'w-2/3 resize-none p-2 border-2 border-text-1/40 rounded-3xl message-input bg-text-1/10' + onEnabled()}
+                    className={'w-2/3 resize-none p-2 border-2 border-ptext/40 rounded-3xl message-input bg-text-1/10' + onEnabled()}
                     onKeyPress={e => {
                         if (e.key === "Enter" && !e.shiftKey) {
                             e.canceled = true;

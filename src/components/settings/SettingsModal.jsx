@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
-import Modal from 'react-modal'
 import SettingsButton from "./SettingsButton";
 import * as SettingsEnum from '../../utils/SettingsEnum';
 import EmailSetting from "./EmailSetting";
 import PasswordSetting from "./PasswordSetting";
 import AvatarSetting from "./AvatarSetting";
+import {CustomModal} from "../CustomModal";
 
 export default function SettingsModal(props) {
-    const[setting, setSetting] = useState(SettingsEnum.password);
+    const [setting, setSetting] = useState(SettingsEnum.password);
 
     const selectComponent = () => {
-        switch (setting){
+        switch (setting) {
             case SettingsEnum.email:
                 return <EmailSetting/>;
             case SettingsEnum.password:
@@ -29,32 +29,46 @@ export default function SettingsModal(props) {
         closeModal();
     }
 
+
+
     return (
-        <Modal className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full md:w-2/3 md:h-3/4 lg:w-1/2 lg:h-2/3 border-2 border-gray-400 outline-none rounded-2xl shadow-2xl p-4 flex flex-col bg-white'
-               isOpen={props.visible}>
-            <h1 className='text-3xl mb-3'>Settings</h1>
+        <CustomModal
+               isOpen={props.visible}
+        >
+            <div className={'flex'}>
+            <h1 className='text-3xl mb-3 mr-auto'>Settings</h1>
+            <div className={'flex h-full'}>
+                <button className={'h-[80%] group text-ptext/10 hover:text-warning'} onClick={closeModal}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className={"h-full"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.4}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </button>
+            </div>
+            </div>
             <div className='grow flex'>
-                <ul className='w-1/3 md:w-1/4 h-full pl-3 border-r-2'>
-                    <li className='mt-5'>
-                        <SettingsButton title={'Change password'} click={() => {setSetting(SettingsEnum.password)}}/>
+                <ul className='w-1/3 md:w-1/4 h-full border-r-[1px] border-ptext/20'>
+                    <li>
+                        <SettingsButton title={'Change password'} click={() => {
+                            setSetting(SettingsEnum.password)
+                        }}/>
                     </li>
-                    <li className='mt-5'>
-                        <SettingsButton title={'Change email'} click={() => {setSetting(SettingsEnum.email)}}/>
+                    <li>
+                        <SettingsButton title={'Change email'} click={() => {
+                            setSetting(SettingsEnum.email)
+                        }}/>
                     </li>
-                    <li className='mt-5'>
-                        <SettingsButton title={'Change avatar'} click={() => {setSetting(SettingsEnum.avatar)}}/>
+                    <li>
+                        <SettingsButton title={'Change avatar'} click={() => {
+                            setSetting(SettingsEnum.avatar)
+                        }}/>
                     </li>
                 </ul>
                 <div className='w-2/3 md:w-3/4 h-full mt-5 relative'>
                     {selectComponent()}
                 </div>
             </div>
-            <div className='w-full h-10 flex justify-end items-center'>
-                <button className='bg-gray-300 mr-4 border-2 border-gray-300 settingsButton'
-                        onClick={() => closeModal()}>Cancel</button>
-                <button className='bg-orange-500 border-orange-500 settingsButton'
-                        onClick={() => saveAndClose()}>Save</button>
-            </div>
-        </Modal>
+
+
+        </CustomModal>
     );
 }

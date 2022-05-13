@@ -92,7 +92,7 @@ export default function Main(props) {
     return (
 
         <UserContext.Provider value={props.user}>
-            <div className='h-screen bg-secondary/90 text-text-1 relative'>
+            <div className='h-screen bg-secondary/90 text-ptext relative'>
                 <Sidebar clearDesk={props.clearDesk}
                          setActiveConversation={setActiveConversation} channels={props.channels}
                          sortedChannels={sortedChannels} setSettingsVisible={setSettingsVisible}

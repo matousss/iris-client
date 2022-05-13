@@ -16,10 +16,10 @@ function InputField(props) {
     }
 
     return (
-        <div className='w-full h-auto p-5 mx-auto bg-text-1/5 shadow-[0_-10px_15px_-3px_rgba(0,0,0,.1)]'>
+        <div className='w-full h-auto p-5 mx-auto bg-ptext/5 shadow-[0_-10px_15px_-3px_rgba(0,0,0,.1)]'>
             <form className='flex justify-center item w-full' onSubmit={handleSubmit}>
                 <TextareaAutosize id={'input'} maxRows={4} onChange={e => setInput(e.target.value)}
-                                  className='w-2/3 resize-none p-2 border-2 border-text-1/40 rounded-3xl message-input bg-text-1/10'
+                                  className='w-2/3 resize-none p-2 border-2 border-ptext/40 rounded-3xl message-input bg-ptext/10'
                                   onKeyDown={
                                       e => {
                                           if (e.key === "Enter" && !e.shiftKey) {
