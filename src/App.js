@@ -36,7 +36,7 @@ function App() {
                 if (response.status === 200) {
                     response.json().then(data => {
                         setUser(data);
-                        getData(data.user).then(data => {
+                        getData(data.id).then(data => {
                             setUserStorage(data.users);
                             setChannelStorage(data.channels);
                             setLoading(false);

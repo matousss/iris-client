@@ -7,7 +7,7 @@ async function getUsers(ids: String[]) {
     async function processResponse(response) {
         if (response.ok) {
             let raw = await response.json()
-            let user = new User(raw.user, raw.username, raw.avatar);
+            let user = new User(raw.id, raw.username, raw.avatar);
             user.precacheAvatar()
             return user;
         }
