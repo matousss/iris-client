@@ -12,7 +12,7 @@ export default function (props) {
             <div className={'h-full w-full'}>
                 <BrowserView className={'h-full w-sidebar'}>
                     <UserContext.Consumer>
-                        {(user) => <DummyButton avatar={user.avatar} username={user.username}/>}
+                        {(user) => <DummyButton avatar={user.avatar} username={user.username} email={user.email}/>}
                     </UserContext.Consumer>
 
                 </BrowserView>

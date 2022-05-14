@@ -27,27 +27,12 @@ export function Login(props) {
     }
 
     const handleFetch = (response) => {
-        // if (data.result === 'inactive_user') {
-        //     props.setUser(usernameField);
-        //     props.setPage(Page.verify);
-        //     return;
-        // }
-        //
-        // if (data.result === 'invalid_user') return setError('wrong username or password')
-        //
-        // props.setUser(data.user);
-        // props.stayLoggedIn ? localStorage.setItem('user', JSON.stringify(data.user)) : sessionStorage.setItem('user', JSON.stringify(data.user));
-        // props.setPage(Page.main);
 
         switch (response.status) {
             case 200:
                 response.json().then(data => {
-                    // saveToken(data['token']);
                     props.setUser(data['user']);
-                    // props.setToken(data['token'])
                     props.initMain(data['token'])
-
-                    // props.setPage(Page.main);
                 })
                 break;
             case 401:

@@ -8,9 +8,10 @@ import {getFullProfile, logout} from './utils/RequestUtils'
 import Loading from "./components/Loading";
 import {getData} from './utils/StorageUtil';
 import {loadTheme} from "./utils/ThemesUtils";
-import Main from "./components/Main";
+import Main, {UserContext} from "./components/Main";
 
-const SetLoadingContext = React.createContext(() => {})
+const SetLoadingContext = React.createContext(() => {
+})
 
 
 function App() {
@@ -104,7 +105,7 @@ function App() {
                                setLoading={setLoading}
                 />
             case Page.verify:
-                return <Verify username={user['username']}
+                return <Verify user={user}
                                setPage={setPage}
                                initMain={initMain}
                                setLoading={setLoading}
@@ -143,18 +144,17 @@ function App() {
     return (
         <>
             {loading ? <Loading opacity={.6}/> : ''}
-            {   (page !== Page.main ? <HomeContainer>{selectComponent(page)}</HomeContainer> :
+            {(page !== Page.main ? <HomeContainer>{selectComponent(page)}</HomeContainer> :
 
-                        <Main user={user}
-                              clearDesk={clearDesk}
-                              setPage={setPage}
-                              stayLoggedIn={stayLoggedIn}
-                              users={userStorage}
-                              channels={channelStorage}/>
+                    <Main user={user}
+                          clearDesk={clearDesk}
+                          setPage={setPage}
+                          stayLoggedIn={stayLoggedIn}
+                          users={userStorage}
+                          channels={channelStorage}/>
 
-                )
+            )
             }
-
         </>
     );
 }

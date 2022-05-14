@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import * as Page from '../../utils/PageEnum'
 import {activateAccount} from "../../utils/RequestUtils";
 import HomeForm from "./form/HomeForm";
 import FormField from "./form/FormField";
+import {UserContext} from "../Main";
 
-export function Verify({username, setPage, initMain, setLoading}) {
+export function Verify({user, setPage, initMain, setLoading}) {
     const [codeField, setCodeField] = useState('')
     const [error, setError] = useState('')
 
@@ -32,7 +33,7 @@ export function Verify({username, setPage, initMain, setLoading}) {
         e.preventDefault();
         setLoading(true);
         try {
-            let response = await activateAccount(username, codeField)
+            let response = await activateAccount(user.username, codeField)
 
             await handleFetch(response)
         } catch (e) {

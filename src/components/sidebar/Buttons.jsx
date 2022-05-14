@@ -13,13 +13,13 @@ function SidebarButton(props) {
 }
 
 
-function DummyButton({avatar, username}) {
+function DummyButton(props) {
     return (
         <SidebarButton onClick={() => {
         }} className={'inline hover:bg-white/0 cursor-not-allowed'}>
             {/*{avatar ? <img src={avatar}/> : 'ne'}*/}
             <div className={'m-auto w-max border-ptext/50 border-[3px] border-dashed rounded-full'}>
-                {getAvatar(username, avatar)}
+                {getAvatar(props)}
             </div>
         </SidebarButton>
     )

@@ -167,7 +167,7 @@ body * {
 }
 
 .incoming-message .message-body {
-    @apply border-[1.5px] border-primary/30;
+    @apply border-1.5 border-primary/30;
     @apply bg-white/10;
     @apply text-left;
 }
@@ -179,5 +179,6 @@ body * {
     @apply break-words;
     @apply bg-primary/40;
     @apply text-right;
+    @apply w-fit;
 }
 

@@ -12,7 +12,7 @@ export default function Sidebar(props) {
 
 
     const generateButtons = () => Array.from(props.sortedChannels, (channel) => {
-            return (<ChannelButton key={channel.id} channel={channel.id} avatar={channel.icon} username={channel.title}
+            return (<ChannelButton key={channel.id} channel={channel} avatar={channel.icon}
                                    setActiveConversation={props.setActiveConversation}
                                    visible={expanded}/>)
         }

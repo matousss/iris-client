@@ -1,16 +1,16 @@
 import React from 'react';
 import Avatar from "react-avatar";
 
-const AutoAvatar = ({username}) => <Avatar className={"my-auto"} name={username} size={'56'} round={true}/>;
+const AutoAvatar = (props) => <Avatar className={"my-auto"} {...props} size={'56'} round={true}/>;
 
-export const getAvatar = (username, avatar) => (avatar === null ?
-    <AutoAvatar username={username} className={'duration-0'}/> :
+export const getAvatar = ({username, email, avatar}) => (avatar === null ?
+    <AutoAvatar name={username} email={email} className={'duration-0'}/> :
     <img src={avatar} className={'max-h-14 rounded-[100%] bg-white'} alt={<AutoAvatar username={username}/>}/>);
 
 export default function ChannelCard(props) {
     return (
         <div className={'flex items-left row align-left px-2 w-full h-full py-3'}>
-            {getAvatar(props.username, props.avatar)}
+            {getAvatar({...props})}
 
             <div
                 className={

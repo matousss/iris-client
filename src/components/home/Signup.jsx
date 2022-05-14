@@ -40,7 +40,6 @@ export function Signup({setUser, setPage, setLoading}) {
         switch (response.status) {
             case 200:
                 setPage(Page.verify);
-                console.log(data['user'])
                 setUser(data['user'])
                 break;
             case 400:

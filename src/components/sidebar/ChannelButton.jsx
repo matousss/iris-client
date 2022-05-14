@@ -1,13 +1,16 @@
 import React from 'react';
 import ChannelCard from "./ChannelCard";
 
-export default function ChannelButton(props) {
+export default function ChannelButton({setActiveConversation, channel}) {
     return (
         <button className={'w-full h-22 hover:bg-white/20 duration-[300ms]'}
                 onClick={() => {
-                    props.setActiveConversation(props.channel)
+                    setActiveConversation(channel)
                 }}>
-            <ChannelCard username={props.username} avatar={props.avatar}/>
+            <ChannelCard username={channel.title}
+                         avatar={channel.icon}
+                        email={channel.users.length === 2 ? channel.users[1].email : ''}
+            />
         </button>
     );
 }
