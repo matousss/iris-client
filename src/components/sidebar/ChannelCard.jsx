@@ -4,7 +4,7 @@ import Avatar from "react-avatar";
 const AutoAvatar = ({username}) => <Avatar className={"my-auto"} name={username} size={'56'} round={true}/>;
 
 export const getAvatar = (username, avatar) => (avatar === null ?
-    <AutoAvatar username={username}/> :
+    <AutoAvatar username={username} className={'duration-0'}/> :
     <img src={avatar} className={'max-h-14 rounded-[100%] bg-white'} alt={<AutoAvatar username={username}/>}/>);
 
 export default function ChannelCard(props) {
