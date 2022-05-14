@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import InputField from "./InputField";
-import {ImageMessageComponent, MessageComponent} from "./MessageComponent";
 
 export function MessagePanel({activeChannel, messages, sendMessage}) {
     useEffect(() => console.log('messages updated'), [messages])
