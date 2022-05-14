@@ -9,11 +9,11 @@ export const SettingsField = props =>
 export const SettingsForm = ({title, onSubmit, submitText = 'Save', children}) => {
     return <form className='flex flex-col w-full h-full' onSubmit={onSubmit}>
         {title ? (<h1 className='text-2xl mb-5'>{title}</h1>) : ''}
-        <div className={'flex flex-col my-auto'}>
+        <div className={'flex flex-col'}>
             {children}
         </div>
-        <button className='w-20 p-1 mb-3 mt-auto mr-auto
+        <button className='w-20 p-2 mt-auto ml-auto
         bg-middle/70 hover:bg-ptext/10
-        text-sm border-ptext/10 border-2 rounded-3xl'>{submitText}</button>
+        text-lg border-ptext/10 border-2 rounded-2xl'>{submitText}</button>
     </form>
 }

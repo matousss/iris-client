@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import ReactCrop, {centerCrop, makeAspectCrop} from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css'
-import Modal from "react-modal";
-import {SettingsContainer, TitledSettingContainer} from "./SettingsContainer";
-import {SettingsField, SettingsForm} from "./SettingsForm";
+import {centerCrop, makeAspectCrop} from 'react-image-crop';
+import {TitledSettingContainer} from "./SettingsContainer";
+import {SettingsForm} from "./SettingsForm";
+import {FileInput} from "./FileInput";
+import CropModal from "./CropModal";
 
-function AvatarSetting() {
+function AvatarSetting(props) {
     const [srcImage, setSrcImage] = useState('');
     const [fileName, setFileName] = useState('not slected');
     const [crop, setCrop] = useState(null);
@@ -55,28 +55,9 @@ function AvatarSetting() {
     }
 
     return (
-        <TitledSettingContainer title={'Change avatar'}>
-            <SettingsForm>
-
-                {/*<input type='file' onChange={onSelectFile}              />*/}
-                <label className="block mb-2 w-1/2 text-sm font-medium rounded-2xl border-2 border-ptext/10 bg-ptext/10 cursor-pointer">
-                    <input
-                        className="opacity-0 border-3 border-black w-0 h-0 fixed"
-                        type="file"
-                        onChange={onSelectFile}
-                    />
-                    <div className={'flex'}>
-                        <div className={'h-full pl-1.5 py-2 pr-0 border-r-2 border-ptext/20 bg-middle/70 rounded-l-2xl'}>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                            </svg>
-                        </div>
-
-                        <div className={'m-auto h-full px-2 truncate'}>
-                            {fileName}
-                        </div>
-                    </div>
-                </label>
+        <TitledSettingContainer title={'Change avatar'} {...props}>
+            <SettingsForm onSubmit={() => console.log('submitted')}>
+                <FileInput fileName={fileName} onChange={onSelectFile}/>
 
                 {/*// todo cropped preview
                     (crop && editorOpen === false) ?
@@ -87,22 +68,15 @@ function AvatarSetting() {
             </SettingsForm>
 
 
-            <Modal
-                className='w-[80%] sm:w-[50%] h-fit border-2 border-gray-300 rounded-3xl p-5 absolute top-1/2 left-1/2 translate'
-                isOpen={Boolean(editorOpen)}>
-                <ReactCrop crop={crop} onChange={(crop) => setCrop(crop)} aspect={1} className={'w-full'}>
-                    <img src={srcImage} onLoad={onImageLoad} id='image' className={'object-cover w-full'}
-                         alt={'Error'}/>
-                </ReactCrop>
-                <div className='flex justify-end'>
-                    <button className='bg-gray-300 mr-4 border-2 border-gray-300 settingsButton'
-                            onClick={() => setSrcImage('')}>Cancel
-                    </button>
-                    <button className='bg-orange-500 border-orange-500 settingsButton'
-                            onClick={() => handleResult()}>Ok
-                    </button>
-                </div>
-            </Modal>
+            <CropModal
+                isOpen={editorOpen === true}
+                crop={crop} setCrop={setCrop}
+                srcImage={srcImage} onImageLoad={onImageLoad}
+                onSubmit={handleResult} onCancel={() => {
+                    setSrcImage('');
+                    setFileName('not selected')
+                    setEditorOpen(false);
+            }}/>
         </TitledSettingContainer>
     );
 }

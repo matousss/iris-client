@@ -160,3 +160,12 @@ body * {
 .message-input::-webkit-scrollbar {
     width: 0;
 }
+
+.settings-button {
+}
+.settings-button.active-button {
+    @apply border-ptext/10;
+}
+.settings-button.active-button .content {
+    @apply translate-x-[10%];
+}

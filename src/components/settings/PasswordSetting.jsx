@@ -4,7 +4,7 @@ import {SettingsField, SettingsForm} from "./SettingsForm";
 
 function PasswordSetting(props) {
     return (
-        <SettingsContainer>
+        <SettingsContainer id={props.id}>
             <SettingsForm onSubmit={() => console.log('submitted')} title={'Change password'}>
                 <SettingsField type={'password'} label={'Old password'}/>
                 <SettingsField type={'password'} label={'New password'}/>

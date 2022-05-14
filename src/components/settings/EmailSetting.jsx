@@ -5,7 +5,7 @@ import {UserContext} from "../Main";
 
 function EmailSetting(props) {
     return (
-        <SettingsContainer>
+        <SettingsContainer {...props}>
             <SettingsForm onSubmit={() => console.log('submitted')} title={'Change email'}>
                 <UserContext.Consumer>
                     {(user) => <SettingsField type={'email'} value={user.email} label={'Enter email'}/>}
