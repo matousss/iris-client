@@ -19,7 +19,8 @@ export const CustomModal = props => {
                               left: 0,
                               right: 0,
                               bottom: 0,
-                              backgroundColor: 'rgba(var(--color-middle), .8)'
+                              backgroundColor: 'rgba(var(--color-middle), .4)',
+                              backdropFilter: 'blur(4px)',
                           }
                       }
                   }
