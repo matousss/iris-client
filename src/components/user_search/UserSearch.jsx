@@ -31,7 +31,7 @@ export function UserSearch() {
     }, [result])
 
     return <div className={'fixed left-0 top-0 w-screen h-screen z-100 backdrop-blur-[2.5px] text-ptext'}>
-        <div className={'fixed bg-primary w-[50%] h-[50%] top-[25%] left-[25%]'}>
+        <div className={'fixed bg-primary w-1/2 h-1/2 top-[25%] left-[25%]'}>
             <SearchField onSearch={search} enabled={!loading} reset={() => setResult(null)}/>
             <ul>
                 {displayed}

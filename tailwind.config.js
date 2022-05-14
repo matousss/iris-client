@@ -24,11 +24,19 @@ module.exports = {
                 '70-screen': '70vw',
                 '80-screen': '80vw',
                 '90-screen': '90vw',
+                '1/2': '50%',
             },
             height: {
                 '70-screen': '70vh',
                 '80-screen': '80vh',
                 '90-screen': '90vh',
+                '1/2': '50%',
+            },
+            transitionDuration: {
+                '0': '0ms',
+                '60': '60ms',
+                '250': '250ms',
+                '350': '350ms',
             },
             colors: {
                 primary: withOpacity('--color-primary'),
@@ -63,7 +71,7 @@ module.exports = {
                 },
                 'slide-bottom': {
                     '0%': {
-                      transform: 'translateY(100%)',
+                        transform: 'translateY(100%)',
                     },
                 },
             },

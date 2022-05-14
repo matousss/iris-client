@@ -7,7 +7,7 @@ export default function (props) {
 
 
     return (
-        <li className={'duration-[250ms] flex overflow-hidden h-[6rem]'}>
+        <li className={'duration-250 flex overflow-hidden h-[6rem]'}>
 
             <div className={'h-full w-full'}>
                 <BrowserView className={'h-full w-sidebar'}>
