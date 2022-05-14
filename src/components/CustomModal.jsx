@@ -6,8 +6,9 @@ export const CustomModal = props => {
     }
 
     return <Modal className='
-        flex flex-col absolute top-1/2 left-1/2 p-4
-        transform -translate-x-1/2 -translate-y-1/2
+        flex flex-col p-4 m-auto
+        relative top-1/2
+        transition transform -translate-y-1/2 animate-slide-bottom
         w-full h-full md:w-2/3 md:h-3/4 lg:w-1/2 lg:h-4/5
         md:border-2 border-ptext/20 outline-none md:rounded-2xl md:shadow-2xl bg-middle text-ptext
         '

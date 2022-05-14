@@ -29,10 +29,10 @@ export default function SettingsModal(props) {
     });
 
     return (
-        <CustomModal isOpen={props.visible}>
+        <CustomModal isOpen={props.visible}><div className={'animate-pop-in'}>
             <div className={'flex'}>
-                <h1 className='text-3xl mb-3 mr-auto'>Settings</h1>
-                <div className={'flex h-full'}>
+                <h1 className='text-3xl mb-3'>Settings</h1>
+                <div className={'flex w-full justify-end'}>
                     <button className={'h-[80%] group text-ptext/10 hover:text-warning'} onClick={closeModal}>
                         <svg xmlns="http://www.w3.org/2000/svg" className={"h-full"} fill="none" viewBox="0 0 24 24"
                              stroke="currentColor" strokeWidth={1.4}>
@@ -65,6 +65,7 @@ export default function SettingsModal(props) {
                     })}
 
                 </div>
+            </div>
             </div>
 
 

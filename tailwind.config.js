@@ -44,7 +44,7 @@ module.exports = {
                 'flip': 'flip 300ms linear 1',
                 'shake': 'shake 300ms linear 1',
                 'rotate-logo': 'rotate-center 1200ms ease-in-out infinite both',
-                'appear': 'appear 500ms linear 1'
+                'slide-bottom': 'slide-bottom 250ms ease-in 1'
             },
             keyframes: {
                 flip: {
@@ -61,15 +61,12 @@ module.exports = {
                         transform: 'translateX(5%)',
                     }
                 },
-                appear: {
+                'slide-bottom': {
                     '0%': {
-                        opacity: '0%',
+                      transform: 'translateY(100%)',
                     },
-                    '100%': {
-                      opacity: '100%',
-                    },
-                }
-            }
+                },
+            },
         },
 
     },
