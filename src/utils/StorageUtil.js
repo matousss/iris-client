@@ -67,6 +67,7 @@ async function getData(localUserId) {
                 let user: User = users.get(otherThanMe(...raw.users));
                 title = user.username
                 icon = user.avatar
+                if (raw.users[0] !== user) raw.users = raw.users.reverse()
                 break;
             case 'groupchannel':
                 title = raw.name === null ? "NaN" : raw.name;
