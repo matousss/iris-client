@@ -32,6 +32,11 @@ module.exports = {
                 '90-screen': '90vh',
                 '1/2': '50%',
             },
+            borderWidth: {
+                '.5': '.5px',
+                '1': '1px',
+                '1.5': '1.5px',
+            },
             transitionDuration: {
                 '0': '0ms',
                 '60': '60ms',

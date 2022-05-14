@@ -15,7 +15,7 @@ export function MessagePanel({activeChannel, messages, sendMessage}) {
                 {
                     activeChannel ? messages : 'todo intro screen'
                 }
-                <div className={'text-sm text-ptext/50 mx-auto mb-3'}>
+                <div className={'text-sm text-ptext/40 mx-auto mb-3 border-b-.5 border-ptext/20 px-5'}>
                     Begining of conversation
                 </div>
             </div>
