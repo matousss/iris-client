@@ -28,9 +28,10 @@ export default function Main(props) {
 
     const generateMessages = () => {
         return Array.from(channel.messages, (message, i) => {
+            console.log({message})
             return (
-                <MessageComponent key={i}
-                                  from={message.author.id !== props.user.user}>
+                <MessageComponent key={i} author={message.author}
+                                  from={message.author.id !== props.user.id}>
                     {message.text ? message.text : `Media: $${message.media}`}
                 </MessageComponent>
             )

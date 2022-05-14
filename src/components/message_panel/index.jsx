@@ -1,2 +1,2 @@
 export {MessagePanel} from './MessagePanel'
-export {MessageComponent} from './MessageComponent'
+export {MessageComponent, ImageMessageComponent} from './MessageComponent'

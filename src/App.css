@@ -157,3 +157,27 @@ body * {
 .settings-button.active-button .content {
     @apply translate-x-[10%];
 }
+
+.incoming-message {
+    @apply mr-auto;
+}
+
+.incoming-message .incoming-only {
+    @apply block;
+}
+
+.incoming-message .message-body {
+    @apply border-[1.5px] border-primary/30;
+    @apply bg-white/10;
+    @apply text-left;
+}
+
+.message-body {
+    @apply p-3;
+    @apply rounded-3xl;
+    @apply whitespace-pre-line;
+    @apply break-words;
+    @apply bg-primary/40;
+    @apply text-right;
+}
+
