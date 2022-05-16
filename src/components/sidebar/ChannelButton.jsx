@@ -5,7 +5,7 @@ export default function ChannelButton({setActiveConversation, channel}) {
     return (
         <button className={'w-full h-22 hover:bg-white/20 duration-[300ms]'}
                 onClick={() => {
-                    setActiveConversation(channel)
+                    setActiveConversation(channel.id)
                 }}>
             <ChannelCard username={channel.title}
                          avatar={channel.icon}

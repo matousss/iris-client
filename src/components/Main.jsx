@@ -11,6 +11,7 @@ export const UserContext = React.createContext(null);
 
 export default function Main(props) {
     const [activeConversation, setActiveConversation] = useState(() => {
+        // todo remove
         let lastActive = localStorage.getItem('lastActiveChannel');
         return props.channels.get(lastActive) === undefined ? null : lastActive;
     });
@@ -28,7 +29,6 @@ export default function Main(props) {
 
     const generateMessages = () => {
         return Array.from(channel.messages, (message, i) => {
-            console.log({message})
             return (
                 <MessageComponent key={i} author={message.author}
                                   from={message.author.id !== props.user.id}>
@@ -39,13 +39,15 @@ export default function Main(props) {
     }
 
     useEffect(() => {
-        localStorage.setItem('lastActiveChannel', activeConversation)
-        setChannel(props.channels.get(activeConversation))
-
+        if (activeConversation !== null) {
+            //todo remove
+            localStorage.setItem('lastActiveChannel', activeConversation)
+            setChannel(props.channels.get(activeConversation))
+        }
     }, [activeConversation])
 
     useEffect(() => {
-        if (channel) {
+        if (channel !== null) {
             setMessageArray(generateMessages())
         }
     }, [channel, messageCount])
@@ -59,23 +61,31 @@ export default function Main(props) {
 
     const handleReceive = (event) => {
         let data = JSON.parse(event.data);
-        let type = data.type;
+        let object = data.object;
         let raw = data.data;
-        switch (type) {
-            case 'message':
+        switch (object) {
+            case 'Message':
                 let message = rawToMessage(raw, props.users.get(raw.author));
                 let channel = props.channels.get(raw.channel);
                 if (channel === undefined) return console.error("Channel not found");
+                for (let i in channel.messages) {
+                    if (channel.messages[i].id === message.id) return channel[i] = message;
+                }
                 channel.messages.splice(0, 0, message);
                 if (sortedChannels[0].id !== raw.channel) setSortedChannels(getSortedChannels(props.channels));
                 setMessageCount(channel.messages.length)
 
                 break;
+            case 'DirectChannel':
+            case 'GroupChannel':
+                console.log({data})
+            //    todo updating channels dynamically
             case 'error':
-                console.error('Received WebSocket error: ' + raw)
+                console.error('Received WebSocket error: ' + raw.detail)
+                console.log({raw})
                 break;
             default:
-                console.error("Received unexpected object type: " + type);
+                console.error("Received unexpected object type: " + object);
         }
     }
 
