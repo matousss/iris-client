@@ -3,9 +3,10 @@ import Modal from "react-modal";
 import React from "react";
 import 'react-image-crop/dist/ReactCrop.css'
 import SettingsButton from "./SettingsButton";
+import {CustomModal} from "../CustomModal";
 
 export default function CropModal({isOpen, crop, setCrop, srcImage, onImageLoad, onCancel, onSubmit}) {
-    return <Modal
+    return <CustomModal
                 className='w-[80%] sm:w-[50%] h-fit border-2 border-gray-300 rounded-3xl p-5 absolute top-1/2 left-1/2 translate'
                 isOpen={isOpen}>
                 <ReactCrop crop={crop} onChange={(crop) => setCrop(crop)} aspect={1} className={'w-full'}>
@@ -20,5 +21,5 @@ export default function CropModal({isOpen, crop, setCrop, srcImage, onImageLoad,
                             onClick={onSubmit}>Ok
                     </button>
                 </div>
-            </Modal>
+            </CustomModal>
 }
