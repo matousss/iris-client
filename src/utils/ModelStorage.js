@@ -69,6 +69,20 @@ class Channel extends Model {
 
 }
 
+class GroupChannel extends Channel {
+    owner: User
+    admins: Array<User>
+
+    // see Channel constructor ...owner: User, admins: Array<User>
+    constructor(...props) {
+        super(...props);
+        this.owner = props[props.length - 2];
+        this.admins = props[props.length - 1];
+    }
+
+
+
+}
 
 class ModelStorage extends Map<String, Model> {
     set(value: Model): this {
@@ -81,4 +95,4 @@ class ModelStorage extends Map<String, Model> {
     }
 }
 
-export {User, Message, Channel, ModelStorage, rawToMessage}
+export {User, Message, Channel, GroupChannel, ModelStorage, rawToMessage}

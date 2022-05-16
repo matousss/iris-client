@@ -1,4 +1,4 @@
-import {Channel, ModelStorage, rawToMessage, User} from "./ModelStorage";
+import {Channel, GroupChannel, ModelStorage, rawToMessage, User} from "./ModelStorage";
 import {getChannels, getMessages as fetchMessages, getMiniProfile} from "./RequestUtils";
 
 async function getUsers(ids: String[]) {
@@ -72,7 +72,7 @@ async function getData(localUserId) {
             case 'groupchannel':
                 title = raw.name === null ? "NaN" : raw.name;
                 icon = raw.icon
-                break;
+                return new GroupChannel(raw.id, raw.users, messages.get(raw.id), title, icon, raw.owner, raw.admins);
             default:
                 title = undefined;
         }
@@ -81,7 +81,7 @@ async function getData(localUserId) {
         return new Channel(raw.id, raw.users, messages.get(raw.id), title, icon);
     }
 
-    for(let i in channelsRaw) {
+    for (let i in channelsRaw) {
         let c = await processRawChannel(channelsRaw[i]);
         await channels.set(c);
     }

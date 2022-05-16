@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Sidebar from "./sidebar";
-import {rawToMessage} from "../utils/ModelStorage";
+import {GroupChannel, rawToMessage} from "../utils/ModelStorage";
 import {MessagePanel, MessageComponent} from "./message_panel";
 import {getSortedChannels} from "../utils/Sorting";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
@@ -27,10 +27,10 @@ export default function Main(props) {
 
     const [settingsVisible, setSettingsVisible] = useState(false);
 
-    const generateMessages = () => {
+    const generateMessages = (showAuthor) => {
         return Array.from(channel.messages, (message, i) => {
             return (
-                <MessageComponent key={i} author={message.author}
+                <MessageComponent key={i} author={showAuthor ? message.author : ''}
                                   from={message.author.id !== props.user.id}>
                     {message.text ? message.text : `Media: $${message.media}`}
                 </MessageComponent>
@@ -48,7 +48,7 @@ export default function Main(props) {
 
     useEffect(() => {
         if (channel !== null) {
-            setMessageArray(generateMessages())
+            setMessageArray(generateMessages(channel instanceof GroupChannel))
         }
     }, [channel, messageCount])
 
