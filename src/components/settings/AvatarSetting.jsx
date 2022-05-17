@@ -13,10 +13,6 @@ function AvatarSetting(props) {
     const [crop, setCrop] = useState(null);
     const [editorOpen, setEditorOpen] = useState(false);
 
-    useEffect(() => {
-        console.log(crop);
-    }, [crop])
-
     const onSelectFile = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             setCrop(undefined) // Makes crop preview update between images.
@@ -35,8 +31,8 @@ function AvatarSetting(props) {
         return centerCrop(
             makeAspectCrop(
                 {
-                    unit: '%',
-                    width: 90,
+                    unit: 'px',
+                    width: .9 * mediaWidth,
                 },
                 aspect,
                 mediaWidth,
@@ -91,12 +87,14 @@ function AvatarSetting(props) {
 
         ctx.restore()
     }
-    
+
     return (
         <TitledSettingContainer title={'Change avatar'} {...props}>
             <SettingsForm onSubmit={() => console.log('submitted')}>
                 <FileInput fileName={fileName} onChange={onSelectFile}/>
-                <canvas ref={canvasRef} className='w-1/2 border-2 border-ptext/20 hover:rounded-full'></canvas>
+                <div className={'w-1/2 bg-black/20 group ' + (srcImage ? 'visible' : 'hidden')}>
+                    <canvas ref={canvasRef} className='border-2 border-ptext/20 group-hover:rounded-full w-full h-full'/>
+                </div>
             </SettingsForm>
 
             <CropModal
@@ -105,9 +103,9 @@ function AvatarSetting(props) {
                 srcImage={srcImage} imgRef={imgRef} onImageLoad={onImageLoad}
                 canvasRef={canvasRef}
                 onSubmit={handleResult} onCancel={() => {
-                    setSrcImage('');
-                    setFileName('not selected')
-                    setEditorOpen(false);
+                setSrcImage('');
+                setFileName('not selected')
+                setEditorOpen(false);
             }}/>
         </TitledSettingContainer>
     );
