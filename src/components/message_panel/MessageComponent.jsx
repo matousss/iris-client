@@ -1,7 +1,7 @@
 import React from 'react';
 import {getAvatar} from "../sidebar/ChannelCard";
 
-export function MessageComponentBase({from, author, children}) {
+export function MessageComponentBase({from, children}) {
     return (
         <>
 

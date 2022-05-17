@@ -5,12 +5,20 @@ const AutoAvatar = (props) => <Avatar className={"my-auto"} {...props} round={tr
 
 export const getAvatar = ({username, email, avatar, size = 56}) => (avatar === null ?
     <AutoAvatar name={username} email={email} className={'duration-0'} size={size}/> :
-    <img src={avatar} className={'object-scale-down rounded-[100%] bg-white ' + `max-h-[${size}px]`} alt={<AutoAvatar username={username}/>}/>);
+    <img src={avatar} className={'object-scale-down rounded-[100%] bg-white ' + `max-h-[${size}px]`}
+         alt={<AutoAvatar username={username}/>}/>);
 
 export default function ChannelCard(props) {
     return (
-        <div className={'flex items-left row align-left px-2 w-full h-full py-3'}>
+        <div className={'flex items-left row align-left px-2 size-full py-3 relative'}>
+
             {getAvatar({...props})}
+            {props.unreadCount ? <div
+                className={'text-[11px] bg-red-600 border-white/10 border-.5 rounded-full w-[22px] h-[22px] text-white absolute top-[48px] left-[46px]'}>
+                <span className={'font-sans relative top-[2px] align-center'}>
+                    {props.unreadCount}
+                </span>
+            </div> : ''}
 
             <div
                 className={
