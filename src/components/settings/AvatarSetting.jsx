@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {centerCrop, makeAspectCrop} from 'react-image-crop';
 import {TitledSettingContainer} from "./SettingsContainer";
 import {SettingsForm} from "./SettingsForm";
@@ -7,6 +7,8 @@ import CropModal from "./CropModal";
 
 function AvatarSetting(props) {
     const [srcImage, setSrcImage] = useState('');
+    const imgRef = useRef(null);
+    const canvasRef = useRef(null);
     const [fileName, setFileName] = useState('not slected');
     const [crop, setCrop] = useState(null);
     const [editorOpen, setEditorOpen] = useState(false);
@@ -51,27 +53,57 @@ function AvatarSetting(props) {
     }
 
     const handleResult = () => {
+        drawPreview(imgRef.current, canvasRef.current, crop);
         setEditorOpen(false);
     }
 
+    const drawPreview = (img, canvas, crop) => {
+        const ctx = canvas.getContext('2d');
+
+        const scaleX = img.naturalWidth / img.width;
+        const scaleY = img.naturalHeight / img.height;
+
+        canvas.width = Math.floor(crop.width * scaleX);
+        canvas.height = Math.floor(crop.height * scaleY);
+
+        const cropX = crop.x * scaleX;
+        const cropY = crop.y * scaleY;
+
+        const centerX = img.naturalWidth / 2;
+        const centerY = img.naturalHeight / 2;
+
+        ctx.save();
+
+        ctx.translate(-cropX, -cropY);
+        ctx.translate(centerX, centerY);
+        ctx.translate(-centerX, -centerY);
+        ctx.drawImage(
+            img,
+            0,
+            0,
+            img.naturalWidth,
+            img.naturalHeight,
+            0,
+            0,
+            img.naturalWidth,
+            img.naturalHeight,
+        )
+
+        ctx.restore()
+    }
+    
     return (
         <TitledSettingContainer title={'Change avatar'} {...props}>
             <SettingsForm onSubmit={() => console.log('submitted')}>
                 <FileInput fileName={fileName} onChange={onSelectFile}/>
-
-                {/*// todo cropped preview
-                    (crop && editorOpen === false) ?
-                        <div style={{width: crop.width.toString() + crop.unit, height: crop.height}}>
-                            <img src={srcImage}/>
-                        </div> : ''
-                */}
+                <canvas ref={canvasRef} className='w-1/2 border-2 border-ptext/20 hover:rounded-full'></canvas>
             </SettingsForm>
-
 
             <CropModal
                 isOpen={editorOpen === true}
                 crop={crop} setCrop={setCrop}
-                srcImage={srcImage} onImageLoad={onImageLoad}
+                srcImage={srcImage} imgRef={imgRef} onImageLoad={onImageLoad}
+                canvasRef={canvasRef}
                 onSubmit={handleResult} onCancel={() => {
                     setSrcImage('');
                     setFileName('not selected')
