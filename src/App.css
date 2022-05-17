@@ -162,10 +162,6 @@ body * {
     @apply mr-auto;
 }
 
-.incoming-message .incoming-only {
-    @apply block;
-}
-
 .incoming-message .message-body {
     @apply border-1.5 border-primary/30;
     @apply bg-white/10;
@@ -177,8 +173,11 @@ body * {
     @apply rounded-3xl;
     @apply whitespace-pre-line;
     @apply break-words;
-    @apply bg-primary/40;
+    @apply bg-primary/80;
     @apply text-right;
     @apply w-fit;
 }
 
+.authored-message {
+    @apply rounded-bl-md;
+}

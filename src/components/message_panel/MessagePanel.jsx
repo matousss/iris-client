@@ -9,14 +9,15 @@ export function MessagePanel({activeChannel, messages, sendMessage}) {
             <div className='flex w-full mx-auto shadow-lg h-[80px] bg-ptext/5'>
                 <span className='m-auto py-5 text-4xl'>{activeChannel ? activeChannel.title : ''}</span>
             </div>
-            <div className='grow flex flex-col-reverse overflow-y-scroll overflow-x-hidden messages pt-3'>
 
+            <div className='grow flex flex-col-reverse overflow-y-scroll overflow-x-hidden messages pt-3'>
                 {
                     activeChannel ? messages : 'todo intro screen'
                 }
-                <div className={'text-sm text-ptext/40 mx-auto mb-3 border-b-.5 border-ptext/20 px-5'}>
+                <div className={'text-sm mx-auto mb-3 px-5 text-ptext/5 border-ptext/5 border-b-.5 hover:text-ptext/40 hover:border-ptext/20 duration-500 cursor-default'}>
                     Begining of conversation
                 </div>
+
             </div>
             <InputField channel={activeChannel ? activeChannel.id : ''} sendMessage={sendMessage}/>
         </div>

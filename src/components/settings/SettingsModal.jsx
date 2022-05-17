@@ -29,7 +29,8 @@ export default function SettingsModal(props) {
     });
 
     return (
-        <CustomModal isOpen={props.visible}><div className={'animate-pop-in'}>
+        <CustomModal isOpen={props.visible}>
+
             <div className={'flex'}>
                 <h1 className='text-3xl mb-3'>Settings</h1>
                 <div className={'flex w-full justify-end'}>
@@ -44,11 +45,11 @@ export default function SettingsModal(props) {
             </div>
             <div className='grow flex h-1/2'>
                 <ul className='w-1/3 md:w-1/3 h-full border-r-[1px] border-ptext/20'>
-
-                    {Object.keys(sections).map((key, i) =>
-                        <li><SettingsButton href={'#' + key}
-                                            active={activeButton === i}>{sections[key][0]}</SettingsButton>
-                        </li>)}
+                    <>
+                        {Object.keys(sections).map((key, i) =>
+                            <li><SettingsButton href={'#' + key}
+                                                isActive={activeButton === i}>{sections[key][0]}</SettingsButton>
+                            </li>)}</>
 
                 </ul>
                 <div id={'settings-scroll'} className='w-2/3 max-h-fit md:w-3/4 mt-5 relative
@@ -58,14 +59,13 @@ export default function SettingsModal(props) {
                          let h = e.target.clientHeight;
                          setActiveButton(Math.round(scrollTop / h))
                      }}>
-
-                    {Object.keys(sections).map(key => {
-                        let Element = sections[key][1];
-                        return <Element id={key}/>;
-                    })}
+                    <>
+                        {Object.keys(sections).map(key => {
+                            let Element = sections[key][1];
+                            return <Element id={key}/>;
+                        })}</>
 
                 </div>
-            </div>
             </div>
 
 
