@@ -1,8 +1,6 @@
 import ReactCrop from "react-image-crop";
-import Modal from "react-modal";
 import React from "react";
 import 'react-image-crop/dist/ReactCrop.css'
-import SettingsButton from "./SettingsButton";
 import {CustomModal} from "../CustomModal";
 
 export default function CropModal({isOpen, crop, setCrop, srcImage, imgRef, onImageLoad, canvasRef, onCancel, onSubmit}) {

@@ -10,21 +10,11 @@ export const UserContext = React.createContext(null);
 
 
 export default function Main(props) {
-    const [activeConversation, setActiveConversation] = useState(() => {
-        // todo remove
-        let lastActive = localStorage.getItem('lastActiveChannel');
-        return props.channels.get(lastActive) === undefined ? null : lastActive;
-    });
-
-
     const [wsh, setWSH] = useState(null)
     const [channel, setChannel] = useState(null);
     const [messageArray, setMessageArray] = useState([]);
     const [messageCount, setMessageCount] = useState(0);
-
-
     const [sortedChannels, setSortedChannels] = useState(getSortedChannels(props.channels));
-
     const [settingsVisible, setSettingsVisible] = useState(false);
 
     const generateMessages = (showAuthor) => {
@@ -39,55 +29,52 @@ export default function Main(props) {
     }
 
     useEffect(() => {
-        if (activeConversation !== null) {
-            //todo remove
-            localStorage.setItem('lastActiveChannel', activeConversation)
-            setChannel(props.channels.get(activeConversation))
-        }
-    }, [activeConversation])
-
-    useEffect(() => {
         if (channel !== null) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             setMessageArray(generateMessages(channel instanceof GroupChannel))
         }
     }, [channel, messageCount])
 
     useEffect(() => {
         let wsh = new BaseWebsocketHandler(props.users, props.channels)
-        wsh.handleReceive = handleReceive;
+        wsh.handleReceive = (event) => {
+            let data = JSON.parse(event.data);
+            let object = data.object;
+            let raw = data.data;
+            switch (object) {
+                case 'Message':
+                    let message = rawToMessage(raw, props.users.get(raw.author));
+                    let channel = props.channels.get(raw.channel);
+                    if (channel === undefined) return console.error("Channel not found");
+                    for (let i in channel.messages) {
+                        if (channel.messages[i].id === message.id) return channel[i] = message;
+                    }
+                    channel.messages.splice(0, 0, message);
+                    if (sortedChannels[0].id !== raw.channel) setSortedChannels(getSortedChannels(props.channels));
+                    setMessageCount(channel.messages.length)
+
+                    break;
+                case 'DirectChannel':
+                case 'GroupChannel':
+                    console.log({data})
+                //    todo updating channels dynamically
+                case 'error':
+                    console.error('Received WebSocket error: ' + raw.detail)
+                    console.log({raw})
+                    break;
+                default:
+                    console.error("Received unexpected object type: " + object);
+            }
+        };
+
+
+
         setWSH(wsh)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
-    const handleReceive = (event) => {
-        let data = JSON.parse(event.data);
-        let object = data.object;
-        let raw = data.data;
-        switch (object) {
-            case 'Message':
-                let message = rawToMessage(raw, props.users.get(raw.author));
-                let channel = props.channels.get(raw.channel);
-                if (channel === undefined) return console.error("Channel not found");
-                for (let i in channel.messages) {
-                    if (channel.messages[i].id === message.id) return channel[i] = message;
-                }
-                channel.messages.splice(0, 0, message);
-                if (sortedChannels[0].id !== raw.channel) setSortedChannels(getSortedChannels(props.channels));
-                setMessageCount(channel.messages.length)
 
-                break;
-            case 'DirectChannel':
-            case 'GroupChannel':
-                console.log({data})
-            //    todo updating channels dynamically
-            case 'error':
-                console.error('Received WebSocket error: ' + raw.detail)
-                console.log({raw})
-                break;
-            default:
-                console.error("Received unexpected object type: " + object);
-        }
-    }
 
     const sendMessage = (message) => {
         wsh.ws.send(JSON.stringify({
@@ -95,7 +82,7 @@ export default function Main(props) {
             data: {
                 "text": message,
                 "media": false,
-                "channel": activeConversation
+                "channel": channel.id
             }
         }))
     }
@@ -105,12 +92,12 @@ export default function Main(props) {
         <UserContext.Provider value={props.user}>
             <div className='h-screen bg-secondary/90 text-ptext relative'>
                 <Sidebar clearDesk={props.clearDesk}
-                         setActiveConversation={setActiveConversation} channels={props.channels}
+                         setActiveConversation={id => setChannel(props.channels.get(id))} channels={props.channels}
                          sortedChannels={sortedChannels} setSettingsVisible={setSettingsVisible}
                 />
                 <MessagePanel activeChannel={channel}
                               messages={messageArray} sendMessage={sendMessage}/>
-                <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible}/>
+                {settingsVisible ? <SettingsModal visible={true} setVisible={setSettingsVisible}/> : ''}
             </div>
         </UserContext.Provider>
     );

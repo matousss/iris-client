@@ -20,6 +20,7 @@ function InputField(props) {
             <form className='flex justify-center item w-full' onSubmit={handleSubmit}>
                 <TextareaAutosize id={'input'} maxRows={4} onChange={e => setInput(e.target.value)}
                                   className='w-2/3 resize-none p-2 border-2 border-ptext/40 rounded-3xl message-input bg-ptext/10'
+                                  autoFocus={true}
                                   onKeyDown={
                                       e => {
                                           if (e.key === "Enter" && !e.shiftKey) {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import SettingsButton from "./SettingsButton";
 import EmailSetting from "./EmailSetting";
 import PasswordSetting from "./PasswordSetting";
@@ -22,11 +22,17 @@ export default function SettingsModal(props) {
         avatar: ['Change avatar', AvatarSetting],
     }
 
+    useEffect(() => {
+        setActiveButton(0)
+    }, [props.visible])
 
     window.addEventListener('resize', function () {
         let el = document.getElementById('settings-scroll')
         el.scrollTop = 0;
     });
+
+    let scrollPaneRef = useRef(null);
+    const scrollToAnchor = anchor => scrollPaneRef.current.scrollTop = document.getElementById(anchor).offsetTop;
 
     return (
         <CustomModal isOpen={props.visible}>
@@ -47,12 +53,12 @@ export default function SettingsModal(props) {
                 <ul className='w-1/3 md:w-1/3 h-full border-r-[1px] border-ptext/20'>
                     <>
                         {Object.keys(sections).map((key, i) =>
-                            <li><SettingsButton href={'#' + key}
+                            <li><SettingsButton href={'#' + key} scrollToAnchor={scrollToAnchor}
                                                 isActive={activeButton === i}>{sections[key][0]}</SettingsButton>
                             </li>)}</>
 
                 </ul>
-                <div id={'settings-scroll'} className='w-2/3 max-h-fit md:w-3/4 mt-5 relative
+                <div ref={scrollPaneRef} className='w-2/3 max-h-fit md:w-3/4 mt-5 relative
                 overflow-hidden scroll-smooth duration-[500ms]'
                      onScroll={e => {
                          let scrollTop = e.target.scrollTop;

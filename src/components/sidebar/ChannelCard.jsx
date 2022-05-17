@@ -5,7 +5,7 @@ const AutoAvatar = (props) => <Avatar className={"my-auto"} {...props} round={tr
 
 export const getAvatar = ({username, email, avatar, size = 56}) => (avatar === null ?
     <AutoAvatar name={username} email={email} className={'duration-0'} size={size}/> :
-    <img src={avatar} className={'object-scale-down rounded-[100%] bg-white max-h-[' + size + 'px]'} alt={<AutoAvatar username={username}/>}/>);
+    <img src={avatar} className={'object-scale-down rounded-[100%] bg-white ' + `max-h-[${size}px]`} alt={<AutoAvatar username={username}/>}/>);
 
 export default function ChannelCard(props) {
     return (

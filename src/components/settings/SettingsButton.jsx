@@ -2,6 +2,8 @@ import React from 'react';
 
 const activeClasses = 'active-button'
 
+
+
 const SettingsButton = props =>
     <a className={'border-y-[1px] border-white/0 hover:border-ptext/10 p-2 pl-0 block duration-[300ms] settings-button '
         + (props.isActive ? activeClasses : '')}
@@ -9,7 +11,7 @@ const SettingsButton = props =>
        onClick={(e) => {
            e.preventDefault();
            let anchor = props.href.split('#')[1];
-           document.getElementById('settings-scroll').scrollTop = document.getElementById(anchor).offsetTop;
+           props.scrollToAnchor(anchor);
        }}
     >
         <div className={'flex content pr-auto'}>

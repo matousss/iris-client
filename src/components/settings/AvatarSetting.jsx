@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {centerCrop, makeAspectCrop} from 'react-image-crop';
 import {TitledSettingContainer} from "./SettingsContainer";
 import {SettingsForm} from "./SettingsForm";
