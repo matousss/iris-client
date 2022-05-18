@@ -42,6 +42,7 @@ module.exports = {
                 '60': '60ms',
                 '250': '250ms',
                 '350': '350ms',
+                '450': '450ms',
             },
             colors: {
                 primary: withOpacity('--color-primary'),

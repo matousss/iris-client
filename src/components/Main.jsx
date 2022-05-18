@@ -16,6 +16,9 @@ export default function Main(props) {
     const [messageCount, setMessageCount] = useState(0);
     const [sortedChannels, setSortedChannels] = useState(getSortedChannels(props.channels));
     const [settingsVisible, setSettingsVisible] = useState(false);
+    // todo setWindowFocus automatically
+    const [windowFocus, setWindowFocus] = useState(false);
+
 
     const generateMessages = (showAuthor) => {
         return Array.from(channel.messages, (message, i) => {
@@ -27,6 +30,14 @@ export default function Main(props) {
             )
         })
     }
+
+    const openChannel = id => {
+        let channel_obj = props.channels.get(id)
+        channel_obj.unreadCount = 0;
+        setChannel(channel_obj)
+        // todo send to server
+    }
+
 
     useEffect(() => {
         if (channel !== null) {
@@ -44,15 +55,15 @@ export default function Main(props) {
             switch (object) {
                 case 'Message':
                     let message = rawToMessage(raw, props.users.get(raw.author));
-                    let channel = props.channels.get(raw.channel);
-                    if (channel === undefined) return console.error("Channel not found");
-                    for (let i in channel.messages) {
-                        if (channel.messages[i].id === message.id) return channel[i] = message;
+                    let _channel = props.channels.get(raw.channel);
+                    if (_channel === undefined) return console.error("Channel not found");
+                    for (let i in _channel.messages) {
+                        if (_channel.messages[i].id === message.id) return _channel[i] = message;
                     }
-                    channel.messages.splice(0, 0, message);
+                    _channel.messages.splice(0, 0, message);
                     if (sortedChannels[0].id !== raw.channel) setSortedChannels(getSortedChannels(props.channels));
-                    setMessageCount(channel.messages.length)
-
+                    if (channel !== null && raw.channel === channel.id) setMessageCount(channel.messages.length)
+                    else if (!windowFocus) _channel.unreadCount++;
                     break;
                 case 'DirectChannel':
                 case 'GroupChannel':
@@ -92,7 +103,7 @@ export default function Main(props) {
         <UserContext.Provider value={props.user}>
             <div className='h-screen bg-secondary/90 text-ptext relative'>
                 <Sidebar clearDesk={props.clearDesk}
-                         setActiveConversation={id => setChannel(props.channels.get(id))} channels={props.channels}
+                         setActiveConversation={openChannel} channels={props.channels}
                          sortedChannels={sortedChannels} setSettingsVisible={setSettingsVisible}
                 />
                 <MessagePanel activeChannel={channel}

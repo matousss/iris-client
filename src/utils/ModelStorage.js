@@ -56,14 +56,16 @@ class Channel extends Model {
     messages: Array<Message>;
     title: String;
     icon;
+    unreadCount: number;
 
-    constructor(id, users: Array<User>, messages: Array<Message> = [], title = 'Unknown channel', icon = null) {
+    constructor(id, users: Array<User>, messages: Array<Message> = [], title = 'Unknown channel', icon = null, unreadCount) {
         super();
         this.id = id;
         this.users = users;
         this.messages = messages;
         this.title = title;
         this.icon = icon;
+        this.unreadCount = unreadCount;
     }
 
 
