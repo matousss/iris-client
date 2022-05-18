@@ -32,4 +32,8 @@ function sendMessageOG(channel, text) {
     }))
 }
 
-export {getFetch, dictToFormData, sendMessageOG}
+function viewedChannel(channel) {
+    return getFetch('viewed-channel/' + channel, 'PATCH')
+}
+
+export {getFetch, dictToFormData, sendMessageOG, viewedChannel}

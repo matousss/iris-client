@@ -5,6 +5,8 @@ import {MessagePanel, MessageComponent} from "./message_panel";
 import {getSortedChannels} from "../utils/Sorting";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import SettingsModal from "./settings/SettingsModal";
+import {viewedChannel} from "../utils/requests/RequestUtils";
+import {func} from "prop-types";
 
 export const UserContext = React.createContext(null);
 
@@ -19,7 +21,6 @@ export default function Main(props) {
     // todo setWindowFocus automatically
     const [windowFocus, setWindowFocus] = useState(false);
 
-
     const generateMessages = (showAuthor) => {
         return Array.from(channel.messages, (message, i) => {
             return (
@@ -32,10 +33,12 @@ export default function Main(props) {
     }
 
     const openChannel = id => {
-        let channel_obj = props.channels.get(id)
+        if (channel && channel.id === id) return;
+        let channel_obj = props.channels.get(id);
         channel_obj.unreadCount = 0;
-        setChannel(channel_obj)
-        // todo send to server
+        setChannel(channel_obj);
+        viewedChannel(channel_obj.id).then(() => {
+        });
     }
 
 
@@ -46,45 +49,49 @@ export default function Main(props) {
         }
     }, [channel, messageCount])
 
+
+    function handleReceive(event, channel) {
+        let data = JSON.parse(event.data);
+        let object = data.object;
+        let raw = data.data;
+        switch (object) {
+            case 'Message':
+                let message = rawToMessage(raw, props.users.get(raw.author));
+                let _channel = props.channels.get(raw.channel);
+                if (!_channel) return console.error("Channel not found");
+                for (let i in _channel.messages) {
+                    if (_channel.messages[i].id === message.id) return _channel[i] = message;
+                }
+                _channel.messages.splice(0, 0, message);
+                setSortedChannels(getSortedChannels(props.channels));
+                setMessageCount(_channel.messages.length)
+                if (channel && raw.channel === channel.id) {
+                    // todo somehow check if active channel same as channel with new message and instantly set viewed
+                    // this channel variable is always null
+                } else if (!windowFocus) _channel.unreadCount++;
+
+                break;
+            case 'DirectChannel':
+            case 'GroupChannel':
+                console.log({data})
+            //    todo updating channels dynamically
+            case 'error':
+                console.error('Received WebSocket error: ' + raw.detail)
+                console.log({raw})
+                break;
+            default:
+                console.error("Received unexpected object type: " + object);
+        }
+    };
+
     useEffect(() => {
         let wsh = new BaseWebsocketHandler(props.users, props.channels)
-        wsh.handleReceive = (event) => {
-            let data = JSON.parse(event.data);
-            let object = data.object;
-            let raw = data.data;
-            switch (object) {
-                case 'Message':
-                    let message = rawToMessage(raw, props.users.get(raw.author));
-                    let _channel = props.channels.get(raw.channel);
-                    if (_channel === undefined) return console.error("Channel not found");
-                    for (let i in _channel.messages) {
-                        if (_channel.messages[i].id === message.id) return _channel[i] = message;
-                    }
-                    _channel.messages.splice(0, 0, message);
-                    if (sortedChannels[0].id !== raw.channel) setSortedChannels(getSortedChannels(props.channels));
-                    if (channel !== null && raw.channel === channel.id) setMessageCount(channel.messages.length)
-                    else if (!windowFocus) _channel.unreadCount++;
-                    break;
-                case 'DirectChannel':
-                case 'GroupChannel':
-                    console.log({data})
-                //    todo updating channels dynamically
-                case 'error':
-                    console.error('Received WebSocket error: ' + raw.detail)
-                    console.log({raw})
-                    break;
-                default:
-                    console.error("Received unexpected object type: " + object);
-            }
-        };
-
+        wsh.handleReceive = e => handleReceive(e, channel)
 
 
         setWSH(wsh)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-
+    }, [channel])
 
 
     const sendMessage = (message) => {
