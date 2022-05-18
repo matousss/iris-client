@@ -1,5 +1,7 @@
 import React from 'react';
 import {getAvatar} from "../sidebar/ChannelCard";
+import BAN_ICON from '../../assets/ban_icon.svg'
+
 
 export function MessageComponentBase({from, children}) {
     return (
@@ -13,21 +15,26 @@ export function MessageComponentBase({from, children}) {
     );
 }
 
-const AuthoredIncomingMessage = ({from, author, children}) => <MessageComponentBase from={from}>
+const AuthoredIncomingMessage = ({from, author, children}) => {
+    let avatar_info = {...author};
+    const deleted_user = author.id === null;
+    if (deleted_user) avatar_info.avatar = BAN_ICON
 
-    <label className={'text-sm text-ptext/60 ml-10'}>
-        {author.username}
+    return <MessageComponentBase from={from}>
 
-    </label>
-    <div className={'flex'}>
-        <div className={'mr-2 mt-auto max-h-[32px]'}>
-            {getAvatar({...author, size: 32})}
+        <label className={'text-sm text-ptext/60 ml-10 ' + (deleted_user ? 'italic' : '')}>
+            {author.username}
+        </label>
+        <div className={'flex'}>
+            <div className={'mr-2 mt-auto max-h-[32px]'}>
+                {getAvatar({...avatar_info, size: 32})}
+            </div>
+            <div className={'message-body authored-message'}>
+                {children}
+            </div>
         </div>
-        <div className={'message-body authored-message'}>
-            {children}
-        </div>
-    </div>
-</MessageComponentBase>
+    </MessageComponentBase>
+}
 
 const PlainMessage = props => <MessageComponentBase {...props}>
     <div className={'message-body'}>
