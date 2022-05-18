@@ -10,7 +10,7 @@ export const getAvatar = ({username, email, avatar, size = 56}) => (avatar === n
 
 const formatCount = n => {
     if (n === 0) return '✔';
-    if (n > 100) return '!';
+    if (n >= 100) return '!';
     return n;
 }
 
