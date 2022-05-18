@@ -4,7 +4,8 @@ import {Login, Signup, Verify, HomeContainer} from "./components/home";
 
 import React, {useEffect, useState} from 'react'
 import {loadToken, saveToken} from "./utils/AuthUtils";
-import {getFullProfile, logout} from './utils/RequestUtils'
+import {getFullProfile} from './utils/requests/DataReq'
+import {logout} from './utils/requests/AuthReq'
 import Loading from "./components/Loading";
 import {getData} from './utils/StorageUtil';
 import {loadTheme} from "./utils/ThemesUtils";

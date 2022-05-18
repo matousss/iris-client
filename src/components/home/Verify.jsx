@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import * as Page from '../../utils/PageEnum'
-import {activateAccount} from "../../utils/RequestUtils";
+import {activateAccount} from "../../utils/requests/AuthReq";
 import HomeForm from "./form/HomeForm";
 import FormField from "./form/FormField";
 import {UserContext} from "../Main";

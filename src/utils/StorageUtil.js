@@ -1,5 +1,5 @@
 import {Channel, GroupChannel, ModelStorage, rawToMessage, User} from "./ModelStorage";
-import {getChannels, getMessages as fetchMessages, getMiniProfile} from "./RequestUtils";
+import {getChannels, getMessages as fetchMessages, getMiniProfile} from "./requests/DataReq";
 
 const UNKNOWN_USER = new User(null, '<\Deleted User>', null)
 

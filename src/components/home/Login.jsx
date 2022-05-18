@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import * as Page from '../../utils/PageEnum'
-import {login} from "../../utils/RequestUtils";
+import {login} from "../../utils/requests/AuthReq";
 import HomeForm from "./form/HomeForm";
 import FormField from "./form/FormField";
 

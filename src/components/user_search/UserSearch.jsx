@@ -1,6 +1,6 @@
 import {SearchField} from "./SearchField";
 import React, {useEffect, useState} from "react";
-import {searchUser} from "../../utils/RequestUtils";
+import {searchUser} from "../../utils/requests/DataReq";
 
 export function UserSearch() {
     const [result, setResult] = useState(null);
