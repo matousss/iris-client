@@ -46,7 +46,6 @@ async function getMessages(users) {
         if (users.get(raw.author) === undefined) {
             let missing_user = await getMiniProfile(raw.author);
             users.set(await processAuthorResponse(missing_user))
-            console.log(users)
         }
         map.get(raw.channel).push(rawToMessage(raw, users.getSafe(raw.author)))
     }
