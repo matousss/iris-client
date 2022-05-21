@@ -79,6 +79,9 @@ export default function Main(props) {
             case 'GroupChannel':
                 console.log({data})
             //    todo updating channels dynamically
+                break;
+            case 'force_logout':
+                // todo force logout
             case 'error':
                 console.error('Received WebSocket error: ' + raw.detail)
                 console.log({raw})
