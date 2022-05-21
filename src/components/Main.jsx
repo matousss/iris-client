@@ -6,7 +6,7 @@ import {getSortedChannels} from "../utils/Sorting";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import SettingsModal from "./settings/SettingsModal";
 import {viewedChannel} from "../utils/requests/RequestUtils";
-import {func} from "prop-types";
+import {useWindowFocus} from "../utils/Hooks";
 
 export const UserContext = React.createContext(null);
 
@@ -18,8 +18,8 @@ export default function Main(props) {
     const [messageCount, setMessageCount] = useState(0);
     const [sortedChannels, setSortedChannels] = useState(getSortedChannels(props.channels));
     const [settingsVisible, setSettingsVisible] = useState(false);
-    // todo setWindowFocus automatically
-    const [windowFocus, setWindowFocus] = useState(false);
+    const windowFocus = useWindowFocus();
+
 
     const generateMessages = (showAuthor) => {
         return Array.from(channel.messages, (message, i) => {
@@ -41,7 +41,7 @@ export default function Main(props) {
         });
     }
 
-
+    // render messages on active channel change or new message
     useEffect(() => {
         if (channel !== null) {
             // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,7 +50,8 @@ export default function Main(props) {
     }, [channel, messageCount])
 
 
-    function handleReceive(event, channel) {
+    function handleReceive(event, active_channel, windowFocus) {
+        console.log({active_channel})
         let data = JSON.parse(event.data);
         let object = data.object;
         let raw = data.data;
@@ -63,12 +64,15 @@ export default function Main(props) {
                     if (_channel.messages[i].id === message.id) return _channel[i] = message;
                 }
                 _channel.messages.splice(0, 0, message);
+
+                console.log(windowFocus)
+                if (active_channel && raw.channel === active_channel.id && windowFocus) {
+                    console.log('neoznacuj')
+                    viewedChannel(raw.channel).then(() => {
+                    });
+                } else _channel.unreadCount++;
                 setSortedChannels(getSortedChannels(props.channels));
                 setMessageCount(_channel.messages.length)
-                if (channel && raw.channel === channel.id) {
-                    // todo somehow check if active channel same as channel with new message and instantly set viewed
-                    // this channel variable is always null
-                } else if (!windowFocus) _channel.unreadCount++;
 
                 break;
             case 'DirectChannel':
@@ -85,14 +89,22 @@ export default function Main(props) {
     };
 
     useEffect(() => {
-        let wsh = new BaseWebsocketHandler(props.users, props.channels)
-        wsh.handleReceive = e => handleReceive(e, channel)
+        setWSH(new BaseWebsocketHandler(props.users, props.channels))
 
+        return () => {
+            if (wsh) wsh.disconnect();
+        }
+    }, [])
+    useEffect(() => {
+        if (!wsh) return
+        wsh.handleReceive = e => handleReceive(e, channel, windowFocus)
 
-        setWSH(wsh)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [channel])
+    }, [channel, windowFocus])
 
+    useEffect(() => {
+        if (channel && channel.unreadCount > 0) viewedChannel(channel.id).then(() => {});
+    }, [windowFocus])
 
     const sendMessage = (message) => {
         wsh.ws.send(JSON.stringify({
