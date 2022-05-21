@@ -65,12 +65,12 @@ export default function Main(props) {
                 }
                 _channel.messages.splice(0, 0, message);
 
-                console.log(windowFocus)
                 if (active_channel && raw.channel === active_channel.id && windowFocus) {
-                    console.log('neoznacuj')
                     viewedChannel(raw.channel).then(() => {
                     });
                 } else _channel.unreadCount++;
+
+
                 setSortedChannels(getSortedChannels(props.channels));
                 setMessageCount(_channel.messages.length)
 
@@ -86,7 +86,7 @@ export default function Main(props) {
             default:
                 console.error("Received unexpected object type: " + object);
         }
-    };
+    }
 
     useEffect(() => {
         setWSH(new BaseWebsocketHandler(props.users, props.channels))
