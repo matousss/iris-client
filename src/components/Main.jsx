@@ -51,14 +51,14 @@ export default function Main(props) {
 
 
     function handleReceive(event, active_channel, windowFocus) {
-        console.log({active_channel})
         let data = JSON.parse(event.data);
         let object = data.object;
         let raw = data.data;
+        let _channel
         switch (object) {
             case 'Message':
                 let message = rawToMessage(raw, props.users.get(raw.author));
-                let _channel = props.channels.get(raw.channel);
+                _channel = props.channels.get(raw.channel);
                 if (!_channel) return console.error("Channel not found");
                 for (let i in _channel.messages) {
                     if (_channel.messages[i].id === message.id) return _channel[i] = message;
@@ -75,10 +75,17 @@ export default function Main(props) {
                 setMessageCount(_channel.messages.length)
 
                 break;
+
+            case 'Channel':
             case 'DirectChannel':
             case 'GroupChannel':
                 console.log({data})
-            //    todo updating channels dynamically
+                _channel = props.channels.get(raw.id);
+                let updateData = {...raw};
+                delete updateData['data'];
+                delete updateData['type'];
+                let updatedFields = _channel.update(raw);
+                console.log({updatedFields})
                 break;
             case 'force_logout':
                 // todo force logout

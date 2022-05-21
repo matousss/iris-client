@@ -1,3 +1,5 @@
+import {key} from "wait-on/exampleConfig";
+
 class Model {
     id: String;
 
@@ -26,6 +28,7 @@ class User extends Model {
 
 
 }
+
 function rawToMessage(raw, author) {
     return new Message(raw.id, raw.text, author, raw.media, new Date(raw.creation));
 }
@@ -68,7 +71,34 @@ class Channel extends Model {
         this.unreadCount = unreadCount;
     }
 
+    update(data, users): [] {
+        let keys = Object.keys(data);
+        let updatedFields = []
 
+        for (let i in keys) {
+            let k = keys[i];
+            switch (k) {
+                case 'users':
+                    // todo check if same and download additional resources if not cached
+                    break;
+
+                case 'last_open_by':
+                    // todo recalculate unreadCount
+                    break;
+
+                default:
+                    if (this[k] !== data[k]) {
+                        console.log(this[k])
+                        console.log(data[k])
+                        this[k] = data[k];
+                        updatedFields.push(k);
+                    }
+            }
+
+
+        }
+        return updatedFields;
+    }
 }
 
 class GroupChannel extends Channel {
@@ -82,7 +112,25 @@ class GroupChannel extends Channel {
         this.admins = props[props.length - 1];
     }
 
+    update(data, users): [] {
+        let updatedField = []
+        if (data.admins) {
+            // todo check if same and download additional resources if not cached
+            updatedField.push('admins')
+            delete data.admins
+        }
 
+        if (data.owner) {
+            if (data.owner !== this.owner.id) {
+                updatedField.push('owner')
+                // todo check if cached and download additional resources if not
+            }
+            delete data.owner
+        }
+
+
+        return super.update(data, users).push(...updatedField);
+    }
 
 }
 
