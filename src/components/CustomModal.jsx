@@ -5,13 +5,14 @@ export const CustomModal = props => {
         Modal.setAppElement('body')
     }
 
-    return <Modal className='
+    return <Modal
+        {...props}
+        className={`
         flex flex-col p-4 m-auto
         relative top-1/2
         transition transform -translate-y-1/2 animate-slide-bottom
-        w-full h-full md:w-2/3 md:h-3/4 lg:w-1/2 lg:h-4/5
-        md:border-2 border-ptext/20 outline-none md:rounded-2xl md:shadow-2xl bg-middle text-ptext
-        '
+        md:border-2 border-ptext/20 outline-none md:rounded-2xl md:shadow-2xl bg-middle text-ptext 
+        ` + props.className}
                   style={
                       {
                           overlay: {
@@ -26,7 +27,7 @@ export const CustomModal = props => {
                       }
                   }
 
-                  {...props}
+
 
 
     />

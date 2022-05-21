@@ -1,4 +1,5 @@
 import React from "react";
+import {ModalButton} from "./ModalButton";
 
 export const SettingsField = props =>
     <>
@@ -12,8 +13,8 @@ export const SettingsForm = ({title, onSubmit, submitText = 'Save', children}) =
         <div className={'flex flex-col'}>
             {children}
         </div>
-        <button className='w-20 p-2 mt-auto ml-auto
-        bg-middle/70 hover:bg-ptext/10
-        text-lg border-ptext/10 border-2 rounded-2xl'>{submitText}</button>
+        <ModalButton className={' mt-auto ml-auto'}>
+            {submitText}
+        </ModalButton>
     </form>
 }

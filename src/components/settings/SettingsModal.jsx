@@ -4,6 +4,7 @@ import EmailSetting from "./EmailSetting";
 import PasswordSetting from "./PasswordSetting";
 import AvatarSetting from "./AvatarSetting";
 import {CustomModal} from "../CustomModal";
+import {func} from "prop-types";
 
 export default function SettingsModal(props) {
     const closeModal = () => {
@@ -22,20 +23,28 @@ export default function SettingsModal(props) {
         avatar: ['Change avatar', AvatarSetting],
     }
 
+    let resizeTimer;
+
+    function resizeHandler(e) {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(scrollTo, 100, 0);
+    }
+
     useEffect(() => {
         setActiveButton(0)
     }, [props.visible])
 
-    window.addEventListener('resize', function () {
-        let el = document.getElementById('settings-scroll')
-        el.scrollTop = 0;
-    });
+    useEffect(() => {
+        window.addEventListener('resize', resizeHandler);
+        return () => window.removeEventListener('resize', resizeHandler);
+    }, [])
 
     let scrollPaneRef = useRef(null);
-    const scrollToAnchor = anchor => scrollPaneRef.current.scrollTop = document.getElementById(anchor).offsetTop;
+    const scrollTo = height => scrollPaneRef.current.scrollTop = height;
+    const scrollToAnchor = anchor => scrollTo(document.getElementById(anchor).offsetTop);
 
     return (
-        <CustomModal isOpen={props.visible}>
+        <CustomModal isOpen={props.visible} className={'w-full h-full md:w-2/3 md:h-3/4 lg:w-1/2 lg:h-4/5'}>
 
             <div className={'flex'}>
                 <h1 className='text-3xl mb-3'>Settings</h1>
