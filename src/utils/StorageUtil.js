@@ -4,7 +4,7 @@ import {getChannels, getMessages as fetchMessages, getMiniProfile} from "./reque
 const UNKNOWN_USER = new User(null, '<\Deleted User>', null)
 
 
-async function processAuthorResponse(response) {
+async function processUserResponse(response) {
     if (response.ok) {
         let raw = await response.json()
         let user = new User(raw.id, raw.username, raw.avatar);
@@ -20,16 +20,17 @@ class UserStorage extends ModelStorage {
         if (v) return v;
         return UNKNOWN_USER;
     }
+
+    async getUser(id) {
+        let u = await processUserResponse(await getMiniProfile(id));
+        if (u) this.set(u);
+    }
 }
 
 async function getUsers(ids: String[]) {
     let ms = new UserStorage();
 
-    let responses = await Promise.all(ids.map((id) => getMiniProfile(id)));
-    for (let i in responses) {
-        let user = await processAuthorResponse(responses[i])
-        if (user !== null) ms.set(user)
-    }
+    let responses = await Promise.all(ids.map((id) => ms.getUser(id)));
     return ms;
 }
 
@@ -45,7 +46,7 @@ async function getMessages(users) {
         // get user which is no longer in any chat, but earlier was
         if (users.get(raw.author) === undefined) {
             let missing_user = await getMiniProfile(raw.author);
-            users.set(await processAuthorResponse(missing_user))
+            users.set(await processUserResponse(missing_user))
         }
         map.get(raw.channel).push(rawToMessage(raw, users.getSafe(raw.author)))
     }
@@ -113,4 +114,39 @@ async function getData(localUserId) {
     return {users, channels}
 }
 
-export {getData}
+
+function userArrayChange(ids, userArray) {
+    if (ids.length !== userArray.length) return true;
+    for (let i in ids) {
+        if (ids[i] !== userArray[i]) return true;
+    }
+    return false;
+}
+
+
+async function updateUserArray(ids, userArray, users) {
+    let changed = userArrayChange(ids, userArray);
+
+    if (changed) {
+        let newArray = [];
+        for (let i in ids) {
+            let id = ids[i];
+            let contains = false;
+            for (let j in userArray) {
+                if (id === userArray[j]) {
+                    contains = true;
+                    break;
+                }
+            }
+
+            if (!contains && !users.get(id)) await users.getUser(id);
+            newArray.push(users.get(id))
+        }
+        return  newArray;
+    }
+    return null;
+}
+
+
+
+export {getData, updateUserArray}

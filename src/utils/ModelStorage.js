@@ -1,4 +1,4 @@
-import {key} from "wait-on/exampleConfig";
+import {updateUserArray} from "./StorageUtil";
 
 class Model {
     id: String;
@@ -71,7 +71,7 @@ class Channel extends Model {
         this.unreadCount = unreadCount;
     }
 
-    update(data, users): [] {
+    async update(data, users): [] {
         let keys = Object.keys(data);
         let updatedFields = []
 
@@ -79,7 +79,11 @@ class Channel extends Model {
             let k = keys[i];
             switch (k) {
                 case 'users':
-                    // todo check if same and download additional resources if not cached
+                    let newArray = await updateUserArray(data.users, this.users, users)
+                    if (newArray) {
+                        this.users = newArray;
+                        updatedFields.push('users');
+                    }
                     break;
 
                 case 'last_open_by':
@@ -112,24 +116,30 @@ class GroupChannel extends Channel {
         this.admins = props[props.length - 1];
     }
 
-    update(data, users): [] {
-        let updatedField = []
+    async update(data, users): [] {
+        let updatedFields = []
         if (data.admins) {
-            // todo check if same and download additional resources if not cached
-            updatedField.push('admins')
-            delete data.admins
+            let newArray = await updateUserArray(data.admins, this.admins, users)
+            if (newArray) {
+                this.admins = newArray;
+                updatedFields.push('admins');
+            }
+            delete data.admins;
         }
 
         if (data.owner) {
             if (data.owner !== this.owner.id) {
-                updatedField.push('owner')
-                // todo check if cached and download additional resources if not
+                updatedFields.push('owner');
+                if (!users.get(data.owner)) {
+                    await users.getUser(data.owner);
+                }
+                this.owner = users.get(data.owner);
             }
             delete data.owner
         }
 
 
-        return super.update(data, users).push(...updatedField);
+        return super.update(data, users).push(...updatedFields);
     }
 
 }
