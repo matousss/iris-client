@@ -10,6 +10,7 @@ import Loading from "./components/Loading";
 import {getData} from './utils/StorageUtil';
 import {loadTheme} from "./utils/ThemesUtils";
 import Main, {UserContext} from "./components/Main";
+import ErrorModal from "./components/ErrorModal";
 
 const SetLoadingContext = React.createContext(() => {
 })
@@ -23,10 +24,11 @@ function App() {
     const [loading, setLoading] = useState(true)
     const [userStorage, setUserStorage] = useState(null)
     const [channelStorage, setChannelStorage] = useState(null)
+    const [error, setError] = useState(null);
 
-
-    const showError = message => {
-        console.error(message)
+    const showError = (message, details) => {
+        console.error(message);
+        setError(React.createElement(ErrorModal, {title: message, isOpen: true}, details))
     }
 
     const initMain = _token => {
@@ -53,9 +55,9 @@ function App() {
                     setLoading(false);
                 }
             }).catch(e => {
-                console.error(e)
-                // todo show some error window
-                showError("Server unreachable")
+                console.error(e);
+                setLoading(false);
+                showError('Server unreachable', 'Try reloading page');
             })
         }
     }
@@ -156,6 +158,8 @@ function App() {
 
             )
             }
+
+            {error ? error : ''}
         </>
     );
 }
