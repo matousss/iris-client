@@ -13,6 +13,7 @@ async function processUserResponse(response) {
     }
     return UNKNOWN_USER;
 }
+
 class UserStorage extends ModelStorage {
     // if user doesn't exist returns default anonymous user
     getSafe(key: String): Model | undefined {
@@ -52,7 +53,7 @@ async function getMessages(users) {
     }
 
     for (let i in rawMessages) {
-         await processRaw(rawMessages[i])
+        await processRaw(rawMessages[i])
     }
 
     return map;
@@ -84,7 +85,7 @@ async function getData(localUserId) {
         let icon;
         let _messages = messages.get(raw.id)
         let lastOpenedRaw = raw.last_open_by[localUserId]
-        let lastOpened = new Date( lastOpenedRaw ? lastOpenedRaw : 0);
+        let lastOpened = new Date(lastOpenedRaw ? lastOpenedRaw : 0);
         let unreadCount = _messages.filter(message => message.creation.getTime() > lastOpened.getTime()).length
 
         switch (raw.type) {
@@ -115,38 +116,4 @@ async function getData(localUserId) {
 }
 
 
-function userArrayChange(ids, userArray) {
-    if (ids.length !== userArray.length) return true;
-    for (let i in ids) {
-        if (ids[i] !== userArray[i]) return true;
-    }
-    return false;
-}
-
-
-async function updateUserArray(ids, userArray, users) {
-    let changed = userArrayChange(ids, userArray);
-
-    if (changed) {
-        let newArray = [];
-        for (let i in ids) {
-            let id = ids[i];
-            let contains = false;
-            for (let j in userArray) {
-                if (id === userArray[j]) {
-                    contains = true;
-                    break;
-                }
-            }
-
-            if (!contains && !users.get(id)) await users.getUser(id);
-            newArray.push(users.get(id))
-        }
-        return  newArray;
-    }
-    return null;
-}
-
-
-
-export {getData, updateUserArray}
+export {getData}

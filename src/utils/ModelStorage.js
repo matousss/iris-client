@@ -1,9 +1,5 @@
-import {updateUserArray} from "./StorageUtil";
-
 class Model {
     id: String;
-
-
 }
 
 
@@ -53,6 +49,39 @@ class Message extends Model {
 
 }
 
+function userArrayChange(ids, userArray) {
+    if (ids.length !== userArray.length) return true;
+    for (let i in ids) {
+        if (ids[i] !== userArray[i]) return true;
+    }
+    return false;
+}
+
+
+async function updateUserArray(ids, userArray, users) {
+    let changed = userArrayChange(ids, userArray);
+
+    if (changed) {
+        let newArray = [];
+        for (let i in ids) {
+            let id = ids[i];
+            let contains = false;
+            for (let j in userArray) {
+                if (id === userArray[j]) {
+                    contains = true;
+                    break;
+                }
+            }
+
+            if (!contains && !users.get(id)) await users.getUser(id);
+            newArray.push(users.get(id))
+        }
+        return newArray;
+    }
+    return null;
+}
+
+
 class Channel extends Model {
     id: String;
     users: Array<User>;
@@ -84,16 +113,16 @@ class Channel extends Model {
                         this.users = newArray;
                         updatedFields.push('users');
                     }
+
                     break;
 
                 case 'last_open_by':
-                    // todo recalculate unreadCount
+                    console.log(data['last_open_by'])
                     break;
 
                 default:
+                    console.log({k})
                     if (this[k] !== data[k]) {
-                        console.log(this[k])
-                        console.log(data[k])
                         this[k] = data[k];
                         updatedFields.push(k);
                     }
@@ -118,28 +147,48 @@ class GroupChannel extends Channel {
 
     async update(data, users): [] {
         let updatedFields = []
-        if (data.admins) {
-            let newArray = await updateUserArray(data.admins, this.admins, users)
-            if (newArray) {
-                this.admins = newArray;
-                updatedFields.push('admins');
+        let keys = Object.keys(data);
+
+        for (let i in keys) {
+            let k = keys[i];
+            switch (k) {
+                case 'admins':
+                    let newArray = await updateUserArray(data.admins, this.admins, users)
+                    if (newArray) {
+                        this.admins = newArray;
+                        updatedFields.push('admins');
+                    }
+                    delete data.admins;
+                    break;
+
+                case 'owner':
+                    if (data.owner !== this.owner.id) {
+                        updatedFields.push('owner');
+                        if (!users.get(data.owner)) {
+                            await users.getUser(data.owner);
+                        }
+                        this.owner = users.get(data.owner);
+                    }
+                    delete data.owner
+                    break;
+
+                case 'name':
+                    if (data.name !== this.title) {
+                        updatedFields.push('name');
+                        this.title = data.name;
+                    }
+                    delete data.name;
+                    break;
+
+                default:
+                    break;
             }
-            delete data.admins;
+
+
         }
 
-        if (data.owner) {
-            if (data.owner !== this.owner.id) {
-                updatedFields.push('owner');
-                if (!users.get(data.owner)) {
-                    await users.getUser(data.owner);
-                }
-                this.owner = users.get(data.owner);
-            }
-            delete data.owner
-        }
-
-
-        return super.update(data, users).push(...updatedFields);
+        updatedFields.push(...(await super.update(data, users)))
+        return updatedFields;
     }
 
 }

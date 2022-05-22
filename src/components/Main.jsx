@@ -85,8 +85,10 @@ export default function Main(props) {
                 let updateData = {...raw};
                 delete updateData['data'];
                 delete updateData['type'];
-                let updatedFields = _channel.update(raw);
-                console.log({updatedFields})
+                delete updateData['id'];
+
+                let updatedFields = _channel.update(updateData, props.users);
+                updatedFields.then(console.log)
                 break;
             case 'force_logout':
                 // todo force logout
