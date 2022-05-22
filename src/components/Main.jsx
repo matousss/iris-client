@@ -7,6 +7,7 @@ import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import SettingsModal from "./settings/SettingsModal";
 import {viewedChannel} from "../utils/requests/RequestUtils";
 import {useWindowFocus} from "../utils/Hooks";
+import ErrorModal from "./ErrorModal";
 
 export const UserContext = React.createContext(null);
 

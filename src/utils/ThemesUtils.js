@@ -27,7 +27,7 @@ export const cycleTheme = direction => {
     if (newIndex === themes.length) newIndex = 0;
     if (newIndex === -1) newIndex = themes.length - 1;
 
-    if (Math.floor(Math.random() * 10) === 0) {
+    if (Math.floor(Math.random() * 100) === 0) {
         changeTheme('red');
         return;
     }

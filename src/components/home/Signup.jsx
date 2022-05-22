@@ -54,7 +54,7 @@ export function Signup({setUser, setPage, setLoading}) {
 
     return (
         <>
-            <h1 className='text-black text-5xl mb-6 text-center'>No account? No problem!</h1>
+            <h1 className='text-5xl mb-6 text-center'>No account? No problem!</h1>
             <HomeForm onSubmit={handleSubmit} error={errorMessage} submitText={'register'}>
                 <FormField label={'Email'} type={'email'}
                            value={emailField} onChange={(e) => setEmailField(e.target.value)}/>

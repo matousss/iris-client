@@ -54,7 +54,7 @@ export function Login(props) {
 
     return (
         <>
-            <h1 className='text-black text-6xl mb-6 text-center'>Welcome to Iris</h1>
+            <h1 className='text-6xl mb-6 text-center'>Welcome to Iris</h1>
             <HomeForm onSubmit={handleSubmit} error={error} submitText={'log in'}>
 
                 <FormField label={'Username'}

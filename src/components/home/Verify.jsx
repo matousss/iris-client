@@ -46,7 +46,7 @@ export function Verify({user, setPage, initMain, setLoading}) {
 
     return (
         <>
-            <h1 className='text-black text-3xl mb-4 text-center'>Almost there</h1>
+            <h1 className='text-3xl mb-4 text-center'>Almost there</h1>
             <p className='text-gray-500 my-4'>Please enter the code we've sent to your email</p>
             <HomeForm onSubmit={handleSubmit} submitText={'verify'} error={error}>
                 <FormField label={'Activation code'} value={codeField} onChange={(e) => setCodeField(e.target.value)}/>
