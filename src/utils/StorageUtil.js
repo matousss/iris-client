@@ -62,11 +62,45 @@ async function getMessages(users) {
 }
 
 
+
+
+async function processRawChannel(raw, messages, users) {
+    let localUserId = users.localUser.id;
+    const otherThanMe = (id1, id2) => id1 === localUserId ? id2 : id1;
+
+    let title;
+    let icon;
+    let _messages = messages ? messages.get(raw.id) : [];
+    if (!_messages) _messages = [];
+    let lastOpenedRaw = raw['last_open_by'][localUserId];
+    let lastOpened = new Date(lastOpenedRaw ? lastOpenedRaw : 0);
+    let channelUsers = []
+    raw.users.map(e => channelUsers.push(users.get(e)))
+
+    switch (raw.type) {
+        case 'directchannel':
+            let user: User = users.get(otherThanMe(...raw.users));
+            title = user.username
+            icon = user.avatar
+            break;
+        case 'groupchannel':
+            title = raw.name === null ? "NaN" : raw.name;
+            icon = raw.icon
+            let admins = Array.from(raw.admins.map(e => users.get(e)));
+            return new GroupChannel(raw.id, channelUsers, _messages, title, icon, lastOpened, users.get(raw.owner), admins);
+        default:
+            title = undefined;
+    }
+
+
+    return new Channel(raw.id, channelUsers, _messages, title, icon, lastOpened);
+}
+
+
 async function getData(localUser) {
     let response = await getChannels();
     let userSet = new Set();
     let channelsRaw = await response.json();
-    let localUserId = localUser.id;
 
     for (let i in channelsRaw) {
         let channel = channelsRaw[i];
@@ -77,48 +111,16 @@ async function getData(localUser) {
 
     let users = await getUsers(Array.from(userSet.values()));
     users.localUser = localUser;
+    users.set(localUser);
     let messages = await getMessages(users);
     let channels = new ModelStorage();
 
-
-    const otherThanMe = (id1, id2) => id1 === localUserId ? id2 : id1;
-
-
-    async function processRawChannel(raw) {
-        let title;
-        let icon;
-        let _messages = messages.get(raw.id);
-        if (!_messages) _messages = [];
-        let lastOpenedRaw = raw['last_open_by'][localUserId];
-        let lastOpened = new Date(lastOpenedRaw ? lastOpenedRaw : 0);
-        let channelUsers = []
-        raw.users.map(e => channelUsers.push(users.get(e)))
-
-        switch (raw.type) {
-            case 'directchannel':
-                let user: User = users.get(otherThanMe(...raw.users));
-                title = user.username
-                icon = user.avatar
-                break;
-            case 'groupchannel':
-                title = raw.name === null ? "NaN" : raw.name;
-                icon = raw.icon
-                let admins = Array.from(raw.admins.map(e => users.get(e)));
-                return new GroupChannel(raw.id, channelUsers, _messages, title, icon, lastOpened, users.get(raw.owner), admins);
-            default:
-                title = undefined;
-        }
-
-
-        return new Channel(raw.id, channelUsers, _messages, title, icon, lastOpened);
-    }
-
     for (let i in channelsRaw) {
-        let c = await processRawChannel(channelsRaw[i]);
+        let c = await processRawChannel(channelsRaw[i], messages, users);
         await channels.set(c);
     }
     return {users, channels}
 }
 
 
-export {getData}
+export {getData, processRawChannel}

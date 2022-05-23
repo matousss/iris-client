@@ -1,3 +1,15 @@
+class ModelStorage extends Map<String, Model> {
+    set(value: Model): this {
+        return super.set(value.id, value);
+    }
+
+
+    get(key: String): Model | undefined {
+        return super.get(key);
+    }
+}
+
+
 class Model {
     id: String;
 }
@@ -46,6 +58,7 @@ class Message extends Model {
     author: User;
     media: boolean;
     creation: Date;
+    static map = new ModelStorage()
 
     constructor(id, text = null, author: User, media = false, creation) {
         super();
@@ -55,6 +68,7 @@ class Message extends Model {
         this.author = author;
         this.media = media;
         this.creation = creation;
+        Message.map.set(this);
     }
 
 
@@ -210,15 +224,5 @@ class GroupChannel extends Channel {
 
 }
 
-class ModelStorage extends Map<String, Model> {
-    set(value: Model): this {
-        return super.set(value.id, value);
-    }
-
-
-    get(key: String): Model | undefined {
-        return super.get(key);
-    }
-}
 
 export {User, LocalUser, Message, Channel, GroupChannel, ModelStorage, rawToMessage}

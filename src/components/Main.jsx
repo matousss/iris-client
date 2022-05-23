@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Sidebar from "./sidebar";
-import {GroupChannel, rawToMessage} from "../utils/ModelStorage";
+import {GroupChannel, Message, rawToMessage} from "../utils/ModelStorage";
 import {MessagePanel, MessageComponent} from "./message_panel";
 import {getSortedChannels} from "../utils/Sorting";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import SettingsModal from "./settings/SettingsModal";
 import {viewedChannel} from "../utils/requests/RequestUtils";
 import {useWindowFocus} from "../utils/Hooks";
+import {processRawChannel} from "../utils/StorageUtil";
 
 export const UserContext = React.createContext(null);
 
@@ -41,6 +42,8 @@ export default function Main(props) {
         });
     }
 
+    const updateSidebar = () => setSortedChannels(getSortedChannels(props.channels));
+
     // render messages on active channel change or new message
     useEffect(() => {
         if (channel !== null) {
@@ -71,14 +74,31 @@ export default function Main(props) {
                 } else _channel.unreadCount++;
 
 
-                setSortedChannels(getSortedChannels(props.channels));
-                setMessageCount(_channel.messages.length)
+                updateSidebar();
+                setMessageCount(_channel.messages.length);
 
                 break;
 
             case 'Channel':
             case 'DirectChannel':
             case 'GroupChannel':
+                if (data['created']) {
+                    console.log('addd cjamme')
+                    console.log({raw})
+                    let a = raw.users.map(id => !props.users.get(id) && props.users.getUser(id))
+                    console.log({a})
+                    Promise.all(a).then(() => {
+                        processRawChannel(raw, null, props.users).then(
+                            e => {
+                                props.channels.set(e);
+                                updateSidebar();
+                            }
+
+                        );
+
+                    })
+                    break;
+                }
                 _channel = props.channels.get(raw.id);
                 let updateData = {...raw};
                 delete updateData['data'];
@@ -93,6 +113,24 @@ export default function Main(props) {
         }
     }
 
+    const deleteData = (data) => {
+        let object = data.object;
+        let id = data.id;
+        switch (object) {
+            case 'Message':
+                Message.map.delete(id)
+                break;
+
+            case 'Channel':
+            case 'DirectChannel':
+            case 'GroupChannel':
+                props.channels.delete(id);
+                updateSidebar();
+                break;
+            default:
+                console.error("Received unexpected object type: " + object);
+        }
+    }
 
     function handleReceive(event, activeChannel, windowFocus) {
         let data = JSON.parse(event.data);
@@ -105,6 +143,7 @@ export default function Main(props) {
                 updateData(data, activeChannel, windowFocus);
                 break;
             case 'object.delete':
+                deleteData(data)
                 break;
             case 'force_logout':
                 // todo force logout
