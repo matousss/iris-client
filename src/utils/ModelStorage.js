@@ -134,13 +134,9 @@ class Channel extends Model {
                     break;
 
                 case 'last_open_by':
-                    console.log(data['last_open_by'])
                     let rawDate = data['last_open_by'][users.localUser.id];
                     if (!rawDate) break;
-                    let date = new Date(rawDate)
-                    if (date.getTime() > this.messages[this.messages.length - 1].creation.getTime()) {
-
-                    }
+                    this.updateUnreadCount(new Date(rawDate))
                     break;
 
                 default:
