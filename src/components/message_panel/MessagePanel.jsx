@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import InputField from "./InputField";
 
 export function MessagePanel({activeChannel, messages, sendMessage}) {
-    useEffect(() => console.log('messages updated'), [messages])
+
 
     return (
         <div className='h-screen ml-16 flex flex-col pl-3'>

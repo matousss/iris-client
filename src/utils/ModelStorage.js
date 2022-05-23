@@ -58,7 +58,6 @@ class Message extends Model {
     author: User;
     media: boolean;
     creation: Date;
-    static map = new ModelStorage()
 
     constructor(id, text = null, author: User, media = false, creation) {
         super();
@@ -68,7 +67,6 @@ class Message extends Model {
         this.author = author;
         this.media = media;
         this.creation = creation;
-        Message.map.set(this);
     }
 
 

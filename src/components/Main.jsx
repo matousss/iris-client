@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Sidebar from "./sidebar";
 import {GroupChannel, Message, rawToMessage} from "../utils/ModelStorage";
 import {MessagePanel, MessageComponent} from "./message_panel";
@@ -83,10 +83,7 @@ export default function Main(props) {
             case 'DirectChannel':
             case 'GroupChannel':
                 if (data['created']) {
-                    console.log('addd cjamme')
-                    console.log({raw})
                     let a = raw.users.map(id => !props.users.get(id) && props.users.getUser(id))
-                    console.log({a})
                     Promise.all(a).then(() => {
                         processRawChannel(raw, null, props.users).then(
                             e => {
@@ -118,7 +115,7 @@ export default function Main(props) {
         let id = data.id;
         switch (object) {
             case 'Message':
-                Message.map.delete(id)
+                // todo delete message
                 break;
 
             case 'Channel':
