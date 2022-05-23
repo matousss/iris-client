@@ -103,7 +103,9 @@ export default function Main(props) {
                 delete updateData['id'];
 
                 let updatedFields = _channel.update(updateData, props.users);
-                updatedFields.then(console.log)
+                updatedFields.then(e => {
+                    if (e.contains('last_open_by') || e.contains('name')) updateSidebar();
+                })
                 break;
             default:
                 console.error("Received unexpected object type: " + object);
