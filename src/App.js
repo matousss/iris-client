@@ -9,11 +9,9 @@ import {logout} from './utils/requests/AuthReq'
 import Loading from "./components/Loading";
 import {getData} from './utils/StorageUtil';
 import {loadTheme} from "./utils/ThemesUtils";
-import Main, {UserContext} from "./components/Main";
+import Main from "./components/Main";
 import ErrorModal from "./components/ErrorModal";
-
-const SetLoadingContext = React.createContext(() => {
-})
+import {LocalUser} from "./utils/ModelStorage";
 
 
 function App() {
@@ -39,8 +37,9 @@ function App() {
             getFullProfile().then(response => {
                 if (response.status === 200) {
                     response.json().then(data => {
-                        setUser(data);
-                        getData(data.id).then(data => {
+                        let localUser = new LocalUser(data)
+                        setUser(localUser);
+                        getData(data).then(data => {
                             setUserStorage(data.users);
                             setChannelStorage(data.channels);
                             setLoading(false);
@@ -81,10 +80,6 @@ function App() {
 
     useEffect(() => {
         localStorage.setItem('stayLogged', stayLoggedIn.toString());
-        console.log(stayLoggedIn);
-        console.log(localStorage);
-        console.log(sessionStorage);
-
     }, [stayLoggedIn])
 
     useEffect(() => {
@@ -119,7 +114,7 @@ function App() {
     }
 
     const clearDesk = () => {
-        logout().then(response => {
+        logout().then(() => {
         })
         setPage(Page.login)
         setUser(null);

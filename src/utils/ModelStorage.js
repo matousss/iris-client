@@ -29,6 +29,17 @@ function rawToMessage(raw, author) {
     return new Message(raw.id, raw.text, author, raw.media, new Date(raw.creation));
 }
 
+class LocalUser extends User {
+    email: String;
+    friends: User[]
+
+    constructor({id, username, avatar, email, friends}) {
+        super(id, username, avatar);
+        this.email = email;
+        this.friends = friends;
+    }
+}
+
 class Message extends Model {
     id: String;
     text: ?String;
@@ -52,7 +63,7 @@ class Message extends Model {
 function userArrayChange(ids, userArray) {
     if (ids.length !== userArray.length) return true;
     for (let i in ids) {
-        if (ids[i] !== userArray[i]) return true;
+        if (ids[i] !== userArray[i].id) return true;
     }
     return false;
 }
@@ -88,16 +99,20 @@ class Channel extends Model {
     messages: Array<Message>;
     title: String;
     icon;
-    unreadCount: number;
+    unreadCount: number = 0;
 
-    constructor(id, users: Array<User>, messages: Array<Message> = [], title = 'Unknown channel', icon = null, unreadCount) {
+    updateUnreadCount(time: Date) {
+        this.unreadCount = this.messages.filter(message => message.creation.getTime() > time.getTime()).length;
+    }
+
+    constructor(id, users: Array<User>, messages: Array<Message> = [], title = 'Unknown channel', icon = null, lastOpened) {
         super();
         this.id = id;
         this.users = users;
         this.messages = messages;
         this.title = title;
         this.icon = icon;
-        this.unreadCount = unreadCount;
+        this.updateUnreadCount(lastOpened)
     }
 
     async update(data, users): [] {
@@ -108,6 +123,8 @@ class Channel extends Model {
             let k = keys[i];
             switch (k) {
                 case 'users':
+                    // in direct channel user order might be different because in object is local user always on index 0
+
                     let newArray = await updateUserArray(data.users, this.users, users)
                     if (newArray) {
                         this.users = newArray;
@@ -118,17 +135,20 @@ class Channel extends Model {
 
                 case 'last_open_by':
                     console.log(data['last_open_by'])
+                    let rawDate = data['last_open_by'][users.localUser.id];
+                    if (!rawDate) break;
+                    let date = new Date(rawDate)
+                    if (date.getTime() > this.messages[this.messages.length - 1].creation.getTime()) {
+
+                    }
                     break;
 
                 default:
-                    console.log({k})
                     if (this[k] !== data[k]) {
                         this[k] = data[k];
                         updatedFields.push(k);
                     }
             }
-
-
         }
         return updatedFields;
     }
@@ -187,6 +207,7 @@ class GroupChannel extends Channel {
 
         }
 
+        // noinspection ES6RedundantAwait because it's required
         updatedFields.push(...(await super.update(data, users)))
         return updatedFields;
     }
@@ -204,4 +225,4 @@ class ModelStorage extends Map<String, Model> {
     }
 }
 
-export {User, Message, Channel, GroupChannel, ModelStorage, rawToMessage}
+export {User, LocalUser, Message, Channel, GroupChannel, ModelStorage, rawToMessage}

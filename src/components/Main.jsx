@@ -7,7 +7,6 @@ import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import SettingsModal from "./settings/SettingsModal";
 import {viewedChannel} from "../utils/requests/RequestUtils";
 import {useWindowFocus} from "../utils/Hooks";
-import ErrorModal from "./ErrorModal";
 
 export const UserContext = React.createContext(null);
 
@@ -50,9 +49,7 @@ export default function Main(props) {
         }
     }, [channel, messageCount])
 
-
-    function handleReceive(event, active_channel, windowFocus) {
-        let data = JSON.parse(event.data);
+    const updateData = (data, active_channel, windowFocus) => {
         let object = data.object;
         let raw = data.data;
         let _channel
@@ -61,8 +58,10 @@ export default function Main(props) {
                 let message = rawToMessage(raw, props.users.get(raw.author));
                 _channel = props.channels.get(raw.channel);
                 if (!_channel) return console.error("Channel not found");
-                for (let i in _channel.messages) {
-                    if (_channel.messages[i].id === message.id) return _channel[i] = message;
+                if (!data['created']) {
+                    for (let i in _channel.messages) {
+                        if (_channel.messages[i].id === message.id) return _channel[i] = message;
+                    }
                 }
                 _channel.messages.splice(0, 0, message);
 
@@ -80,7 +79,6 @@ export default function Main(props) {
             case 'Channel':
             case 'DirectChannel':
             case 'GroupChannel':
-                console.log({data})
                 _channel = props.channels.get(raw.id);
                 let updateData = {...raw};
                 delete updateData['data'];
@@ -90,15 +88,35 @@ export default function Main(props) {
                 let updatedFields = _channel.update(updateData, props.users);
                 updatedFields.then(console.log)
                 break;
-            case 'force_logout':
-                // todo force logout
-            case 'error':
-                console.error('Received WebSocket error: ' + raw.detail)
-                console.log({raw})
-                break;
             default:
                 console.error("Received unexpected object type: " + object);
         }
+    }
+
+
+    function handleReceive(event, activeChannel, windowFocus) {
+        let data = JSON.parse(event.data);
+
+
+        console.log({data})
+
+        switch (data.type) {
+            case 'object.update':
+                updateData(data, activeChannel, windowFocus);
+                break;
+            case 'object.delete':
+                break;
+            case 'force_logout':
+                // todo force logout
+                console.log('force logout now')
+                break;
+            case 'error':
+                console.error('Received WebSocket error: ' + data.data.detail)
+                console.log({data})
+                break;
+
+        }
+
     }
 
     useEffect(() => {
@@ -116,7 +134,8 @@ export default function Main(props) {
     }, [channel, windowFocus])
 
     useEffect(() => {
-        if (channel && channel.unreadCount > 0) viewedChannel(channel.id).then(() => {});
+        if (channel && channel.unreadCount > 0) viewedChannel(channel.id).then(() => {
+        });
     }, [windowFocus])
 
     const sendMessage = (message) => {

@@ -15,6 +15,8 @@ async function processUserResponse(response) {
 }
 
 class UserStorage extends ModelStorage {
+    localUser: User
+
     // if user doesn't exist returns default anonymous user
     getSafe(key: String): Model | undefined {
         let v = super.get(key);
@@ -31,7 +33,7 @@ class UserStorage extends ModelStorage {
 async function getUsers(ids: String[]) {
     let ms = new UserStorage();
 
-    let responses = await Promise.all(ids.map((id) => ms.getUser(id)));
+    await Promise.all(ids.map((id) => ms.getUser(id)));
     return ms;
 }
 
@@ -60,10 +62,11 @@ async function getMessages(users) {
 }
 
 
-async function getData(localUserId) {
+async function getData(localUser) {
     let response = await getChannels();
     let userSet = new Set();
     let channelsRaw = await response.json();
+    let localUserId = localUser.id;
 
     for (let i in channelsRaw) {
         let channel = channelsRaw[i];
@@ -73,6 +76,7 @@ async function getData(localUserId) {
     }
 
     let users = await getUsers(Array.from(userSet.values()));
+    users.localUser = localUser;
     let messages = await getMessages(users);
     let channels = new ModelStorage();
 
@@ -83,35 +87,36 @@ async function getData(localUserId) {
     async function processRawChannel(raw) {
         let title;
         let icon;
-        let _messages = messages.get(raw.id)
-        let lastOpenedRaw = raw.last_open_by[localUserId]
+        let _messages = messages.get(raw.id);
+        if (!_messages) _messages = [];
+        let lastOpenedRaw = raw['last_open_by'][localUserId];
         let lastOpened = new Date(lastOpenedRaw ? lastOpenedRaw : 0);
-        let unreadCount = _messages.filter(message => message.creation.getTime() > lastOpened.getTime()).length
+        let channelUsers = []
+        raw.users.map(e => channelUsers.push(users.get(e)))
 
         switch (raw.type) {
             case 'directchannel':
                 let user: User = users.get(otherThanMe(...raw.users));
                 title = user.username
                 icon = user.avatar
-                if (raw.users[0] !== user) raw.users = raw.users.reverse()
                 break;
             case 'groupchannel':
                 title = raw.name === null ? "NaN" : raw.name;
                 icon = raw.icon
-                return new GroupChannel(raw.id, raw.users, _messages, title, icon, unreadCount, raw.owner, raw.admins);
+                let admins = Array.from(raw.admins.map(e => users.get(e)));
+                return new GroupChannel(raw.id, channelUsers, _messages, title, icon, lastOpened, users.get(raw.owner), admins);
             default:
                 title = undefined;
         }
 
 
-        return new Channel(raw.id, raw.users, _messages, title, icon, unreadCount);
+        return new Channel(raw.id, channelUsers, _messages, title, icon, lastOpened);
     }
 
     for (let i in channelsRaw) {
         let c = await processRawChannel(channelsRaw[i]);
         await channels.set(c);
     }
-
     return {users, channels}
 }
 
