@@ -1,9 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {centerCrop, makeAspectCrop} from 'react-image-crop';
 import {TitledSettingContainer} from "./SettingsContainer";
 import {SettingsForm} from "./SettingsForm";
 import {FileInput} from "./FileInput";
 import CropModal from "./CropModal";
+import {updateAvatar} from "../../utils/requests/SettingsReq";
+import {UserContext} from "../Main";
 
 function AvatarSetting(props) {
     const [srcImage, setSrcImage] = useState('');
@@ -12,6 +14,7 @@ function AvatarSetting(props) {
     const [fileName, setFileName] = useState('not slected');
     const [crop, setCrop] = useState(null);
     const [editorOpen, setEditorOpen] = useState(false);
+    const [message, setMessage] = useState(null)
 
     const onSelectFile = (e) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -87,13 +90,40 @@ function AvatarSetting(props) {
 
         ctx.restore()
     }
+    let localUser = useContext(UserContext)
+
+    const save = e => {
+        e.preventDefault();
+        if (!srcImage) return setMessage(React.createElement('span', {className: 'text-warning font-bold' }, 'No image selected!'))
+        props.setLoading(true);
+        let base64 = canvasRef.current.toDataURL();
+        localUser.avatar = base64;
+        updateAvatar(base64).then(e => {
+            let message;
+            let warn = true;
+            switch (e.status) {
+                case 200:
+                    message = 'Saved!'
+                    warn = false;
+                    break;
+                case 400:
+                    message = 'Invalid image format'
+                    break;
+                default:
+                    message = 'Unexpected error'
+            }
+            setMessage(React.createElement('span', {className: warn ? 'text-warning font-bold' : 'text-lime-700' }, message))
+            props.setLoading(false);
+        })
+    }
 
     return (
         <TitledSettingContainer title={'Change avatar'} {...props}>
-            <SettingsForm onSubmit={() => console.log('submitted')}>
+            <SettingsForm onSubmit={save} message={message} disabled={props.loading}>
                 <FileInput fileName={fileName} onChange={onSelectFile}/>
                 <div className={'w-1/2 bg-black/20 group ' + (srcImage ? 'visible' : 'hidden')}>
-                    <canvas ref={canvasRef} className='border-2 border-ptext/20 group-hover:rounded-full w-full h-full'/>
+                    <canvas ref={canvasRef}
+                            className='border-2 border-ptext/20 group-hover:rounded-full w-full h-full'/>
                 </div>
             </SettingsForm>
 

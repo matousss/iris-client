@@ -4,16 +4,12 @@ import EmailSetting from "./EmailSetting";
 import PasswordSetting from "./PasswordSetting";
 import AvatarSetting from "./AvatarSetting";
 import {CustomModal} from "../CustomModal";
-import {func} from "prop-types";
 
 export default function SettingsModal(props) {
+    const [loading, setLoading] = useState(false);
+
     const closeModal = () => {
         props.setVisible(false);
-    }
-
-    const saveAndClose = () => {
-        // TODO save changes
-        closeModal();
     }
 
     const [activeButton, setActiveButton] = useState(0)
@@ -25,7 +21,7 @@ export default function SettingsModal(props) {
 
     let resizeTimer;
 
-    function resizeHandler(e) {
+    function resizeHandler() {
         if (resizeTimer) clearTimeout(resizeTimer);
         resizeTimer = setTimeout(scrollTo, 100, 0);
     }
@@ -77,7 +73,7 @@ export default function SettingsModal(props) {
                     <>
                         {Object.keys(sections).map(key => {
                             let Element = sections[key][1];
-                            return <Element id={key}/>;
+                            return <Element id={key} setLoading={setLoading} loading={loading}/>;
                         })}</>
 
                 </div>

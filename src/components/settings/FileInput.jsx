@@ -1,12 +1,13 @@
 import React from "react";
 
-export const FileInput = ({onChange, selected, fileName}) => <label className='block mb-2 w-3/5 text-sm font-medium
+export const FileInput = ({onChange, selected, fileName, disabled}) => <label className='block mb-2 w-3/5 text-sm font-medium
                     rounded-3xl border-2 border-ptext/10 bg-ptext/10 cursor-pointer'>
                     <input
                         className={'opacity-0 border-3 border-black w-0 h-0 fixed'}
                         type='file'
                         onChange={onChange}
                         value={selected}
+                        disabled={disabled}
                     />
                     <div className={'flex'}>
                         <div
