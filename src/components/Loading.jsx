@@ -5,7 +5,7 @@ export default function Loading({opacity}) {
 
     return (
         <>
-            <div className={'fixed left-0 top-0 w-screen h-screen z-100 backdrop-blur-sm'}>
+            <div className={'fixed left-0 top-0 w-screen h-screen z-[500] backdrop-blur-sm'}>
                 <div className={'opacity-' + opacity}>
                     <div className={'bg-primary/50 w-full h-full fixed'}/>
                     <div className={'bg-black/20 w-full h-full fixed'}/>

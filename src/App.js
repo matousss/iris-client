@@ -2,7 +2,7 @@ import './App.css';
 import * as Page from './utils/PageEnum';
 import {Login, Signup, Verify, HomeContainer} from "./components/home";
 
-import React, {useEffect, useState} from 'react'
+import React, {createContext, useEffect, useState} from 'react'
 import {loadToken, saveToken} from "./utils/AuthUtils";
 import {getFullProfile} from './utils/requests/DataReq'
 import {logout} from './utils/requests/AuthReq'
@@ -14,8 +14,10 @@ import ErrorModal from "./components/ErrorModal";
 import {LocalUser} from "./utils/ModelStorage";
 
 
+export const LoadingContext = createContext([false, null]);
+
 function App() {
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState(null);
     const [page, setPage] = useState(Page.login);
     const [stayLoggedIn, setStayLoggedIn] = useState(localStorage.getItem('stayLogged') === 'true');
     const [token, setToken] = useState('')
@@ -142,19 +144,22 @@ function App() {
     return (
         <>
             {loading ? <Loading opacity={.6}/> : ''}
-            {(page !== Page.main ? <HomeContainer>{selectComponent(page)}</HomeContainer> :
+            <><LoadingContext.Provider value={[loading, setLoading]}>
+                {(page !== Page.main ? <HomeContainer>{selectComponent(page)}</HomeContainer> :
 
-                    <Main user={user}
-                          clearDesk={clearDesk}
-                          setPage={setPage}
-                          stayLoggedIn={stayLoggedIn}
-                          users={userStorage}
-                          channels={channelStorage}/>
+                        <Main user={user}
+                              clearDesk={clearDesk}
+                              setPage={setPage}
+                              stayLoggedIn={stayLoggedIn}
+                              users={userStorage}
+                              channels={channelStorage}/>
 
-            )
-            }
+                )
+                }
 
-            {error ? error : ''}
+                {error ? error : ''}
+             </LoadingContext.Provider></>
+
         </>
     );
 }

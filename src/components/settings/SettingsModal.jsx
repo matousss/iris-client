@@ -1,12 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import SettingsButton from "./SettingsButton";
 import EmailSetting from "./EmailSetting";
 import PasswordSetting from "./PasswordSetting";
 import AvatarSetting from "./AvatarSetting";
 import {CustomModal} from "../CustomModal";
+import {LoadingContext} from "../../App";
 
 export default function SettingsModal(props) {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useContext(LoadingContext);
 
     const closeModal = () => {
         props.setVisible(false);

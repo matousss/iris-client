@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {createContext, useEffect, useState} from 'react';
 import Sidebar from "./sidebar";
 import {GroupChannel, Message, rawToMessage} from "../utils/ModelStorage";
 import {MessagePanel, MessageComponent} from "./message_panel";
@@ -9,7 +9,7 @@ import {viewedChannel} from "../utils/requests/RequestUtils";
 import {useWindowFocus} from "../utils/Hooks";
 import {processRawChannel} from "../utils/StorageUtil";
 
-export const UserContext = React.createContext(null);
+export const UserContext = createContext(null);
 
 
 export default function Main(props) {

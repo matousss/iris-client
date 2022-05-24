@@ -113,7 +113,7 @@ function AvatarSetting(props) {
                     message = 'Unexpected error'
             }
             setMessage(React.createElement('span', {className: warn ? 'text-warning font-bold' : 'text-lime-700' }, message))
-            props.setLoading(false);
+            window.setTimeout(props.setLoading, 500, false);
         })
     }
 
