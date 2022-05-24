@@ -59,7 +59,7 @@ export default function SettingsModal(props) {
                 <ul className='w-1/3 md:w-1/3 h-full border-r-[1px] border-ptext/20'>
                     <>
                         {Object.keys(sections).map((key, i) =>
-                            <li><SettingsButton href={'#' + key} scrollToAnchor={scrollToAnchor}
+                            <li key={i}><SettingsButton href={'#' + key} scrollToAnchor={scrollToAnchor}
                                                 isActive={activeButton === i}>{sections[key][0]}</SettingsButton>
                             </li>)}</>
 
@@ -72,9 +72,9 @@ export default function SettingsModal(props) {
                          setActiveButton(Math.round(scrollTop / h))
                      }}>
                     <>
-                        {Object.keys(sections).map(key => {
+                        {Object.keys(sections).map((key, i) => {
                             let Element = sections[key][1];
-                            return <Element id={key} setLoading={setLoading} loading={loading}/>;
+                            return <Element id={key} key={i}/>;
                         })}</>
 
                 </div>

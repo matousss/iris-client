@@ -1,11 +1,15 @@
 import {dictToFormData, getFetch} from "./RequestUtils";
 
+function getBasicAuth(auth) {
+    return new Headers({
+        'Authorization': 'Basic ' + auth,
+        'Content-Type': 'application/x-www-form-urlencoded',
+    })
+}
+
 function login(auth) {
     return getFetch('auth/login', 'POST', null,
-        new Headers({
-            'Authorization': 'Basic ' + auth,
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }))
+        getBasicAuth(auth))
 }
 
 function logout() {
@@ -23,4 +27,5 @@ function activateAccount(username, activationCode) {
         'activation_code': activationCode,
     }), new Headers())
 }
-export {login, logout, signup, activateAccount}
+
+export {login, logout, signup, activateAccount, getBasicAuth}

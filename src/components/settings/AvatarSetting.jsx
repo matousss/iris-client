@@ -94,7 +94,7 @@ function AvatarSetting(props) {
 
     const save = e => {
         e.preventDefault();
-        if (!srcImage) return setMessage(React.createElement('span', {className: 'text-warning font-bold' }, 'No image selected!'))
+        if (!srcImage) return setMessage(React.createElement('span', {className: 'text-warning font-bold'}, 'No image selected!'))
         props.setLoading(true);
         let base64 = canvasRef.current.toDataURL();
         localUser.avatar = base64;
@@ -112,9 +112,11 @@ function AvatarSetting(props) {
                 default:
                     message = 'Unexpected error'
             }
-            setMessage(React.createElement('span', {className: warn ? 'text-warning font-bold' : 'text-lime-700' }, message))
+            setMessage(React.createElement('span', {className: warn ? 'text-warning font-bold' : 'text-lime-700'}, message))
             window.setTimeout(props.setLoading, 500, false);
-        })
+        }).catch(
+            setMessage(React.createElement('span', {className: 'text-warning font-bold'}, 'Unexpected Error'))
+        )
     }
 
     return (

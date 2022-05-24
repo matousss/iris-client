@@ -1,10 +1,12 @@
 import React from "react";
 import {ModalButton} from "./ModalButton";
 
-export const SettingsField = props =>
+export const SettingsField = ({valueSetter, label, ...props}) =>
     <>
-        {props.label ? <label className='text-lg'>{props.label}</label> : ''}
-        <input className='border-2 border-ptext/10 rounded-3xl p-2 text-xs w-full max-w-3/5 bg-ptext/10' {...props}/>
+        {label ? <label className='text-lg'>{label}</label> : ''}
+        <input className='border-2 border-ptext/10 rounded-3xl p-2 text-xs w-full max-w-3/5 bg-ptext/10' {...props}
+            onChange={e => valueSetter(e.target.value)}
+        />
     </>
 
 export const SettingsForm = ({title, onSubmit, submitText = 'Save', children, disabled, message}) => {
