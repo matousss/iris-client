@@ -7,7 +7,7 @@ import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import SettingsModal from "./settings/SettingsModal";
 import {viewedChannel} from "../utils/requests/RequestUtils";
 import {useWindowFocus} from "../utils/Hooks";
-import {processRawChannel} from "../utils/StorageUtil";
+import {getMessages, processRawChannel} from "../utils/StorageUtil";
 
 export const UserContext = createContext(null);
 
@@ -84,8 +84,9 @@ export default function Main(props) {
             case 'GroupChannel':
                 if (data['created']) {
                     let a = raw.users.map(id => !props.users.get(id) && props.users.getUser(id))
-                    Promise.all(a).then(() => {
-                        processRawChannel(raw, null, props.users).then(
+                    a.push(getMessages(props.users, raw.id))
+                    Promise.all(a).then(results => {
+                        processRawChannel(raw, results[results.length - 1].get(raw.id), props.users).then(
                             e => {
                                 props.channels.set(e);
                                 updateSidebar();
@@ -104,7 +105,7 @@ export default function Main(props) {
 
                 let updatedFields = _channel.update(updateData, props.users);
                 updatedFields.then(e => {
-                    if (e.contains('last_open_by') || e.contains('name')) updateSidebar();
+                    if (e.includes('last_open_by') || e.includes('name')) updateSidebar();
                 })
                 break;
             default:
@@ -133,9 +134,6 @@ export default function Main(props) {
 
     function handleReceive(event, activeChannel, windowFocus) {
         let data = JSON.parse(event.data);
-
-
-        console.log({data})
 
         switch (data.type) {
             case 'object.update':

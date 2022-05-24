@@ -12,8 +12,8 @@ function getChannels() {
     return getFetch('channel', 'GET')
 }
 
-function getMessages() {
-    return getFetch('message', 'GET')
+function getMessages(channelId = null) {
+    return getFetch('message' + (channelId ? `?channel_id=${channelId}` : ''), 'GET')
 }
 
 function searchUser(keyword = '') {

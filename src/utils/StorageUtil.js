@@ -37,10 +37,12 @@ async function getUsers(ids: String[]) {
     return ms;
 }
 
-async function getMessages(users) {
-    const response = await fetchMessages();
-    let rawMessages = await response.json();
+async function getMessages(users, channelId) {
+    const response = await fetchMessages(channelId);
     let map = new Map();
+    if (!response.ok) return map;
+    let rawMessages = await response.json();
+
 
 
     const processRaw = async raw => {
@@ -123,4 +125,4 @@ async function getData(localUser) {
 }
 
 
-export {getData, processRawChannel}
+export {getData, processRawChannel, getMessages}
