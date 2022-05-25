@@ -201,9 +201,10 @@ class GroupChannel extends Channel {
                     break;
 
                 case 'name':
-                    if (data.name !== this.title) {
+                    let newName = data.name ? data.name : 'NaN';
+                    if (newName !== this.title) {
                         updatedFields.push('name');
-                        this.title = data.name;
+                        this.title = newName;
                     }
                     delete data.name;
                     break;

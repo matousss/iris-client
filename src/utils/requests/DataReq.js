@@ -20,4 +20,8 @@ function searchUser(keyword = '') {
     return getFetch('profile/miniature?search='+keyword)
 }
 
-export {getMiniProfile, getFullProfile, getChannels, getMessages, searchUser}
+function deleteChannel(id) {
+    return getFetch(`channel/${id}/`, 'DELETE')
+}
+
+export {getMiniProfile, getFullProfile, getChannels, getMessages, searchUser, deleteChannel}

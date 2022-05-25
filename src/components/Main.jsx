@@ -98,6 +98,7 @@ export default function Main(props) {
                     break;
                 }
                 _channel = props.channels.get(raw.id);
+                if (!_channel) return
                 let updateData = {...raw};
                 delete updateData['data'];
                 delete updateData['type'];
@@ -192,7 +193,7 @@ export default function Main(props) {
                          setActiveConversation={openChannel} channels={props.channels}
                          sortedChannels={sortedChannels} setSettingsVisible={setSettingsVisible}
                 />
-                <MessagePanel activeChannel={channel}
+                <MessagePanel activeChannel={channel} setChannel={setChannel}
                               messages={messageArray} sendMessage={sendMessage}/>
                 {settingsVisible ? <SettingsModal visible={true} setVisible={setSettingsVisible}/> : ''}
             </div>
