@@ -170,8 +170,7 @@ export default function Main(props) {
     }, [channel, windowFocus])
 
     useEffect(() => {
-        if (channel && channel.unreadCount > 0) viewedChannel(channel.id).then(() => {
-        });
+        if (channel && channel.unreadCount > 0) viewedChannel(channel.id).then(() => updateSidebar());
     }, [windowFocus])
 
     const sendMessage = (message) => {
