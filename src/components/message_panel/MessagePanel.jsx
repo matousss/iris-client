@@ -29,7 +29,7 @@ export function MessagePanel({activeChannel, setChannel, messages, sendMessage})
                             className={'text-sm mx-auto mb-3 px-5 text-ptext/5 border-ptext/5 border-b-.5 hover:text-ptext/40 hover:border-ptext/20 duration-500 cursor-default'}>
                             Begining of conversation
                         </div>
-                    </> : <div className={'m-auto text-xl'}>Start chatting from the left :D</div>
+                    </> : <div className={'m-auto text-xl text-ptext/60'}>Start chatting... What are you waiting for?</div>
                 }
 
 

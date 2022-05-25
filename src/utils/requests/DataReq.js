@@ -17,7 +17,7 @@ function getMessages(channelId = null) {
 }
 
 function searchUser(keyword = '') {
-    return getFetch('profile/miniature?search='+keyword)
+    return getFetch('profile/miniature?search=' + keyword)
 }
 
 function deleteChannel(id) {
@@ -31,4 +31,10 @@ function createDirectChannel(id) {
     return getFetch('channel/', 'POST', formData)
 }
 
-export {getMiniProfile, getFullProfile, getChannels, getMessages, searchUser, deleteChannel, createDirectChannel}
+function changeEmail(email) {
+    let formData = new FormData();
+    formData.append('email', email);
+    return getFetch('auth/changeemail', 'POST', formData)
+}
+
+export {getMiniProfile, getFullProfile, getChannels, getMessages, searchUser, deleteChannel, createDirectChannel, changeEmail}

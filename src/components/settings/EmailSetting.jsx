@@ -1,21 +1,36 @@
-import React, {useContext, useState} from 'react';
+import React, {createElement, useContext, useState} from 'react';
 import {SettingsContainer} from "./SettingsContainer";
 import {SettingsField, SettingsForm} from "./SettingsForm";
 import {UserContext} from "../Main";
+import {changeEmail} from "../../utils/requests/DataReq";
 
 function EmailSetting({loading, setLoading, ...props}) {
-    const [emailInput, setEmailInput] = useState(useContext(UserContext).email);
-    const [message, setMessage] = useState(null)
+    const user = useContext(UserContext)
+    const [emailInput, setEmailInput] = useState(user.email);
+    const [message, setMessage] = useState(null);
 
     return (
         <SettingsContainer {...props}>
-            <SettingsForm onSubmit={e => {
+            <SettingsForm onSubmit={async e => {
                 e.preventDefault();
-                setMessage('WIP')
-            }} title={'Change email'} message={message}>
-                <UserContext.Consumer>
-                    {(user) => <SettingsField type={'email'} value={user.email} label={'Enter email'} valueSetter={setEmailInput}/>}
-                </UserContext.Consumer>
+                if (emailInput.trim() === '') return setMessage(createElement('span', {className: 'text-warning'}, 'Field cannot be empty'))
+                setLoading(true);
+                try {
+                    let response = await changeEmail(emailInput);
+                    switch (response.status) {
+                        case 200:
+                            user.email = emailInput;
+                            return setMessage(createElement('span', {className: 'text-lime-700'}, 'Saved!'));
+                        default:
+                            setMessage(createElement('span', {className: 'text-warning font-bold'}, 'Unexpected error'))
+                    }
+                } finally {
+                    setLoading(false);
+                }
+            }} title={'Change email'} message={message} disabled={loading}>
+
+                <SettingsField type={'email'} value={emailInput} label={'Enter email'} valueSetter={setEmailInput}/>
+
             </SettingsForm>
         </SettingsContainer>
     );

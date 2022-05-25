@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {createElement, useContext, useRef, useState} from 'react';
 import {centerCrop, makeAspectCrop} from 'react-image-crop';
 import {TitledSettingContainer} from "./SettingsContainer";
 import {SettingsForm} from "./SettingsForm";
@@ -112,10 +112,10 @@ function AvatarSetting({loading, setLoading, ...props}) {
                 default:
                     message = 'Unexpected error'
             }
-            setMessage(React.createElement('span', {className: warn ? 'text-warning font-bold' : 'text-lime-700'}, message))
+            setMessage(createElement('span', {className: warn ? 'text-warning font-bold' : 'text-lime-700'}, message))
             window.setTimeout(setLoading, 500, false);
         }).catch(
-            setMessage(React.createElement('span', {className: 'text-warning font-bold'}, 'Unexpected Error'))
+            setMessage(createElement('span', {className: 'text-warning font-bold'}, 'Unexpected Error'))
         )
     }
 
