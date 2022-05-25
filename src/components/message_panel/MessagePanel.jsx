@@ -9,7 +9,7 @@ export function MessagePanel({activeChannel, setChannel, messages, sendMessage})
         <div className='h-screen ml-16 flex flex-col pl-3'>
             <div className='flex w-full mx-auto shadow-lg h-[80px] bg-ptext/5 justify-center align-middle'>
                 {activeChannel ? <>
-                    <span className='py-5 text-4xl fixed'>{activeChannel.title}</span>
+                    <span className='py-5 text-2xl md:text-4xl fixed'>{activeChannel.title}</span>
                     <button
                         className={'p-2 ml-auto mr-2 hover:bg-warning hover:text-white duration-250 rounded-xl h-fit my-auto text-ptext/50'}
                         onClick={() =>

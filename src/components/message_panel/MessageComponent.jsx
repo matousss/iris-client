@@ -48,6 +48,6 @@ export const MessageComponent = (props) => (props.from && props.author ?
 export const ImageMessageComponent = ({src, ...props}) => <MessageComponent {...props}>
     {props.children}
     <img src={src} alt={'Image failed to load'}
-         className={'rounded-2xl cursor-pointer mt-2'} onClick={() => console.log('todo show large image')}/>
+         className={'rounded-2xl cursor-pointer mt-2 max-h-[256px] object-scale-down'} onClick={() => console.log('todo show large image')}/>
 </MessageComponent>
 
