@@ -74,7 +74,7 @@ export default function SettingsModal(props) {
                     <>
                         {Object.keys(sections).map((key, i) => {
                             let Element = sections[key][1];
-                            return <Element id={key} key={i}/>;
+                            return <Element id={key} key={i} setLoading={setLoading} loading={loading}/>;
                         })}</>
 
                 </div>
