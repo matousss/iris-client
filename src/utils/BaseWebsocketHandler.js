@@ -44,7 +44,6 @@ export default class {
     }
 
     handleReceive(event) {
-        console.log(event)
     }
 
 
