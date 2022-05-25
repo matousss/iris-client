@@ -1,7 +1,7 @@
 import {createContext, useEffect, useState} from 'react';
 import Sidebar from "./sidebar";
 import {GroupChannel, Message, rawToMessage} from "../utils/ModelStorage";
-import {MessagePanel, MessageComponent} from "./message_panel";
+import {MessagePanel, MessageComponent, ImageMessageComponent} from "./message_panel";
 import {getSortedChannels} from "../utils/Sorting";
 import BaseWebsocketHandler from "../utils/BaseWebsocketHandler";
 import SettingsModal from "./settings/SettingsModal";
@@ -27,11 +27,17 @@ export default function Main(props) {
 
     const generateMessages = (showAuthor) => {
         return Array.from(channel.messages, (message, i) => {
-            return (
-                <MessageComponent key={i} author={showAuthor ? message.author : ''}
-                                  from={message.author.id !== props.user.id}>
-                    {message.text ? message.text : `Media: $${message.media}`}
+            let author = showAuthor ? message.author : '';
+            let from = message.author.id !== props.user.id;
+            console.log(message.media)
+            return (!message.media ?
+                <MessageComponent key={i} author={author}
+                                  from={from}>
+                    {message.text}
                 </MessageComponent>
+                    : <ImageMessageComponent key={i} src={message.media} author={author} from={from}>
+                        {message.text ? message.text : ''}
+                    </ImageMessageComponent>
             )
         })
     }
@@ -180,7 +186,7 @@ export default function Main(props) {
             type: "message",
             data: {
                 "text": message,
-                "media": false,
+                "media": null,
                 "channel": channel.id
             }
         }))

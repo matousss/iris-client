@@ -45,9 +45,9 @@ const PlainMessage = props => <MessageComponentBase {...props}>
 export const MessageComponent = (props) => (props.from && props.author ?
     <AuthoredIncomingMessage {...props}/> : <PlainMessage {...props}/>)
 
-export const ImageMessageComponent = (props) => <MessageComponent {...props}>
+export const ImageMessageComponent = ({src, ...props}) => <MessageComponent {...props}>
     {props.children}
-    <img src={props.src} alt={'Image failed to load'}
+    <img src={src} alt={'Image failed to load'}
          className={'rounded-2xl cursor-pointer mt-2'} onClick={() => console.log('todo show large image')}/>
 </MessageComponent>
 
