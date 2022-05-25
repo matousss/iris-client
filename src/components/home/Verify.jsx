@@ -1,11 +1,10 @@
-import React, {useContext, useState} from 'react'
+import React, {useState} from 'react'
 import * as Page from '../../utils/PageEnum'
 import {activateAccount} from "../../utils/requests/AuthReq";
 import HomeForm from "./form/HomeForm";
 import FormField from "./form/FormField";
-import {UserContext} from "../Main";
 
-export function Verify({user, setPage, initMain, setLoading}) {
+export function Verify({user, setPage, initMain, setLoading, showError}) {
     const [codeField, setCodeField] = useState('')
     const [error, setError] = useState('')
 
@@ -37,6 +36,7 @@ export function Verify({user, setPage, initMain, setLoading}) {
 
             await handleFetch(response)
         } catch (e) {
+            showError('Server unreachable', 'Please reload page')
             console.error(e);
             setPage(Page.login);
             setLoading(false);

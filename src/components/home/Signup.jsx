@@ -4,7 +4,7 @@ import {signup} from '../../utils/requests/AuthReq'
 import HomeForm from "./form/HomeForm";
 import FormField from "./form/FormField";
 
-export function Signup({setUser, setPage, setLoading}) {
+export function Signup({setUser, setPage, setLoading, showError}) {
     const [emailField, setEmailField] = useState('')
     const [usernameField, setUsernameField] = useState('')
     const [passwordField, setPasswordField] = useState('')
@@ -26,6 +26,9 @@ export function Signup({setUser, setPage, setLoading}) {
                 'password': passwordField,
             })
             await handleFetch(response)
+        }
+        catch (e) {
+            showError('Server unreachable', 'Please reload page')
         }
         finally {
             e.target.firstChild.disabled = false;

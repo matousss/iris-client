@@ -58,7 +58,7 @@ function App() {
             }).catch(e => {
                 console.error(e);
                 setLoading(false);
-                showError('Server unreachable', 'Try reloading page');
+                showError('Server unreachable', 'Please reload page');
             })
         }
     }
@@ -96,19 +96,23 @@ function App() {
                               stayLoggedIn={stayLoggedIn}
                               setStayLoggedIn={setStayLoggedIn}
                               setLoading={setLoading}
-                              initMain={initMain}/>
+                              initMain={initMain}
+                              showError={showError}
+                />
             case Page.signup:
                 return <Signup setUser={setUser}
                                setPage={setPage}
                                stayLoggedIn={stayLoggedIn}
                                setStayLoggedIn={setStayLoggedIn}
                                setLoading={setLoading}
+                               showError={showError}
                 />
             case Page.verify:
                 return <Verify user={user}
                                setPage={setPage}
                                initMain={initMain}
                                setLoading={setLoading}
+                               showError={showError}
                 />
             default:
                 return (<div>Error</div>)

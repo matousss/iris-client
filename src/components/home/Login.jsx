@@ -17,10 +17,10 @@ export function Login(props) {
             let response = await login(window.btoa(usernameField.toString() + ':' + passwordField.toString()))
 
 
-            await handleFetch(response);
+            await handleFetch(response)
         } catch (e) {
             console.error(e);
-            setError('Unexpected error');
+            props.showError('Server unreachable', 'Please reload page')
         } finally {
             e.target.firstChild.disabled = false;
         }
