@@ -3,10 +3,10 @@ import Avatar from "react-avatar";
 
 const AutoAvatar = (props) => <Avatar className={"my-auto"} {...props} round={true}/>;
 
-export const getAvatar = ({username, email, avatar, size = 56}) => (avatar === null ?
-    <AutoAvatar name={username} email={email} className={'duration-0'} size={size}/> :
+export const getAvatar = ({username, email, avatar, size = 56, color}) => (!avatar ?
+    <AutoAvatar className={'duration-0'} name={username} email={email} size={size} color={color}/> :
     <img src={avatar} className={'object-scale-down rounded-[100%] bg-white w-full ' + `max-h-[${size}px]`}
-         alt={<AutoAvatar username={username}/>}/>);
+         alt={'Error'}/>);
 
 const formatCount = n => {
     if (n === 0) return '✔';
@@ -33,7 +33,10 @@ export default function ChannelCard(props) {
             <div
                 className={
                     'on-expand text-xl my-auto ml-3 h-fixed text-left'}>
-                <span className={"overflow-hidden text-ellipsis line-clamp-1 duration-75"}>{props.username}</span>
+                <span className={"overflow-hidden text-ellipsis line-clamp-1 duration-75"}>
+                    {props.children ? props.children : props.username}
+
+                </span>
 
             </div>
         </div>

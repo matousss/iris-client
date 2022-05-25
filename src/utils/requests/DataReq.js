@@ -24,4 +24,11 @@ function deleteChannel(id) {
     return getFetch(`channel/${id}/`, 'DELETE')
 }
 
-export {getMiniProfile, getFullProfile, getChannels, getMessages, searchUser, deleteChannel}
+function createDirectChannel(id) {
+    let formData = new FormData();
+    formData.append('type', 'directchannel')
+    formData.append('users', id)
+    return getFetch('channel/', 'POST', formData)
+}
+
+export {getMiniProfile, getFullProfile, getChannels, getMessages, searchUser, deleteChannel, createDirectChannel}

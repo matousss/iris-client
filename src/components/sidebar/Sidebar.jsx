@@ -3,12 +3,10 @@ import ChannelButton from "./ChannelButton";
 import {isMobile} from "react-device-detect";
 import TopButtons from "./TopButtons";
 import {SignOutButton} from "./Buttons";
+import ChannelCard from "./ChannelCard";
 
 export default function Sidebar(props) {
     const [expanded, setExpanded] = useState(false)
-
-
-
 
 
     const generateButtons = () => Array.from(props.sortedChannels, (channel) => {
@@ -58,6 +56,12 @@ export default function Sidebar(props) {
             </li>*/}
             <TopButtons toggleExpansion={toggleExpansion} setSettingsVisible={props.setSettingsVisible}/>
             <li id='sidebar-channels' className={'buttons'}>
+                <button className={'w-full h-22 hover:bg-white/20 duration-[300ms]'}
+                        onClick={props.openSearch}>
+                    <ChannelCard username={'+'} unreadCount={0} color={'green'}>
+                        <span className={'text-sm italic'}>Start new</span>
+                    </ChannelCard>
+                </button>
                 {generateButtons()}
 
             </li>

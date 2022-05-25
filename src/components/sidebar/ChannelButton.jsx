@@ -9,7 +9,7 @@ export default function ChannelButton({setActiveConversation, channel}) {
                 }}>
             <ChannelCard username={channel.title}
                          avatar={channel.icon}
-                        email={channel.users.length === 2 ? channel.users[1].email : ''}
+                        email={channel.users && channel.users.length === 2 ? channel.users[1].email : ''}
                          unreadCount={channel.unreadCount}
             />
         </button>

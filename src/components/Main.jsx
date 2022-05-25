@@ -8,6 +8,8 @@ import SettingsModal from "./settings/SettingsModal";
 import {viewedChannel} from "../utils/requests/RequestUtils";
 import {useWindowFocus} from "../utils/Hooks";
 import {getMessages, processRawChannel} from "../utils/StorageUtil";
+import {UserSearch} from "./user_search";
+import {createDirectChannel} from "../utils/requests/DataReq";
 
 export const UserContext = createContext(null);
 export const ClearDeskContext = createContext(null);
@@ -19,6 +21,7 @@ export default function Main(props) {
     const [messageCount, setMessageCount] = useState(0);
     const [sortedChannels, setSortedChannels] = useState(getSortedChannels(props.channels));
     const [settingsVisible, setSettingsVisible] = useState(false);
+    const [searchVisible, setSearchVisible] = useState(false);
     const windowFocus = useWindowFocus();
 
 
@@ -183,6 +186,9 @@ export default function Main(props) {
         }))
     }
 
+    const createDirect = async id => createDirectChannel(id);
+
+
     return (
 
         <UserContext.Provider value={props.user}>
@@ -190,15 +196,23 @@ export default function Main(props) {
                 <Sidebar clearDesk={props.clearDesk}
                          setActiveConversation={openChannel} channels={props.channels}
                          sortedChannels={sortedChannels} setSettingsVisible={setSettingsVisible}
+                         openSearch={() => setSearchVisible(true)}
                 />
                 <MessagePanel activeChannel={channel} setChannel={setChannel}
                               messages={messageArray} sendMessage={sendMessage}/>
 
-                {settingsVisible ?
-                    <ClearDeskContext.Provider value={props.clearDesk}>
-                        <SettingsModal visible={true} setVisible={setSettingsVisible}/>
-                    </ClearDeskContext.Provider> : ''}
+
             </div>
+            {settingsVisible ?
+                <ClearDeskContext.Provider value={props.clearDesk}>
+                    <SettingsModal visible={true} setVisible={setSettingsVisible}/>
+                </ClearDeskContext.Provider> : ''}
+
+            {searchVisible ? <UserSearch
+                visible={searchVisible}
+                closeModal={() => setSearchVisible(false)}
+                onSelect={createDirect}
+            /> : ''}
         </UserContext.Provider>
     );
 }
