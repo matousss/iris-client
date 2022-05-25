@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/iris-client/static/css/main.f9f1b682.css",
-    "main.js": "/iris-client/static/js/main.c52ea377.js",
-    "static/js/787.c4e7f8f9.chunk.js": "/iris-client/static/js/787.c4e7f8f9.chunk.js",
-    "static/media/layered-waves-haikei.svg": "/iris-client/static/media/layered-waves-haikei.3760601b67d2aacb6aa2.svg",
-    "index.html": "/iris-client/index.html",
-    "static/media/ban_icon.svg": "/iris-client/static/media/ban_icon.1f2d6cd7631aa1de13d028b605e13551.svg",
-    "main.f9f1b682.css.map": "/iris-client/static/css/main.f9f1b682.css.map",
-    "main.c52ea377.js.map": "/iris-client/static/js/main.c52ea377.js.map",
-    "787.c4e7f8f9.chunk.js.map": "/iris-client/static/js/787.c4e7f8f9.chunk.js.map"
+    "main.css": "/static/css/main.bffdbde0.css",
+    "main.js": "/static/js/main.da0249a9.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
+    "static/media/layered-waves-haikei.svg": "/static/media/layered-waves-haikei.3760601b67d2aacb6aa2.svg",
+    "index.html": "/index.html",
+    "static/media/ban_icon.svg": "/static/media/ban_icon.1f2d6cd7631aa1de13d028b605e13551.svg",
+    "main.bffdbde0.css.map": "/static/css/main.bffdbde0.css.map",
+    "main.da0249a9.js.map": "/static/js/main.da0249a9.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f9f1b682.css",
-    "static/js/main.c52ea377.js"
+    "static/css/main.bffdbde0.css",
+    "static/js/main.da0249a9.js"
   ]
 }
