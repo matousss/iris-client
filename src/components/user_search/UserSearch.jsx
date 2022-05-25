@@ -77,7 +77,7 @@ export function UserSearch({visible, closeModal, onSelect}) {
             <div className={'w-full my-2 text-center font-bold text-lg text-warning'}>
                 {message}
             </div>
-            <ul className={'w-full h-full max-h-4/5 px-4 flex flex-col ' + (displayed ? 'overflow-auto' : '')}>
+            <ul className={'w-full h-full max-h-[75%] px-4 flex flex-col ' + (displayed ? 'overflow-auto' : '')}>
                 {displayed ? displayed :
                     <img src={image} alt={'.'} className={'rounded-xl object-scale-down max-h-full my-auto'}/>}
             </ul>
