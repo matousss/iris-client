@@ -29,7 +29,6 @@ export default function Main(props) {
         return Array.from(channel.messages, (message, i) => {
             let author = showAuthor ? message.author : '';
             let from = message.author.id !== props.user.id;
-            console.log(message.media)
             return (!message.media ?
                 <MessageComponent key={i} author={author}
                                   from={from}>
