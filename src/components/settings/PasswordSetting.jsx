@@ -1,7 +1,7 @@
 import React, {createElement, useContext, useState} from 'react';
 import {SettingsContainer} from "./SettingsContainer";
 import {SettingsField, SettingsForm} from "./SettingsForm";
-import {UserContext} from "../Main";
+import {ClearDeskContext, UserContext} from "../Main";
 import {changePassword} from "../../utils/requests/SettingsReq";
 import {LoadingContext} from "../../App";
 
@@ -11,7 +11,7 @@ function PasswordSetting(props) {
     const [newPass, setNewPass] = useState('');
     const [repeatPass, setRepeatPass] = useState('');
     const [message, setMessage] = useState(null);
-
+    const clearDesk = useContext(ClearDeskContext);
 
     const onSubmit = e => {
         e.preventDefault();
@@ -23,8 +23,11 @@ function PasswordSetting(props) {
         props.setLoading(true);
         changePassword(window.btoa(user.username + ':' + oldPass.toString()), newPass).then(
             e => {
-                // todo handle errors
-                props.setLoading(false);
+                if (!e.ok) setMessage(createElement('span', {className: 'text-warning font-bold'}, 'Error occured'))
+                else {
+                    props.setLoading(false);
+                    clearDesk();
+                }
             }
         );
     }

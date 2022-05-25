@@ -10,7 +10,7 @@ import {useWindowFocus} from "../utils/Hooks";
 import {getMessages, processRawChannel} from "../utils/StorageUtil";
 
 export const UserContext = createContext(null);
-
+export const ClearDeskContext = createContext(null);
 
 export default function Main(props) {
     const [wsh, setWSH] = useState(null)
@@ -91,7 +91,6 @@ export default function Main(props) {
                                 props.channels.set(e);
                                 updateSidebar();
                             }
-
                         );
 
                     })
@@ -144,8 +143,7 @@ export default function Main(props) {
                 deleteData(data)
                 break;
             case 'force_logout':
-                // todo force logout
-                console.log('force logout now')
+                props.clearDesk()
                 break;
             case 'error':
                 console.error('Received WebSocket error: ' + data.data.detail)
@@ -195,7 +193,11 @@ export default function Main(props) {
                 />
                 <MessagePanel activeChannel={channel} setChannel={setChannel}
                               messages={messageArray} sendMessage={sendMessage}/>
-                {settingsVisible ? <SettingsModal visible={true} setVisible={setSettingsVisible}/> : ''}
+
+                {settingsVisible ?
+                    <ClearDeskContext.Provider value={props.clearDesk}>
+                        <SettingsModal visible={true} setVisible={setSettingsVisible}/>
+                    </ClearDeskContext.Provider> : ''}
             </div>
         </UserContext.Provider>
     );
