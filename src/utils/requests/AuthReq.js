@@ -16,6 +16,10 @@ function logout() {
     return getFetch('auth/logout/', 'POST')
 }
 
+function logoutAll(exceptCurrent = false) {
+    return getFetch('auth/logoutall/', exceptCurrent ? 'DELETE' : 'POST')
+}
+
 function signup(data = {}) {
     return getFetch('auth/register', 'POST', dictToFormData(data), new Headers())
 }
@@ -28,4 +32,4 @@ function activateAccount(username, activationCode) {
     }), new Headers())
 }
 
-export {login, logout, signup, activateAccount, getBasicAuth}
+export {login, logout, logoutAll, signup, activateAccount, getBasicAuth}

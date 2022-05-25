@@ -7,7 +7,7 @@ import CropModal from "./CropModal";
 import {updateAvatar} from "../../utils/requests/SettingsReq";
 import {UserContext} from "../Main";
 
-function AvatarSetting(props) {
+function AvatarSetting({loading, setLoading, ...props}) {
     const [srcImage, setSrcImage] = useState('');
     const imgRef = useRef(null);
     const canvasRef = useRef(null);
@@ -95,7 +95,7 @@ function AvatarSetting(props) {
     const save = e => {
         e.preventDefault();
         if (!srcImage) return setMessage(React.createElement('span', {className: 'text-warning font-bold'}, 'No image selected!'))
-        props.setLoading(true);
+        setLoading(true);
         let base64 = canvasRef.current.toDataURL();
         localUser.avatar = base64;
         updateAvatar(base64).then(e => {
@@ -113,7 +113,7 @@ function AvatarSetting(props) {
                     message = 'Unexpected error'
             }
             setMessage(React.createElement('span', {className: warn ? 'text-warning font-bold' : 'text-lime-700'}, message))
-            window.setTimeout(props.setLoading, 500, false);
+            window.setTimeout(setLoading, 500, false);
         }).catch(
             setMessage(React.createElement('span', {className: 'text-warning font-bold'}, 'Unexpected Error'))
         )
@@ -121,7 +121,7 @@ function AvatarSetting(props) {
 
     return (
         <TitledSettingContainer title={'Change avatar'} {...props}>
-            <SettingsForm onSubmit={save} message={message} disabled={props.loading}>
+            <SettingsForm onSubmit={save} message={message} disabled={loading}>
                 <FileInput fileName={fileName} onChange={onSelectFile}/>
                 <div className={'w-1/2 bg-black/20 group ' + (srcImage ? 'visible' : 'hidden')}>
                     <canvas ref={canvasRef}
