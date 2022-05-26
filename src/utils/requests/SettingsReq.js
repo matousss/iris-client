@@ -12,7 +12,7 @@ async function updateAvatar(avatarBase64) {
 async function changePassword(auth, newPassword) {
     let formData = new FormData();
     formData.append('password', newPassword);
-    return getFetch('changepassword', 'POST', formData, getBasicAuth(auth))
+    return getFetch('auth/changepassword', 'POST', formData, getBasicAuth(auth))
 }
 
 export {updateAvatar, changePassword}
