@@ -52,7 +52,7 @@ export function UserSearch({visible, closeModal, onSelect}) {
     useEffect(() => {
         if (result === undefined) return setDisplayed("Error occured");
         if (result === null) return setDisplayed(null);
-        if (result.length === 0) return setDisplayed(null);
+        if (result.length === 0 || (result.length === 1 && result[0].id === user.id)) return setDisplayed(null);
 
         setDisplayed(result.map((v, i) => v.id === user.id ? '' : <UserResult key={i} user={v} onClick={handleSelect}/>))
 
